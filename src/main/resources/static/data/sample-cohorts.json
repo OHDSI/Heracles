@@ -1,0 +1,27 @@
+[
+    {
+        "name": "Breast Cancer s/p Mastectomy",
+        "description": "Patients with a history of Mastectomy (14-Nov-2014)",
+        "id": 1
+    },
+    {
+        "name": "Cervical Cancer In-Situ",
+        "description": "Patients with a cervical cancer in-situ (12-Jan-2015)",
+        "id": 2
+    },
+    {
+        "name": "Diabetes Mellitus",
+        "description": "Created on 31-Oct-2014 by Ryan, Patrick",
+        "id": 3
+    },
+    {
+        "name": "Schizophrenia",
+        "description": "Created on 4-Nov-2014 by Stang, Paul",
+        "id": 4
+    },
+    {
+        "name": "Diabetes Mellitus Poorly Controlled",
+        "description": "Created on 14-Nov-2014 by Matcho, Amy",
+        "id": 5
+    }
+]

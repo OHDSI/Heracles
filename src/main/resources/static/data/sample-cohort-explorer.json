@@ -1,0 +1,66 @@
+{
+	"name":"Schizophrenia",
+	"description": "Created on 4-Nov-2014 by Stang, Paul",
+	"total_patients": 52281,
+	"mean_age":32,
+	"mean_obs_period":"21 mos",
+	"gender_distribution": {
+		"Male":57,
+		"Female":43
+	},
+	"age_distribution" : {
+		"> 65 yrs":20,
+		"50 to 64 yrs":23,
+		"35 to 49 yrs":17,
+		"18 to 34 yrs":25,
+		"< 18 yrs":15
+	},
+	"analyses": [
+	
+		{ 
+			"name":"Distribution of age by drug_concept_id",
+			"id":1,
+			"done":false,
+			"category":"DRUG_EXPOSURE"
+		},
+		{ 
+			"name":"Number of persons with at least one drug exposure, by drug_concept_id",
+			"id":2,
+			"done":true,
+			"category":"DRUG_EXPOSURE"
+		},
+		{ 
+			"name":"Number of persons by observation occurrence start month, by observation_concept_id",
+			"id":3,
+			"done":false,
+			"category":"OBSERVATION"
+		},
+		{ 
+			"name":"Distribution of age at cohort start",
+			"id":4,
+			"done":true,
+			"category":"COHORT-SPECIFIC ANALYSES"
+		},
+		{ 
+			"name":"Number of persons by age, with age at cohort start",
+			"id":5,
+			"done":true,
+			"category":"COHORT-SPECIFIC ANALYSES"
+		},
+		{ 
+			"name":"Distribution of age at cohort start by gender",
+			"id":6,
+			"done":false,
+			"category":"COHORT-SPECIFIC ANALYSES"
+		},
+		{ 
+			"name":"Distribution of age at cohort start by cohort start year",
+			"id":7,
+			"done":true,
+			"category":"COHORT-SPECIFIC ANALYSES"
+		}
+	]	
+	
+	
+	
+}
