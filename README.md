@@ -8,24 +8,23 @@ Health Enterprise Resource and Care Learning Exploration System (HERACLES) provi
 HERACLES is a project as part of the Observational Health Data Sciences and Informatics (OHDSI, http://ohdsi.org) collaboration.
 
 ##### Features
-* Heracles Runner
+* Select from existing COHORTs in CDM and choose a set of analyses to run
+* Focus on a particular concept group such as medications, conditions, or procedures
+* Visualize results through a series of reports similar to [ACHILLES](http://www.ohdsi.org/web/achilles/index.html#/SAMPLE/dashboard)
 
 ##### Technology
 * HTML5
 * Javascript
 
-##### System Requirements
-* CDM V5 (in any OHDSI supported dialect)
-* Standalone installation requires WebAPI and a server 
+###### System Requirements
+* Must run a web server (ex. Apache, nginx, IIS)
+* HTML5-compatible web browser (ex. Chrome, IE10+, Firefox)
 
 ##### Dependencies
-* 
+* Need to have [OHDSI WebAPI](https://github.com/OHDSI/WebAPI) available.
 
 ##### Getting Started
-* 
-
-##### Getting involved
-* 
+* Pending Release
 	
 ##### License
 Apache
