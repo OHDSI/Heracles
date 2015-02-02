@@ -1,0 +1,78 @@
+.sub-text {
+	color: #BEEDF6;
+}
+
+.jumbotron {
+	background: #13A0BA;
+    color: white;
+    background: -webkit-linear-gradient(#13A0BA, #026476); /* For Safari 5.1 to 6.0 */
+  	background: -o-linear-gradient(#13A0BA, #026476); /* For Opera 11.1 to 12.0 */
+  	background: -moz-linear-gradient(#13A0BA, #026476); /* For Firefox 3.6 to 15 */
+  	background: linear-gradient(#13A0BA, #026476); /* Standard syntax */
+}
+
+.large-input {
+	padding: 10px;
+    font-size: 15pt;
+    line-height: 2.45;
+    height: 50px;
+}
+
+.btn-heracles {
+	color: #fff;
+	background-color: #0A7184;
+	border-color: #168296;
+}
+
+a {
+	cursor:pointer;
+}
+
+.cohort-desc {
+	padding-right: 4px;
+}
+
+.definition {
+	text-decoration: underline;	
+	padding: 2px 10px;
+}
+
+ .toggle-child-label {
+ 	font-weight:normal;
+ 	padding-left:40px;
+ 	cursor:pointer;
+ }
+ 
+.toggle-parent-label {
+	cursor:pointer;
+}
+ 
+ 
+.toggle-filter-control {
+	font-size: 90%;
+	background-color:#aaa;
+}
+ 
+.multiselect {
+	width: 20em;
+	height: 15em;
+	border: solid 1px #c0c0c0;
+	overflow: auto;
+}
+
+.multiselect label {
+	display: block;
+}
+
+.multiselect-on {
+	color: #ffffff;
+	background-color: #000099;
+}
+
+.analyses-button {
+	margin-top:10px;
+}
+
+.d3-wrapper {
+	text-align: center;
+}

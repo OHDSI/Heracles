@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8"></meta>
+    <title>Heracles</title>
+
+    <script type="text/javascript" src="lib/jquery/jquery.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"></link>
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"></link>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="lib/typeahead.js/typeahead.bundle.js"></script>
+    <script type="text/javascript" src="lib/handlebars/handlebars.js" ></script>
+    <script type="text/javascript" src="lib/jquery-ui/jquery-ui.js"></script>
+    <script type="text/javascript" src="lib/d3/d3.js" ></script>
+    <script type="text/javascript" src="lib/angular/angular.js"></script>
+    <script type="text/javascript" src="build/Heracles.config.js.js" ></script>
+    <script type="text/javascript" src="build/Heracles.min.js" ></script>
+
+    <!--Heracles custom-->
+    <link rel="stylesheet" type="text/css" href="build/Heracles.min.css" ></link>
+</head>
+<body>
+<!-- TODO clean this up -->
+<input id="demo-mode" type="hidden" value="true" />
+
+<!-- TODO add filter auto selector -->
+<div class="container">
+    <!-- Header and app info -->
+    <div class="row page-one" style="margin-top:10px">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="jumbotron">
+                <h2>Heracles</h2>
+                <p class="sub-text">Heracles is the cohort analysis tool for the OMOP Common Data Model (CDM). Begin your analyses by selecting a cohort.</p>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+
+    <!-- Cohort search bar -->
+    <div id="cohort-search" class="row page-one">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div id="cohorts-typeahead">
+                <input id="cohorts" type="text" placeholder="Search Cohorts" class="form-control large-input typeahead" />
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+
+    <!-- Cohort Explorer -->
+    <div id="cohort-explorer-main" class="row" style="display:none" ng-controller="CohortExplorerCtrl">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="row" style="padding-top:3px"a>
+                <div class="col-md-12">
+                    <a id="cohort-explorer-back">&laquo;Back</a>
+                </div>
+            </div>
+            <div id="cohort-explorer-summary" class="row">
+                <div class="col-md-8">
+                    <div style="padding-left:5%">
+                        <h3 id="cohort-name">{{cohort.name}}
+                            <small data-toggle="tooltip" data-placement="bottom" title="{{cohort.description}}">
+                                <a class="definition">definition</a>
+                            </small>
+                        </h3>
+                        <div>
+                            <div>
+                                <label style="text-decoration:underline">Summary</label>
+                            </div>
+                            <div>
+                                <label class="cohort-desc">Total Patients: </label>{{cohort.total_patients}}</div>
+                            <div>
+                                <label class="cohort-desc">Mean Observation Period: </label>{{cohort.mean_obs_period}}</div>
+                            <div>
+                                <label class="cohort-desc">Mean Age: </label>{{cohort.mean_age}}</div>
+                            <div>
+                                <label class="cohort-desc">% Female: </label>{{cohort.gender_distribution.Female}}%</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>View Completed Analysis Results</h4>
+                                <!-- TODO replace vm macros
+                                #set ($filterKey = "completed-analyses")
+                                #set ($ngRepeat = "(k, v) in cohort.completed_cohorts")
+                                #autoFilterCheckList($filterKey, $ngRepeat)
+                                -->
+                            </div>
+                        </div>
+                        <div style="padding:15px 0px;" class="row">
+                            <div class="col-md-12">
+                                <!-- TODO replace vm macros
+                                <h4>Run New Analyses</h4>
+                                #set ($filterKey = "new-analyses")
+                                #set ($ngRepeat = "(k, v) in cohort.new_cohorts")
+                                #autoFilterCheckList($filterKey, $ngRepeat)
+                                -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="cohort-explorer-charts" class="col-md-4">
+                    <div>
+                        <div><h4 style="text-align:center">Age Distribution</h4></div>
+                        <div id="age_dist" class="d3-wrapper" />
+                    </div>
+                    <div>
+                        <div><h4 style="text-align:center">Gender Distribution</h4></div>
+                        <div id="gender_dist" class="d3-wrapper"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</div>
+
+
+</body>
+</html>

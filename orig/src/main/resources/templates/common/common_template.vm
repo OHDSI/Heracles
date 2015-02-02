@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en-US" ng-app="Heracles">
+	<head>
+		<title>$pageTitle</title>
+		#parse( "common/styles.vm" )
+	</head>
+	<body>
+		<input id="demo-mode" type="hidden" value="$demoMode" />
+		<input id="webapi-url" type="hidden" value="$webApiUrl" />
+		#parse( $innerTemplate )
+		#parse( "common/scripts.vm" )
+	</body>
+</html>
