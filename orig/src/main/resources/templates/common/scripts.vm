@@ -21,7 +21,7 @@
 	
 <!--Heracles custom js-->
 <script type="text/javascript"
-	src="/js/heracles-main.js"></script>
+	src="/js/auto-filter-box.js"></script>
 <script type="text/javascript"
 	src="/js/heracles-d3.js"></script>
 

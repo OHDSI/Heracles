@@ -16,12 +16,9 @@ HERACLES is a project as part of the Observational Health Data Sciences and Info
 ##### Technology
 * HTML5
 * Javascript
-* Grunt
-* Bower
 * jQuery
 * Bootstrap
 * AngularJS
-* Typeahead.js
 
 ##### System Requirements
 * 
@@ -30,32 +27,23 @@ HERACLES is a project as part of the Observational Health Data Sciences and Info
 * Have a version of the [OHDSI WebAPI](https://github.com/OHDSI/WebAPI) running.
 
 ##### Getting Started
-###### If you want to develop the source, you need install the following.
-* Install [Node.js](http://nodejs.org/)
-* Install [Bower](http://bower.io/)
-<br/>` npm install -g bower `
-* Install [Grunt](http://gruntjs.com/getting-started)
+###### Running Heracles
+*
+###### If you wish to add/modify configuration using Grunt, you can install the following.
+* Install [Node.js](http://nodejs.org/) if not yet installed
+* Install [Grunt](http://gruntjs.com/getting-started) if not yet installed
 <br/>`npm install -g grunt-cli`
 * Install grunt dependencies (under the root directory)
-<br/>`npm install grunt-contrib-uglify --save-dev`
-<br/>`npm install grunt-bower-task --save-dev`
-<br/>`npm install grunt-contrib-cssmin --save-dev`
-<br/>`npm install grunt-contrib-jshint --save-dev`
-<br/>`npm install grunt-contrib-nodeunit --save-dev`
-<br/>`npm install grunt-contrib-watch --save-dev`
+<br/>`sh installGruntDependencies.sh`
+* (optional) If you're pointing to a different WebAPI than the default (localhost:8080/WebAPI), do the following
+<br/>update the `web_api_url` property in package.json
 * Run grunt to kick off the default tasks
 <br/>`grunt`
-* Run watch to keep minified files up to date (optional)
+* (optional) Run watch to keep minified files up to date
 <br/>`grunt watch`
 
 ##### Other Notes
-* If you're pointing to a different WebAPI than the default (localhost:8080/WebAPI), do the following
-<br/>update the `web_api_url` property in package.json
-<br/>Run `grunt initwebapi`
-* Modify all *.js/*.css files under src/, then use grunt to minify them
-* Everything under /lib should be managed by bower, so don't make any changes there directly
-<br/>See the [Bower](http://bower.io/) page for installing new javascript libraries
-
+*
 
 ##### Getting involved
 * 

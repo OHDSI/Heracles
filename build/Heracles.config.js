@@ -1,1 +1,1 @@
-function getWebApiUrl() { return 'http://localhost:8080/WebAPI/'; }
+function getWebApiUrl() { return 'http://localhost:8080/WebAPI'; }

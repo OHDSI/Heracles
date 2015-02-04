@@ -11,13 +11,21 @@ module.exports = function(grunt) {
             build: {
                 src: 'src/js/*.js',
                 dest: 'build/<%= pkg.name %>.min.js'
+            },
+            custom_minify: {
+                files: [{
+                    expand: true,
+                    cwd: 'lib',
+                    src: '**/*.js',
+                    dest: 'build/js/minified'
+                }]
             }
         },
         // run watch to keep minified version update, e.g. 'grunt watch'
         watch: {
             scripts: {
                 files: 'src/js/*.js',
-                tasks: ['uglify', 'cssmin'],
+                tasks: ['jshint', 'cssmin'],
                 options: {
                 }
             }
@@ -37,13 +45,8 @@ module.exports = function(grunt) {
         cssmin: {
             target: {
                 files: {
-                    'build/<%= pkg.name %>.min.css' : ['src/css/*.css']
+                    'build/<%= pkg.name %>.min.css' : ['src/css/heracles.css']
                 }
-            }
-        },
-        bower: {
-            install: {
-                //just run 'grunt bower:install' and you'll see files from your Bower packages in lib directory
             }
         },
         initwebapi : {
@@ -55,9 +58,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
+    // reads the web api property and loads into the config
     grunt.registerTask("initwebapi", "Initializes the web api configuration", function() {
         grunt.log.writeln('The webapi property is: ' + grunt.config('pkg.web_api_url') + '. Set this in your package.json before running this task.');
         var out = 'build/' + grunt.config('pkg.name') + '.config.js';
@@ -71,7 +74,7 @@ module.exports = function(grunt) {
 
 
     // Default task(s).
-    grunt.registerTask('default', ['bower:install', 'jshint', 'uglify', 'cssmin']);
+    grunt.registerTask('default', ['jshint', 'cssmin', 'initwebapi']);
 
 
 };

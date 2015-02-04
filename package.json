@@ -6,7 +6,7 @@
     "grunt-bower-task": "^0.4.0",
     "grunt-contrib-cssmin": "^0.11.0",
     "grunt-contrib-jshint": "^0.11.0",
-    "grunt-contrib-nodeunit": "~0.4.1",
+    "grunt-contrib-nodeunit": "^0.4.1",
     "grunt-contrib-uglify": "^0.7.0",
     "grunt-contrib-watch": "^0.6.1"
   },
@@ -14,5 +14,5 @@
     "type": "git",
     "url": "https://github.com/OHDSI/Heracles"
   },
-  "web_api_url" : "http://localhost:8080/WebAPI/"
+  "web_api_url": "http://localhost:8080/WebAPI"
 }

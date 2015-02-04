@@ -1,3 +1,6 @@
+@import "typeahead.css";
+@import url("../../lib/bootstrap/bootstrap.css");
+
 .sub-text {
 	color: #BEEDF6;
 }
