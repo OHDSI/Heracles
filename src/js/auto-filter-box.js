@@ -1,4 +1,4 @@
-define(['jquery'], function($) {
+require(['domReady!', 'jquery', 'bootstrap'], function (domReady, $, b) {
     var activeFilter;
 
     $.fn.filterByText = function (textbox, selectSingleMatch) {
