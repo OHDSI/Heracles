@@ -26,10 +26,12 @@ HERACLES is a project as part of the Observational Health Data Sciences and Info
 ##### Dependencies
 * Have a version of the [OHDSI WebAPI](https://github.com/OHDSI/WebAPI) running.
 
-##### Getting Started
-###### Running Heracles
-*
-###### If you wish to add/modify configuration using Grunt, you can install the following.
+##### Running Heracles
+*  Will be updated when released
+
+###### For Developers
+
+If you wish to add/modify configuration using Grunt, you can install the following.
 * Install [Node.js](http://nodejs.org/) if not yet installed
 * Install [Grunt](http://gruntjs.com/getting-started) if not yet installed
 <br/>`npm install -g grunt-cli`
