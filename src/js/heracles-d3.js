@@ -1,6 +1,6 @@
 define(['jquery', 'd3', 'angular'], function (jquery, d3, angular) {
-    const COLOR_RANGE = ["#AF0C3C", "#290F2E", "#0E7184", "#F0D31A", "#FE7D0D"];
-    const HIDDEN_DIV_HEIGHT = 250;
+    var COLOR_RANGE = ["#AF0C3C", "#290F2E", "#0E7184", "#F0D31A", "#FE7D0D"];
+    var HIDDEN_DIV_HEIGHT = 250;
 
 
     function HeraclesD3() {}
@@ -99,7 +99,7 @@ define(['jquery', 'd3', 'angular'], function (jquery, d3, angular) {
             }
         );
 
-    }
+    };
 
     HeraclesD3.showGenderDistribution = function(genderData) {
 
@@ -181,7 +181,7 @@ define(['jquery', 'd3', 'angular'], function (jquery, d3, angular) {
             attr("transform", "translate(0, -4)").
             attr("class", "yAxis");
 
-    }
+    };
 
     function type(d) {
         d.value = +d.value; // coerce to number

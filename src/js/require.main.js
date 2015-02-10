@@ -28,38 +28,4 @@ require.config({
     ]
 });
 
-// configure angular
-require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $, b, HeraclesD3) {
-        angular.element().ready(function() {
-            // bootstrap the app manually
-            angular.module('Heracles', []).controller('CohortExplorerCtrl', function($scope, $http) {
-                $scope.showCohort = function(datum) {
-                    $http.get('src/data/sample-cohort-explorer.json')
-                        .then(function(res){
-                            res.data.completed_cohorts = {};
-                            res.data.new_cohorts = {};
-                            $.each(res.data.analyses, function() {
-                                if (this.done === true) {
-                                    if (!res.data.completed_cohorts[this.category]) {
-                                        res.data.completed_cohorts[this.category] = [];
-                                    }
-                                    res.data.completed_cohorts[this.category].push(this);
-                                } else {
-                                    if (!res.data.new_cohorts[this.category]) {
-                                        res.data.new_cohorts[this.category] = [];
-                                    }
-                                    res.data.new_cohorts[this.category].push(this);
-                                }
-                            });
-                            $scope.cohort = res.data;
-                            HeraclesD3.showAgeDistribution(res.data.age_distribution)
-                            HeraclesD3.showGenderDistribution(res.data.gender_distribution);
-                        });
-                };
-            });
-            angular.bootstrap(document, ['Heracles']);
-            require(['cohort-searcher', 'auto-filter-box', 'heracles.main']);
-        });
-    }
-);
-
+require(['heracles.angular']);
