@@ -71,7 +71,8 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $,
                        $scope.job.label = "Success";
                        $scope.job.message = "Your job was submitted successfully!";
                         if (data.jobInstance) {
-                            $scope.job.job_link = getWebApiUrl() + "/job/" + data.jobInstance.instanceId;
+                            $scope.job.job_link = getWebApiUrl() + "/job/" + data.jobInstance.instanceId +
+                                "/execution/" + data.executionId;
                         }
                     } else {
                         // TODO
