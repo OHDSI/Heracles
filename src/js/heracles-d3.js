@@ -13,12 +13,14 @@ define(['jquery', 'd3', 'angular'], function (jquery, d3, angular) {
         data.array = [];
         data.keys = [];
         data.values = [];
-        $.each(dataIn, function (k, v) {
-            data.keys.push(k);
-            data.values.push(v);
+        data.total_size = 0;
+        $.each(dataIn, function () {
+            data.keys.push(this.CONCEPT_NAME);
+            data.values.push(this.NUM_PERSONS);
+            data.total_size += (+this.NUM_PERSONS);
             var obj = {};
-            obj.label = k;
-            obj.value = v;
+            obj.label = this.CONCEPT_NAME;
+            obj.value = this.NUM_PERSONS;
             data.array.push(obj);
         });
         return data;
@@ -36,9 +38,14 @@ define(['jquery', 'd3', 'angular'], function (jquery, d3, angular) {
 
         var w = Math.max(getCurrentMaxHeight(), 150);
         var r = w / 2;
-        var color = d3.scale.ordinal()
+        /*
+            var color = d3.scale.ordinal()
+
             .domain(data.keys)
             .range(COLOR_RANGE);
+         */
+
+        var color = d3.scale.category20();
 
 
         var vis = d3.select('#age_dist')
@@ -105,9 +112,12 @@ define(['jquery', 'd3', 'angular'], function (jquery, d3, angular) {
 
         var transData = translateJsonDataToArray(genderData);
         var data = transData.array;
+        /*
         var color = d3.scale.ordinal()
             .domain(transData.keys)
             .range(COLOR_RANGE);
+            */
+        var color = d3.scale.category10();
 
         $("#gender_dist").empty();
 
@@ -160,9 +170,10 @@ define(['jquery', 'd3', 'angular'], function (jquery, d3, angular) {
             attr("text-anchor", "middle").
             attr("font-weight", "bold").
             text(function (datum) {
-                return datum.value + "%";
+                return Math.round((+datum.value / transData.total_size) * 100) + "%";
             }).
-            attr("fill", "white");
+            attr("fill", "white").
+            attr("style", "font-size: 10; font-family: Helvetica, sans-serif");
 
         barChart.selectAll("text.yAxis").
             data(data).
@@ -173,7 +184,7 @@ define(['jquery', 'd3', 'angular'], function (jquery, d3, angular) {
             attr("y", height).
             attr("dx", -barWidth / 2).
             attr("text-anchor", "middle").
-            attr("style", "font-size: 12; font-family: Helvetica, sans-serif").
+            attr("style", "font-size: 10; font-family: Helvetica, sans-serif").
             attr("fill", "white").
             text(function (datum) {
                 return datum.label;

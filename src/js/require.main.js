@@ -21,6 +21,8 @@ require.config({
         requirejs: '../../lib/requirejs/require',
         typeahead: '../../lib/typeahead.js/typeahead.bundle',
         'domReady':'../../lib/requirejs/plugins/domReady',
+        'lodash' : '../../lib/lodash/lodash',
+        'monster' : '../../lib/cookie-monster/cookie-monster',
         'heracles-d3' : 'heracles-d3'
     },
     priority: [

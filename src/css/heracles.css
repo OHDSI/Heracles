@@ -81,5 +81,14 @@ a {
 }
 
 .analysis-complete {
-    color: #8699a4;
+    color: #898989;
+}
+
+.cohort-description {
+    color: #898989;
+    padding: 2px;
+}
+
+.summary-grouper {
+    padding: 2px;
 }

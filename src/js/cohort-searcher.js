@@ -1,8 +1,18 @@
 /**
  * Created by cahilton on 2/3/15.
  */
-require(['domReady!', 'jquery', 'typeahead', 'handlebars', 'angular'], function (domReady, $, t, Handlebars, angular) {
+require(['domReady!', 'jquery', 'typeahead', 'handlebars', 'angular', 'monster', 'lodash'], function (domReady, $, t, Handlebars, angular, monster, _) {
     $(domReady).ready(function () {
+
+        var lastRefreshed = monster.get('last-refreshed');
+        var refresh = true;
+        if (lastRefreshed) {
+            var now = _.now();
+            // don't refresh more than once an hour
+            if (+lastRefreshed + 3600000 >= now) {
+                refresh = false;
+            }
+        }
 
         var cohortDefUrl = getWebApiUrl() + '/cohortdefinition';
 
@@ -15,7 +25,15 @@ require(['domReady!', 'jquery', 'typeahead', 'handlebars', 'angular'], function 
             prefetch: cohortDefUrl
         });
 
-        bloodhoundCohorts.initialize();
+
+
+        if (refresh) {
+            bloodhoundCohorts.clearPrefetchCache();
+            bloodhoundCohorts.initialize(true);
+            monster.set('last-refreshed', _.now());
+        } else {
+            bloodhoundCohorts.initialize();
+        }
 
 
         // typeahead cohort listener

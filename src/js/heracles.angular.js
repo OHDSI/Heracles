@@ -1,10 +1,13 @@
 // configure angular
 require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $, b, HeraclesD3) {
         angular.element().ready(function() {
-            // bootstrap the app manually
+            // setup angular controller on angular ready
             angular.module('Heracles', []).controller('CohortExplorerCtrl', function($scope, $http) {
 
+                $scope.job = {};
+
                 $scope.showCohort = function(datum) {
+                    $scope.selected = datum;
                     //$http.get('src/data/sample-cohort-explorer.json')
                     $http.get(getWebApiUrl() + "/cohortanalysis/" + datum.COHORT_DEFINITION_ID + "/summary")
                         .then(function(res){
@@ -31,10 +34,20 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $,
                                 $scope.cohort.ANALYSES_MAP = map;
 
                             }
-                            //        HeraclesD3.showAgeDistribution(res.data.age_distribution)
-                            //        HeraclesD3.showGenderDistribution(res.data.gender_distribution);
+                            if ($scope.cohort.AGE_DISTRIBUTION !== null && $scope.cohort.AGE_DISTRIBUTION.length > 0) {
+                                HeraclesD3.showAgeDistribution($scope.cohort.AGE_DISTRIBUTION);
+                            }
+                            if ($scope.cohort.GENDER_DISTRIBUTION !== null && $scope.cohort.GENDER_DISTRIBUTION.length > 0) {
+                                HeraclesD3.showGenderDistribution($scope.cohort.GENDER_DISTRIBUTION);
+                            }
                         });
                 };
+
+                $scope.refreshCohort = function() {
+                    if ($scope.selected) {
+                        $scope.showCohort($scope.selected);
+                    }
+                }
 
                 $scope.submitJob = function($event) {
                     var btn = $(event.currentTarget);
@@ -57,16 +70,17 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $,
                     $http.post(getWebApiUrl() + "/cohortanalysis", cohortJob).
                         success(function(data, status, headers, config) {
                             btn.button('reset');
-                            showJobModal(true, data, status, headers, config);
+                            showJobResultModal(true, data, status, headers, config);
                         }).
                         error(function(data, status, headers, config) {
                             btn.button('reset');
-                            showJobModal(false, data, status, headers, config);
+                            showJobResultModal(false, data, status, headers, config);
                         });
-                }
+                };
 
-                function showJobModal(success, data, status, headers, config) {
+                function showJobResultModal(success, data, status, headers, config) {
                     $scope.job = {};
+                    $scope.job.success = success;
                     if (success) {
                        $scope.job.label = "Success";
                        $scope.job.message = "Your job was submitted successfully!";
@@ -75,12 +89,19 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $,
                                 "/execution/" + data.executionId;
                         }
                     } else {
-                        // TODO
+                        $scope.job.label = "Failure";
+                        $scope.job.message = "Your job failed.";
                     }
                     $("#jobStatusModal").modal("show");
                 }
+
+
             });
+
+            // manually boostrap angular since using amd
             angular.bootstrap(document, ['Heracles']);
+
+            // include other scripts
             require(['cohort-searcher', 'auto-filter-box', 'heracles.main']);
         });
     }

@@ -10,26 +10,32 @@
 <!-- TODO add filter auto selector -->
 <div class="container">
     <!-- Header and app info -->
-    <div class="row page-one" style="margin-top:10px">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-            <div class="jumbotron">
-                <h2>Heracles</h2>
-                <p class="sub-text">Heracles is the cohort analysis tool for the OMOP Common Data Model (CDM). Begin your analyses by selecting a cohort.</p>
+    <div class="row page-one">
+        <div class="col-md-12">
+            <div class="row " style="margin-top:10px">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <div class="jumbotron">
+                        <h2>Heracles</h2>
+                        <p class="sub-text">Heracles is the cohort analysis tool for the OMOP Common Data Model (CDM). Begin your analyses by selecting a cohort.</p>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
             </div>
         </div>
-        <div class="col-md-1"></div>
-    </div>
 
-    <!-- Cohort search bar -->
-    <div id="cohort-search" class="row page-one">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
-            <div id="cohorts-typeahead">
-                <input id="cohorts" type="text" placeholder="Search Cohorts" class="form-control large-input typeahead" />
+        <!-- Cohort search bar -->
+        <div class="col-md-12">
+            <div id="cohort-search" class="row ">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div id="cohorts-typeahead">
+                        <input id="cohorts" type="text" placeholder="Search Cohorts" class="form-control large-input typeahead" />
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
             </div>
         </div>
-        <div class="col-md-2"></div>
     </div>
 
     <!-- Cohort Explorer -->
@@ -56,24 +62,34 @@
             </div>
         </div>
         
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
+
+        <div class="col-md-12">
             <div class="row" style="padding-top:3px"a>
-                <div class="col-md-12">
+                <div class="col-md-10">
                     <a id="cohort-explorer-back">&laquo;Back</a>
+                </div>
+                <div class="col-md-2 pull-right">
+                    <a ng-click="refreshCohort()">Refresh</a>
                 </div>
             </div>
             <div id="cohort-explorer-summary" class="row">
-                <div class="col-md-8">
+                <div class="col-md-10">
                     <div style="padding-left:5%">
                         <h3 id="cohort-name">{{cohort.COHORT_DEFINITION.COHORT_DEFINITION_NAME}}
+                            <!--
                             <small ng-show="cohort.COHORT_DEFINITION.COHORT_DEFINITION_DESCRIPTION != null"
                                    data-toggle="tooltip" data-placement="bottom" title="{{cohort.COHORT_DEFINITION.COHORT_DEFINITION_DESCRIPTION}}">
                                 <a class="definition">definition</a>
                             </small>
+                            -->
                         </h3>
                         <div>
-                            <div>
+                            <p class="cohort-description">
+                                {{cohort.COHORT_DEFINITION.COHORT_DEFINITION_DESCRIPTION}}
+                            </p>
+                        </div>
+                        <div class="summary-grouper">
+                            <div ng-show="cohort.TOTAL_PATIENTS != null || cohort.PERCENT_FEMALE != null">
                                 <label style="text-decoration:underline">Summary</label>
                             </div>
                             <div ng-show="cohort.TOTAL_PATIENTS != null">
@@ -128,13 +144,13 @@
 
                     </div>
                 </div>
-                <div id="cohort-explorer-charts" class="col-md-4">
+                <div id="cohort-explorer-charts" class="col-md-2">
                     <div>
-                        <div><h4 style="text-align:center">Age Distribution</h4></div>
+                        <div ng-show="cohort.AGE_DISTRIBUTION != null && cohort.AGE_DISTRIBUTION.length > 0"><h4 style="text-align:center">Age Distribution</h4></div>
                         <div id="age_dist" class="d3-wrapper" />
                     </div>
                     <div>
-                        <div><h4 style="text-align:center">Gender Distribution</h4></div>
+                        <div ng-show="cohort.GENDER_DISTRIBUTION != null && cohort.GENDER_DISTRIBUTION.length > 0"><h4 style="text-align:center">Gender Distribution</h4></div>
                         <div id="gender_dist" class="d3-wrapper"/>
                     </div>
                 </div>
