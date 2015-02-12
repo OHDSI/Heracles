@@ -92,3 +92,10 @@ a {
 .summary-grouper {
     padding: 2px;
 }
+
+.last-update-time {
+    font-style: oblique;
+    color: #787878;
+    font-family: serif;
+    font-size: 12px;
+}

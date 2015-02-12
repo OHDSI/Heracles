@@ -1,6 +1,7 @@
 define(['jquery', 'd3', 'angular'], function (jquery, d3, angular) {
     var COLOR_RANGE = ["#AF0C3C", "#290F2E", "#0E7184", "#F0D31A", "#FE7D0D"];
     var HIDDEN_DIV_HEIGHT = 250;
+    var DEFAULT_HEIGHT = 275;
 
 
     function HeraclesD3() {}
@@ -81,7 +82,7 @@ define(['jquery', 'd3', 'angular'], function (jquery, d3, angular) {
 
         $("#age_dist").empty();
 
-        var w = 200; //Math.min(getCurrentMaxHeight(), 200);
+        var w = DEFAULT_HEIGHT; //Math.min(getCurrentMaxHeight(), 200);
         var r = w / 2;
         /*
             var color = d3.scale.ordinal()
@@ -126,11 +127,14 @@ define(['jquery', 'd3', 'angular'], function (jquery, d3, angular) {
         arcs.append("svg:text").attr("transform", function (d) {
             d.innerRadius = 0;
             d.outerRadius = r;
-            return "translate(" + arc.centroid(d) + ")";
+            var centroid = (arc.centroid(d));
+            centroid[1] -= 10;
+            //console.log(centroid);
+            return "translate(" + centroid + ")";
         })
             .attr("text-anchor", "middle")
             .attr("fill", "white")
-            .style("font-size", "10px")
+            .style("font-size", "12px")
             .text(function (d, i) {
                 return data.array[i].label;
             }
@@ -140,14 +144,14 @@ define(['jquery', 'd3', 'angular'], function (jquery, d3, angular) {
             d.innerRadius = 0;
             d.outerRadius = r;
             var centroid = (arc.centroid(d));
-            centroid[1] += 20;
+            centroid[1] += 10;
             //console.log(centroid);
             return "translate(" + centroid + ")";
         })
             .attr("text-anchor", "middle")
             .attr("fill", "white")
             .attr("font-weight", "bold")
-            .style("font-size", "10px")
+            .style("font-size", "11px")
             .text(function (d, i) {
                 return data.array[i].average_value + "%";
             }
@@ -168,9 +172,10 @@ define(['jquery', 'd3', 'angular'], function (jquery, d3, angular) {
 
         $("#gender_dist").empty();
 
+        var minHeight = 30;
         var barWidth = 60;
         var width = (barWidth + 10) * data.length;
-        var height = 200; //Math.min(getCurrentMaxHeight(), 200);
+        var height = DEFAULT_HEIGHT; //Math.min(getCurrentMaxHeight(), 200);
 
         var x = d3.scale.linear().domain([0, data.length]).range([0, width]);
         var y = d3.scale.linear().domain([0, d3.max(data, function (datum) {
@@ -192,10 +197,10 @@ define(['jquery', 'd3', 'angular'], function (jquery, d3, angular) {
                 return x(index);
             }).
             attr("y", function (datum) {
-                return height - y(datum.average_value);
+                return height - Math.max(minHeight,y(datum.average_value));
             }).
             attr("height", function (datum) {
-                return y(datum.average_value);
+                return Math.max(minHeight,y(datum.average_value));
             }).
             attr("width", barWidth).
             attr("fill", function (d, i) {
@@ -210,7 +215,7 @@ define(['jquery', 'd3', 'angular'], function (jquery, d3, angular) {
                 return x(index) + barWidth;
             }).
             attr("y", function (datum) {
-                return height - y(datum.average_value);
+                return height - Math.max(minHeight,y(datum.average_value));
             }).
             attr("dx", -barWidth / 2).
             attr("dy", "1.2em").

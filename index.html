@@ -112,6 +112,7 @@
                                                      <input type="checkbox" class="toggle-checkbox-item"
                                                             style="margin:2px" filter-key="cohort-analyses" value="{{item.ANALYSIS_NAME}}" analysis-id="{{item.ANALYSIS_ID}}" parent="{{k}}" />
                                                      {{item.ANALYSIS_NAME}}
+                                                     <span ng-show="item.LAST_UPDATE_TIME_FORMATTED != null" class="last-update-time"> ({{item.LAST_UPDATE_TIME_FORMATTED}})</span>
                                                  </label>
                                              </div>
                                          </div>
@@ -146,6 +147,25 @@
                             <br /><br />
                             <a href="{{job.job_link}}" target="_blank">Click here to view Job Status</a>
                         </span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="messageModalLabel">{{message.label}}</h4>
+                        </div>
+                        <div class="modal-body">
+                            {{message.text}}
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

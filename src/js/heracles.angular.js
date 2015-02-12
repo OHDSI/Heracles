@@ -5,6 +5,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $,
             angular.module('Heracles', []).controller('CohortExplorerCtrl', function($scope, $http) {
 
                 $scope.job = {};
+                $scope.message = {};
 
                 $scope.showCohort = function(datum) {
                     $scope.selected = datum;
@@ -45,6 +46,13 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $,
                 };
 
                 $scope.submitJob = function($event) {
+                    if ($(".toggle-checkbox-item:checked").length === 0) {
+                        $scope.message.text = "Please select at least one Analysis to run.";
+                        $scope.message.label = "Error submitting Analysis";
+                        $("#messageModal").modal('show');
+                        return;
+                    }
+
                     var btn = $(event.currentTarget);
                     btn.button('loading');
                     var cohortJob = {};
