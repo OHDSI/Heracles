@@ -12,15 +12,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $,
                     $http.get(getWebApiUrl() + "/cohortanalysis/" + datum.COHORT_DEFINITION_ID + "/summary")
                         .then(function(res){
                             $scope.cohort = res.data;
-                            if (res.data.GENDER_DISTRIBUTION) {
-                                $.each(res.data.GENDER_DISTRIBUTION, function() {
-                                    if (this.CONCEPT_NAME === "FEMALE") {
-                                        $scope.cohort.PERCENT_FEMALE = Math.round((+this.NUM_PERSONS/+res.data.TOTAL_PATIENTS) * 100);
-                                    }
-                                });
-                            } else {
-                                $scope.cohort.PERCENT_FEMALE = null;
-                            }
+
                             if (res.data.ANALYSES) {
                                 var map = {};
                                 $.each(res.data.ANALYSES, function() {
@@ -45,9 +37,12 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $,
 
                 $scope.refreshCohort = function() {
                     if ($scope.selected) {
+                        $("input:checkbox").prop("checked", false);
+                        $("#auto-filter-input").val("");
+                        $("#auto-filter-div").find("label").show();
                         $scope.showCohort($scope.selected);
                     }
-                }
+                };
 
                 $scope.submitJob = function($event) {
                     var btn = $(event.currentTarget);
@@ -94,6 +89,13 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $,
                     }
                     $("#jobStatusModal").modal("show");
                 }
+
+                $scope.parentAnalysesClick = function($event) {
+                    var parent = $(event.currentTarget);
+                    var key = parent.attr("key");
+                    var checked = parent.find("input:checkbox").prop("checked");
+                    $("input[parent='" + key + "']:visible").prop("checked", checked);
+                };
 
 
             });

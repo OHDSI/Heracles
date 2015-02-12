@@ -8,21 +8,66 @@ define(['jquery', 'd3', 'angular'], function (jquery, d3, angular) {
     HeraclesD3.prototype.constructor = HeraclesD3;
 
 
-    function translateJsonDataToArray(dataIn) {
+    function translateGenderData(dataIn) {
         var data = {};
         data.array = [];
         data.keys = [];
-        data.values = [];
         data.total_size = 0;
         $.each(dataIn, function () {
-            data.keys.push(this.CONCEPT_NAME);
-            data.values.push(this.NUM_PERSONS);
+
             data.total_size += (+this.NUM_PERSONS);
+
             var obj = {};
+            data.keys.push(this.CONCEPT_NAME);
             obj.label = this.CONCEPT_NAME;
             obj.value = this.NUM_PERSONS;
+
             data.array.push(obj);
         });
+
+        // reset averages
+        $.each(data.array, function () {
+            this.average_value = Math.round((+this.value / data.total_size) * 100);
+        });
+
+        return data;
+    }
+
+    function translateAgeData(dataIn) {
+        var data = {};
+        data.array = [];
+        data.total_size = 0;
+        data.keys = ["<18 yrs", "18-34 yrs", "35-49 yrs", "50-64 yrs", ">= 65 yrs"];
+        $.each(data.keys, function() {
+            var obj = {};
+            obj.label = (this);
+            obj.value = 0;
+            data.array.push(obj);
+        });
+
+        $.each(dataIn, function() {
+            var age = +this.AGE_AT_INDEX;
+            var persons = +this.NUM_PERSONS;
+            data.total_size += (+this.NUM_PERSONS);
+
+            if (age < 18) {
+                data.array[0].value += persons;
+            } else if (age >= 18 && age < 35) {
+                data.array[1].value += persons;
+            } else if (age >= 35 && age < 50) {
+                data.array[2].value += persons;
+            } else if (age >= 50 && age < 65) {
+                data.array[3].value += persons;
+            } else {
+                data.array[4].value += persons;
+            }
+        });
+
+        // reset averages
+        $.each(data.array, function () {
+            this.average_value = Math.round((+this.value / data.total_size) * 100);
+        });
+
         return data;
     }
 
@@ -32,11 +77,11 @@ define(['jquery', 'd3', 'angular'], function (jquery, d3, angular) {
     }
 
     HeraclesD3.showAgeDistribution = function(ageData) {
-        var data = translateJsonDataToArray(ageData);
+        var data = translateAgeData(ageData);
 
         $("#age_dist").empty();
 
-        var w = Math.max(getCurrentMaxHeight(), 150);
+        var w = 200; //Math.min(getCurrentMaxHeight(), 200);
         var r = w / 2;
         /*
             var color = d3.scale.ordinal()
@@ -45,7 +90,7 @@ define(['jquery', 'd3', 'angular'], function (jquery, d3, angular) {
             .range(COLOR_RANGE);
          */
 
-        var color = d3.scale.category20();
+        var color = d3.scale.category10();
 
 
         var vis = d3.select('#age_dist')
@@ -56,7 +101,7 @@ define(['jquery', 'd3', 'angular'], function (jquery, d3, angular) {
             .append("svg:g")
             .attr("transform", "translate(" + r + "," + r + ")");
         var pie = d3.layout.pie().value(function (d) {
-            return d.value;
+            return d.average_value;
         });
 
         // declare an arc generator function
@@ -85,6 +130,7 @@ define(['jquery', 'd3', 'angular'], function (jquery, d3, angular) {
         })
             .attr("text-anchor", "middle")
             .attr("fill", "white")
+            .style("font-size", "10px")
             .text(function (d, i) {
                 return data.array[i].label;
             }
@@ -101,8 +147,9 @@ define(['jquery', 'd3', 'angular'], function (jquery, d3, angular) {
             .attr("text-anchor", "middle")
             .attr("fill", "white")
             .attr("font-weight", "bold")
+            .style("font-size", "10px")
             .text(function (d, i) {
-                return data.array[i].value + "%";
+                return data.array[i].average_value + "%";
             }
         );
 
@@ -110,7 +157,7 @@ define(['jquery', 'd3', 'angular'], function (jquery, d3, angular) {
 
     HeraclesD3.showGenderDistribution = function(genderData) {
 
-        var transData = translateJsonDataToArray(genderData);
+        var transData = translateGenderData(genderData);
         var data = transData.array;
         /*
         var color = d3.scale.ordinal()
@@ -123,11 +170,11 @@ define(['jquery', 'd3', 'angular'], function (jquery, d3, angular) {
 
         var barWidth = 60;
         var width = (barWidth + 10) * data.length;
-        var height = Math.max(getCurrentMaxHeight(), 150);
+        var height = 200; //Math.min(getCurrentMaxHeight(), 200);
 
         var x = d3.scale.linear().domain([0, data.length]).range([0, width]);
         var y = d3.scale.linear().domain([0, d3.max(data, function (datum) {
-            return datum.value;
+            return datum.average_value;
         })]).
             rangeRound([0, height]);
 
@@ -145,10 +192,10 @@ define(['jquery', 'd3', 'angular'], function (jquery, d3, angular) {
                 return x(index);
             }).
             attr("y", function (datum) {
-                return height - y(datum.value);
+                return height - y(datum.average_value);
             }).
             attr("height", function (datum) {
-                return y(datum.value);
+                return y(datum.average_value);
             }).
             attr("width", barWidth).
             attr("fill", function (d, i) {
@@ -163,14 +210,14 @@ define(['jquery', 'd3', 'angular'], function (jquery, d3, angular) {
                 return x(index) + barWidth;
             }).
             attr("y", function (datum) {
-                return height - y(datum.value);
+                return height - y(datum.average_value);
             }).
             attr("dx", -barWidth / 2).
             attr("dy", "1.2em").
             attr("text-anchor", "middle").
             attr("font-weight", "bold").
             text(function (datum) {
-                return Math.round((+datum.value / transData.total_size) * 100) + "%";
+                return datum.average_value + "%";
             }).
             attr("fill", "white").
             attr("style", "font-size: 10; font-family: Helvetica, sans-serif");
@@ -194,10 +241,7 @@ define(['jquery', 'd3', 'angular'], function (jquery, d3, angular) {
 
     };
 
-    function type(d) {
-        d.value = +d.value; // coerce to number
-        return d;
-    }
+
 
     return HeraclesD3;
 });

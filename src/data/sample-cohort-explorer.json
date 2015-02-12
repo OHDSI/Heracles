@@ -1,29 +1,147 @@
 {
   "COHORT_DEFINITION": {
-    "COHORT_DEFINITION_ID": 1,
-    "COHORT_DEFINITION_NAME": "Schizophrenia",
-    "COHORT_DEFINITION_DESCRIPTION": "Patients with a history of schizohphrenia by diagnosis",
+    "COHORT_DEFINITION_ID": 5,
+    "COHORT_DEFINITION_NAME": "Test Cohort",
+    "COHORT_DEFINITION_DESCRIPTION": "A Test Cohort",
     "DEFINITION_TYPE_CONCEPT_ID": 0,
-    "COHORT_DEFINITION_SYNTAX": "here is some great json code",
+    "COHORT_DEFINITION_SYNTAX": "supertastic fun time",
     "SUBJECT_CONCEPT_ID": 0,
-    "COHORT_INITIATION_DATE": "2014-09-12"
+    "COHORT_INITIATION_DATE": "2015-02-10"
   },
-  "TOTAL_PATIENTS": "25421",
-  "MEAN_AGE": null,
+  "TOTAL_PATIENTS": "100",
+  "MEAN_AGE": "41.99",
   "MEAN_OBS_PERIOD": null,
   "GENDER_DISTRIBUTION": [
     {
       "CONCEPT_ID": "8507",
-      "NUM_PERSONS": "12329",
+      "NUM_PERSONS": "42",
       "CONCEPT_NAME": "MALE"
     },
     {
       "CONCEPT_ID": "8532",
-      "NUM_PERSONS": "13091",
+      "NUM_PERSONS": "54",
       "CONCEPT_NAME": "FEMALE"
+    },
+    {
+      "CONCEPT_ID": "8551",
+      "NUM_PERSONS": "4",
+      "CONCEPT_NAME": "UNKNOWN"
     }
   ],
-  "AGE_DISTRIBUTION": null,
+  "AGE_DISTRIBUTION": [
+    {
+      "AGE_AT_INDEX": "28",
+      "NUM_PERSONS": "2"
+    },
+    {
+      "AGE_AT_INDEX": "69",
+      "NUM_PERSONS": "2"
+    },
+    {
+      "AGE_AT_INDEX": "38",
+      "NUM_PERSONS": "4"
+    },
+    {
+      "AGE_AT_INDEX": "37",
+      "NUM_PERSONS": "2"
+    },
+    {
+      "AGE_AT_INDEX": "33",
+      "NUM_PERSONS": "4"
+    },
+    {
+      "AGE_AT_INDEX": "25",
+      "NUM_PERSONS": "2"
+    },
+    {
+      "AGE_AT_INDEX": "36",
+      "NUM_PERSONS": "2"
+    },
+    {
+      "AGE_AT_INDEX": "29",
+      "NUM_PERSONS": "2"
+    },
+    {
+      "AGE_AT_INDEX": "47",
+      "NUM_PERSONS": "3"
+    },
+    {
+      "AGE_AT_INDEX": "39",
+      "NUM_PERSONS": "2"
+    },
+    {
+      "AGE_AT_INDEX": "42",
+      "NUM_PERSONS": "2"
+    },
+    {
+      "AGE_AT_INDEX": "15",
+      "NUM_PERSONS": "5"
+    },
+    {
+      "AGE_AT_INDEX": "51",
+      "NUM_PERSONS": "3"
+    },
+    {
+      "AGE_AT_INDEX": "23",
+      "NUM_PERSONS": "2"
+    },
+    {
+      "AGE_AT_INDEX": "20",
+      "NUM_PERSONS": "3"
+    },
+    {
+      "AGE_AT_INDEX": "52",
+      "NUM_PERSONS": "2"
+    },
+    {
+      "AGE_AT_INDEX": "59",
+      "NUM_PERSONS": "2"
+    },
+    {
+      "AGE_AT_INDEX": "57",
+      "NUM_PERSONS": "2"
+    },
+    {
+      "AGE_AT_INDEX": "13",
+      "NUM_PERSONS": "3"
+    },
+    {
+      "AGE_AT_INDEX": "61",
+      "NUM_PERSONS": "4"
+    },
+    {
+      "AGE_AT_INDEX": "82",
+      "NUM_PERSONS": "2"
+    },
+    {
+      "AGE_AT_INDEX": "7",
+      "NUM_PERSONS": "3"
+    },
+    {
+      "AGE_AT_INDEX": "48",
+      "NUM_PERSONS": "2"
+    },
+    {
+      "AGE_AT_INDEX": "14",
+      "NUM_PERSONS": "2"
+    },
+    {
+      "AGE_AT_INDEX": "103",
+      "NUM_PERSONS": "2"
+    },
+    {
+      "AGE_AT_INDEX": "71",
+      "NUM_PERSONS": "2"
+    },
+    {
+      "AGE_AT_INDEX": "58",
+      "NUM_PERSONS": "2"
+    },
+    {
+      "AGE_AT_INDEX": "9",
+      "NUM_PERSONS": "2"
+    }
+  ],
   "ANALYSES": [
     {
       "ANALYSIS_ID": 1200,
@@ -34,7 +152,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "CARE_SITE",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -46,8 +164,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "CARE_SITE",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 1700,
@@ -58,7 +176,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -70,7 +188,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -82,7 +200,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": true
     },
     {
@@ -94,8 +212,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 1802,
@@ -106,7 +224,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": true
     },
     {
@@ -118,7 +236,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -130,8 +248,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 1810,
@@ -142,8 +260,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 1809,
@@ -154,8 +272,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 1812,
@@ -166,7 +284,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -178,7 +296,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -190,8 +308,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 1821,
@@ -202,8 +320,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 1871,
@@ -214,8 +332,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 1841,
@@ -226,8 +344,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 1851,
@@ -238,7 +356,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -250,8 +368,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 1800,
@@ -262,7 +380,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": true
     },
     {
@@ -274,8 +392,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 1814,
@@ -286,8 +404,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 1807,
@@ -298,7 +416,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -310,8 +428,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 1860,
@@ -322,8 +440,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 1820,
@@ -334,8 +452,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 1870,
@@ -346,8 +464,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 1840,
@@ -358,8 +476,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 1850,
@@ -370,7 +488,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -382,8 +500,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 1806,
@@ -394,7 +512,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -406,7 +524,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -418,8 +536,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "COHORT_SPECIFIC_ANALYSES",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 406,
@@ -430,7 +548,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "CONDITION",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -442,8 +560,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "CONDITION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 410,
@@ -454,8 +572,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "CONDITION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 411,
@@ -466,8 +584,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "CONDITION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 409,
@@ -478,7 +596,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "CONDITION",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -490,7 +608,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "CONDITION",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -502,7 +620,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "CONDITION",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -514,8 +632,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "CONDITION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 405,
@@ -526,8 +644,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "CONDITION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 403,
@@ -538,8 +656,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "CONDITION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 402,
@@ -550,8 +668,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "CONDITION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 400,
@@ -562,7 +680,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "CONDITION",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -574,7 +692,7 @@
       "STRATUM_4_NAME": "age decile",
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "CONDITION",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -586,7 +704,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "CONDITION_ERA",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -598,7 +716,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "CONDITION_ERA",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -610,7 +728,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "CONDITION_ERA",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -622,7 +740,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "CONDITION_ERA",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -634,7 +752,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "CONDITION_ERA",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -646,7 +764,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "CONDITION_ERA",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -658,7 +776,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "CONDITION_ERA",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -670,7 +788,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "CONDITION_ERA",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -682,7 +800,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "CONDITION_ERA",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -694,7 +812,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "CONDITION_ERA",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -706,7 +824,7 @@
       "STRATUM_4_NAME": "age decile",
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "CONDITION_ERA",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -718,8 +836,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DEATH",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 511,
@@ -730,7 +848,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DEATH",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -742,7 +860,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DEATH",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -754,7 +872,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DEATH",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -766,7 +884,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DEATH",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -778,7 +896,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DEATH",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -790,8 +908,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DEATH",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 509,
@@ -802,7 +920,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DEATH",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -814,7 +932,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DEATH",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -826,7 +944,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DEATH",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -838,7 +956,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DEATH",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -850,7 +968,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DEATH",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -862,7 +980,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DEATH",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -874,8 +992,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DRUG",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 715,
@@ -886,8 +1004,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DRUG",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 717,
@@ -898,8 +1016,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DRUG",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 716,
@@ -910,8 +1028,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DRUG",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 703,
@@ -922,8 +1040,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DRUG",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 720,
@@ -934,8 +1052,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DRUG",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 710,
@@ -946,8 +1064,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DRUG",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 711,
@@ -958,7 +1076,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DRUG",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -970,7 +1088,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DRUG",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -982,7 +1100,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DRUG",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -994,7 +1112,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DRUG",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1006,8 +1124,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DRUG",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 705,
@@ -1018,8 +1136,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DRUG",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 702,
@@ -1030,8 +1148,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DRUG",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 700,
@@ -1042,8 +1160,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DRUG",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 704,
@@ -1054,8 +1172,8 @@
       "STRATUM_4_NAME": "age decile",
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DRUG",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 906,
@@ -1066,7 +1184,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DRUG_ERA",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1078,7 +1196,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DRUG_ERA",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1090,7 +1208,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DRUG_ERA",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1102,7 +1220,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DRUG_ERA",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1114,7 +1232,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DRUG_ERA",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1126,7 +1244,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DRUG_ERA",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1138,7 +1256,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DRUG_ERA",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1150,7 +1268,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DRUG_ERA",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1162,7 +1280,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DRUG_ERA",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1174,7 +1292,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DRUG_ERA",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1186,7 +1304,7 @@
       "STRATUM_4_NAME": "age decile",
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "DRUG_ERA",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1198,8 +1316,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "LOCATION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 1101,
@@ -1210,7 +1328,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "LOCATION",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1222,8 +1340,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 104,
@@ -1234,8 +1352,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 806,
@@ -1246,8 +1364,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 817,
@@ -1258,7 +1376,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1270,7 +1388,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1282,8 +1400,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 105,
@@ -1294,8 +1412,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 107,
@@ -1306,8 +1424,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 106,
@@ -1318,8 +1436,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 803,
@@ -1330,8 +1448,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 801,
@@ -1342,8 +1460,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 807,
@@ -1354,8 +1472,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 805,
@@ -1366,8 +1484,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 820,
@@ -1378,7 +1496,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1390,7 +1508,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1402,7 +1520,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1414,7 +1532,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1426,7 +1544,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1438,7 +1556,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1450,7 +1568,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1462,8 +1580,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 102,
@@ -1474,8 +1592,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 108,
@@ -1486,8 +1604,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 113,
@@ -1498,8 +1616,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 802,
@@ -1510,7 +1628,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1522,8 +1640,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 111,
@@ -1534,8 +1652,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 117,
@@ -1546,8 +1664,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 116,
@@ -1558,7 +1676,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": true
     },
     {
@@ -1570,8 +1688,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 804,
@@ -1582,7 +1700,7 @@
       "STRATUM_4_NAME": "age decile",
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1594,8 +1712,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 109,
@@ -1606,7 +1724,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1618,7 +1736,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1630,7 +1748,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "OBSERVATION",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1642,7 +1760,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "PERSON",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": true
     },
     {
@@ -1654,7 +1772,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "PERSON",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": true
     },
     {
@@ -1666,7 +1784,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "PERSON",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": true
     },
     {
@@ -1678,7 +1796,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "PERSON",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": true
     },
     {
@@ -1690,7 +1808,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "PERSON",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": true
     },
     {
@@ -1702,7 +1820,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "PERSON",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1714,7 +1832,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "PERSON",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1726,7 +1844,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "PERSON",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1738,8 +1856,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "PERSON",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 606,
@@ -1750,7 +1868,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "PROCEDURE",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1762,7 +1880,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "PROCEDURE",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1774,7 +1892,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "PROCEDURE",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1786,7 +1904,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "PROCEDURE",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1798,7 +1916,7 @@
       "STRATUM_4_NAME": "age decile",
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "PROCEDURE",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1810,7 +1928,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "PROCEDURE",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1822,7 +1940,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "PROCEDURE",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1834,7 +1952,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "PROCEDURE",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1846,7 +1964,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "PROCEDURE",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1858,7 +1976,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "PROCEDURE",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1870,7 +1988,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "PROCEDURE",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1882,7 +2000,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "PROCEDURE",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1894,7 +2012,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "VISITS",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1906,7 +2024,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "VISITS",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1918,7 +2036,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "VISITS",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1930,7 +2048,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "VISITS",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1942,7 +2060,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "VISITS",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1954,7 +2072,7 @@
       "STRATUM_4_NAME": "age decile",
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "VISITS",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -1966,8 +2084,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "VISITS",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 201,
@@ -1978,8 +2096,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "VISITS",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 208,
@@ -1990,8 +2108,8 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "VISITS",
-      "COHORT_DEFINITION_ID": 1,
-      "ANALYSIS_COMPLETE": false
+      "COHORT_DEFINITION_ID": 5,
+      "ANALYSIS_COMPLETE": true
     },
     {
       "ANALYSIS_ID": 209,
@@ -2002,7 +2120,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "VISITS",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -2014,7 +2132,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "VISITS",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     },
     {
@@ -2026,7 +2144,7 @@
       "STRATUM_4_NAME": null,
       "STRATUM_5_NAME": null,
       "ANALYSIS_TYPE": "VISITS",
-      "COHORT_DEFINITION_ID": 1,
+      "COHORT_DEFINITION_ID": 5,
       "ANALYSIS_COMPLETE": false
     }
   ]

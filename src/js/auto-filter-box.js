@@ -1,6 +1,4 @@
 require(['domReady!', 'jquery', 'bootstrap'], function (domReady, $, b) {
-    var activeFilter;
-
     $.fn.filterByText = function (textbox, selectSingleMatch) {
         return this.each(function () {
             var select = this;
@@ -62,20 +60,34 @@ require(['domReady!', 'jquery', 'bootstrap'], function (domReady, $, b) {
         $(selector).find("input[type='checkbox']:visible").prop('checked', checked);
     }
 
-// regular functions
+
     function split(val) {
         return val.split(/,\s*/);
     }
 
-// init multiselect w/ checkboxes
+
     $(function () {
+        // init multiselect w/ checkboxes
         $(".multiselect").multiselect();
-    });
-// init filters
-    $(function () {
+
+        // init filters
         $(".multiselect").each(function () {
             var filterKey = $(this).attr("filter-key");
             $(this).filterByText($(".auto-filter-check-list-input[filter-key='" + filterKey + "']"), true);
         });
+
+        // set up auto checkbox filters
+        //setup select/clear filters events
+        $(".auto-filter-check-list-select").click(function() {
+            toggleVisibleReports(true, ".multiselect[filter-key='" + $(this).attr("filter-key") + "']");
+            return false;
+        });
+        $(".auto-filter-check-list-clear").click(function() {
+            toggleVisibleReports(false, ".multiselect[filter-key='" + $(this).attr("filter-key") + "']");
+            return false;
+        });
+
     });
+
+
 });

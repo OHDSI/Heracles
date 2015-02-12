@@ -7,7 +7,6 @@
 </head>
 <body>
 
-<!-- TODO add filter auto selector -->
 <div class="container">
     <!-- Header and app info -->
     <div class="row page-one">
@@ -40,31 +39,8 @@
 
     <!-- Cohort Explorer -->
     <div id="cohort-explorer-main" class="row" style="display:none" ng-controller="CohortExplorerCtrl">
-        <div class="modal fade" id="jobStatusModal" tabindex="-1" role="dialog" aria-labelledby="jobStatusModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="jobStatusModalLabel">{{job.label}}</h4>
-                    </div>
-                    <div class="modal-body">
-                        {{job.message}}
 
-                        <span ng-show="job.job_link != null">
-                            <br /><br />
-                            <a href="{{job.job_link}}" target="_blank">Click here to view Job Status</a>
-                        </span>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-
-        <div class="col-md-12">
-            <div class="row" style="padding-top:3px"a>
+            <div class="row" style="padding-top:3px">
                 <div class="col-md-10">
                     <a id="cohort-explorer-back">&laquo;Back</a>
                 </div>
@@ -73,8 +49,8 @@
                 </div>
             </div>
             <div id="cohort-explorer-summary" class="row">
-                <div class="col-md-10">
-                    <div style="padding-left:5%">
+                <div class="col-sm-4">
+                    <div>
                         <h3 id="cohort-name">{{cohort.COHORT_DEFINITION.COHORT_DEFINITION_NAME}}
                             <!--
                             <small ng-show="cohort.COHORT_DEFINITION.COHORT_DEFINITION_DESCRIPTION != null"
@@ -89,7 +65,7 @@
                             </p>
                         </div>
                         <div class="summary-grouper">
-                            <div ng-show="cohort.TOTAL_PATIENTS != null || cohort.PERCENT_FEMALE != null">
+                            <div ng-show="cohort.TOTAL_PATIENTS != null">
                                 <label style="text-decoration:underline">Summary</label>
                             </div>
                             <div ng-show="cohort.TOTAL_PATIENTS != null">
@@ -98,65 +74,86 @@
                                 <label class="cohort-desc">Mean Observation Period: </label>{{cohort.MEAN_OBS_PERIOD}}</div>
                             <div ng-show="cohort.MEAN_AGE != null">
                                 <label class="cohort-desc">Mean Age: </label>{{cohort.MEAN_AGE}}</div>
-                            <div ng-show="cohort.PERCENT_FEMALE != null">
-                                <label class="cohort-desc">% Female: </label>{{cohort.PERCENT_FEMALE}}%</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h4>Run Cohort Analyses</h4>
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <span class="toggle-filter-span" filter-key="cohort-analyses">
-                                             <input placeholder="Type to filter..." type="text" class="form-control auto-filter-check-list-input" style="margin-top:8px" filter-key="cohort-analyses"/>
-                                             <div class="multiselect-wrapper" filter-key="cohort-analyses">
-                                                 <div class="multiselect form-control" style="margin:3px;height:350px;overflow-y:auto;width:100%;" filter-key="cohort-analyses">
-                                                     <div ng-repeat="(k, v) in cohort.ANALYSES_MAP">
-                                                         <label class="toggle-parent-label" key="{{k}}">
-                                                             <!-- <input type="checkbox" class="toggle-checkbox-parent-item" filter-key="cohort-analyses"
-                                                                style="margin:4px" value="{{k}}"/>-->
-                                                             {{k}}
-                                                         </label>
-                                                         <div ng-repeat="item in v">
-                                                             <label class="toggle-child-label {{item.CLASS}}" >
-                                                                 <input type="checkbox" class="toggle-checkbox-item"
-                                                                        style="margin:2px" filter-key="cohort-analyses" value="{{item.ANALYSIS_NAME}}" analysis-id="{{item.ANALYSIS_ID}}" parent="{{k}}" />
-                                                                 {{item.ANALYSIS_NAME}}
-                                                             </label>
-                                                         </div>
-                                                     </div>
-
-                                                 </div>
-                                                 <span style="float:right">
-                                                        <div class="btn-group btn-group-xs">
-                                                            <button type="button" class="btn btn-default auto-filter-check-list-select" filter-key="cohort-analyses" >Check current</button>
-                                                            <button type="button" class="btn btn-default auto-filter-check-list-clear" filter-key="cohort-analyses">Uncheck current</button>
-                                                        </div>
-                                                 </span>
-                                             </div>
-                                        </span>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <button class="btn btn-sm btn-heracles analyses-button" filter-key="cohort-analyses" ng-click="submitJob($event)" data-loading-text="...">Go</button>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
                     </div>
                 </div>
-                <div id="cohort-explorer-charts" class="col-md-2">
-                    <div>
-                        <div ng-show="cohort.AGE_DISTRIBUTION != null && cohort.AGE_DISTRIBUTION.length > 0"><h4 style="text-align:center">Age Distribution</h4></div>
+
+                <div class="col-sm-4">
+                    <div ng-show="cohort.AGE_DISTRIBUTION != null && cohort.AGE_DISTRIBUTION.length > 0">
+                        <h4 style="text-align:center">Age Distribution</h4>
                         <div id="age_dist" class="d3-wrapper" />
                     </div>
-                    <div>
-                        <div ng-show="cohort.GENDER_DISTRIBUTION != null && cohort.GENDER_DISTRIBUTION.length > 0"><h4 style="text-align:center">Gender Distribution</h4></div>
+                </div>
+                </div>
+                <div class="col-sm-4">
+                    <div ng-show="cohort.GENDER_DISTRIBUTION != null && cohort.GENDER_DISTRIBUTION.length > 0">
+                        <h4 style="text-align:center">Gender Distribution</h4>
                         <div id="gender_dist" class="d3-wrapper"/>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <h4>Run Cohort Analyses</h4>
+                            <span class="toggle-filter-span" filter-key="cohort-analyses">
+                                 <input id="auto-filter-input" placeholder="Type to filter..." type="text" class="form-control auto-filter-check-list-input" style="margin-top:8px" filter-key="cohort-analyses"/>
+                                 <div class="multiselect-wrapper" filter-key="cohort-analyses">
+                                     <div id="auto-filter-div" class="multiselect form-control" style="margin:3px;height:350px;overflow-y:auto;width:100%;" filter-key="cohort-analyses">
+                                         <div ng-repeat="(k, v) in cohort.ANALYSES_MAP">
+                                             <label class="toggle-parent-label" key="{{k}}" ng-click="parentAnalysesClick($event)">
+                                                 <input type="checkbox" class="toggle-checkbox-parent-item" filter-key="cohort-analyses"
+                                                        style="margin:4px" value="{{k}}" />
+                                                 {{k}}
+                                             </label>
+                                             <div ng-repeat="item in v">
+                                                 <label class="toggle-child-label {{item.CLASS}}" >
+                                                     <input type="checkbox" class="toggle-checkbox-item"
+                                                            style="margin:2px" filter-key="cohort-analyses" value="{{item.ANALYSIS_NAME}}" analysis-id="{{item.ANALYSIS_ID}}" parent="{{k}}" />
+                                                     {{item.ANALYSIS_NAME}}
+                                                 </label>
+                                             </div>
+                                         </div>
+
+                                     </div>
+                                     <span style="float:right">
+                                            <div class="btn-group btn-group-xs">
+                                                <button type="button" class="btn btn-default auto-filter-check-list-select" filter-key="cohort-analyses" >Check current</button>
+                                                <button type="button" class="btn btn-default auto-filter-check-list-clear" filter-key="cohort-analyses">Uncheck current</button>
+                                            </div>
+                                     </span>
+                                 </div>
+                            </span>
+            </div>
+            <div class="col-md-12">
+                <button class="btn btn-lg btn-heracles analyses-button" filter-key="cohort-analyses" ng-click="submitJob($event)" data-loading-text="...">Begin Analysis</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="modal fade" id="jobStatusModal" tabindex="-1" role="dialog" aria-labelledby="jobStatusModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="jobStatusModalLabel">{{job.label}}</h4>
+                        </div>
+                        <div class="modal-body">
+                            {{job.message}}
+
+                        <span ng-show="job.job_link != null">
+                            <br /><br />
+                            <a href="{{job.job_link}}" target="_blank">Click here to view Job Status</a>
+                        </span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-1"></div>
     </div>
 </div>
 

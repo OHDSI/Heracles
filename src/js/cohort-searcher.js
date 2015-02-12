@@ -8,13 +8,14 @@ require(['domReady!', 'jquery', 'typeahead', 'handlebars', 'angular', 'monster',
         var refresh = true;
         if (lastRefreshed) {
             var now = _.now();
-            // don't refresh more than once an hour
-            if (+lastRefreshed + 3600000 >= now) {
+            // don't refresh more than once every 15 mins
+            if (+lastRefreshed + 900000 >= now) {
                 refresh = false;
             }
         }
 
         var cohortDefUrl = getWebApiUrl() + '/cohortdefinition';
+        //var cohortDefUrl = 'src/data/sample-cohorts.json';
 
         // initialize the cohort type ahead, constructs the suggestion engine
         var bloodhoundCohorts = new Bloodhound({
