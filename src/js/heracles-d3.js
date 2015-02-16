@@ -1,7 +1,6 @@
 define(['jquery', 'd3'], function (jquery, d3) {
     var COLOR_RANGE = ["#AF0C3C", "#290F2E", "#0E7184", "#F0D31A", "#FE7D0D"];
-    var HIDDEN_DIV_HEIGHT = 250;
-    var DEFAULT_HEIGHT = 225;
+    var DEFAULT_HEIGHT = 175;
 
 
     function HeraclesD3() {}
@@ -38,7 +37,7 @@ define(['jquery', 'd3'], function (jquery, d3) {
         var data = {};
         data.array = [];
         data.total_size = 0;
-        data.keys = ["<18 yrs", "18-34 yrs", "35-49 yrs", "50-64 yrs", ">= 65 yrs"];
+        data.keys = ["<18", "18-34", "35-49", "50-64", ">=65"];
         $.each(data.keys, function() {
             var obj = {};
             obj.label = (this);
@@ -70,11 +69,6 @@ define(['jquery', 'd3'], function (jquery, d3) {
         });
 
         return data;
-    }
-
-    function getCurrentMaxHeight() {
-        return (($("#cohort-explorer-summary").height() + HIDDEN_DIV_HEIGHT) / 2) - 50;
-
     }
 
     HeraclesD3.showAgeDistribution = function(ageData) {
@@ -134,7 +128,7 @@ define(['jquery', 'd3'], function (jquery, d3) {
         })
             .attr("text-anchor", "middle")
             .attr("fill", "white")
-            .style("font-size", "12px")
+            .style("font-size", "11px")
             .text(function (d, i) {
                 return data.array[i].label;
             }
@@ -151,9 +145,9 @@ define(['jquery', 'd3'], function (jquery, d3) {
             .attr("text-anchor", "middle")
             .attr("fill", "white")
             .attr("font-weight", "bold")
-            .style("font-size", "11px")
+            .style("font-size", "10px")
             .text(function (d, i) {
-                return data.array[i].average_value + "%";
+                return "(" + data.array[i].average_value + "%)";
             }
         );
 

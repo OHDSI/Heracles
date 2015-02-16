@@ -102,7 +102,9 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $,
                                 cohortJob[(key + "ConceptIds")] = ary;
                             }
                         }
-                    })
+                    });
+                    console.log("Submitting to cohort analysis service:");
+
                     $http.post(getWebApiUrl() + "/cohortanalysis", cohortJob).
                         success(function(data, status, headers, config) {
                             btn.button('reset');
