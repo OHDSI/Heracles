@@ -2,7 +2,7 @@
 require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $, b, HeraclesD3) {
         angular.element().ready(function() {
             // setup angular controller on angular ready
-            angular.module('Heracles', []).controller('CohortExplorerCtrl', function($scope, $http) {
+            angular.module('HeraclesAnalysis', []).controller('CohortExplorerCtrl', function($scope, $http) {
 
                 $scope.job = {};
                 $scope.message = {};
@@ -117,12 +117,10 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $,
                     var checked = parent.find("input:checkbox").prop("checked");
                     $("input[parent='" + key + "']:visible").prop("checked", checked);
                 };
-
-
             });
 
             // manually boostrap angular since using amd
-            angular.bootstrap(document, ['Heracles']);
+            angular.bootstrap(document, ['HeraclesAnalysis']);
 
             // include other scripts
             require(['cohort-searcher', 'auto-filter-box', 'heracles.main']);

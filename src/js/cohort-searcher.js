@@ -38,7 +38,7 @@ require(['domReady!', 'jquery', 'typeahead', 'handlebars', 'angular', 'monster',
 
 
         // typeahead cohort listener
-        $('#cohorts-typeahead .typeahead').typeahead({
+        $('.heracles-typeahead .typeahead').typeahead({
             hint: true,
             highlight: true,
             minLength: 1
