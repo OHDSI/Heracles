@@ -9,7 +9,12 @@ require(['domReady!', 'jquery', 'bootstrap'], function (domReady, $, b) {
         $("#cohort-explorer-back").click(function () {
             $("#cohort-explorer-main").slideUp("fast", function () {
                 $(".page-one").slideDown('fast', function () {
+                    // clear out heracles charts for less jumpiness
+                    $("#age_dist").empty();
+                    $("#gender_dist").empty();
+
                     setTimeout(function () {
+                        //reset focus
                         $("#cohorts-typeahead").focus();
                     }, 3000);
                 });
@@ -23,7 +28,50 @@ require(['domReady!', 'jquery', 'bootstrap'], function (domReady, $, b) {
         setTimeout(function () {
             $("#cohorts-typeahead").focus();
         }, 3000);
+
+        $("#auto-filter-input").keyup(function() {
+            if ($(this).val() === "") {
+                $("#select-filter-button").text("Select all");
+                $("#deselect-filter-button").text("Deselect all");
+            } else {
+                $("#select-filter-button").text("Select current");
+                $("#deselect-filter-button").text("Deselect current");
+            }
+        });
+
+        $(".toggle-filter-input").attr("placeholder", function() {
+            return "Enter a list of " + ($(this).attr("toggle-filter")) + " concepts (e.g. 234,532,5,432)";
+        });
+
+        $(".toggle-filter-control").click(function() {
+            var filter = $(this).attr("toggle-filter");
+            var btn = $(this);
+            if (btn.attr("down") === "true") {
+                $(".toggle-filter-input-wrapper[toggle-filter='" + filter + "']").hide(200);
+                btn
+                    .removeClass("toggle-filter-active")
+                    .attr("down", "false")
+                    .find(".toggle-operator").text("+");
+            } else {
+                // take care of others
+                $(".toggle-filter-input-wrapper[toggle-filter!='" + filter + "']").hide(50, function(){
+                    $(".toggle-filter-control[toggle-filter!='" + filter + "']")
+                        .removeClass("toggle-filter-active")
+                        .attr("down", "false")
+                        .find(".toggle-operator")
+                        .text("+");
+                });
+
+                // take care of self
+                btn.attr("down", "true");
+                setTimeout(function() {
+                    $(".toggle-filter-input-wrapper[toggle-filter='" + filter + "']").show("fast");
+                        btn
+                            .addClass("toggle-filter-active")
+                            .find(".toggle-operator").text("-");
+                    $(".toggle-filter-input[toggle-filter='" + filter + "']").focus();
+                }, 200);
+            }
+        });
     });
-
-
 });

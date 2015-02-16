@@ -42,52 +42,52 @@
 
             <div class="row" style="padding-top:3px">
                 <div class="col-md-10">
-                    <a id="cohort-explorer-back">&laquo;Back</a>
+                    <a id="cohort-explorer-back" style="font-size:16px">&laquo;Back</a>
                 </div>
                 <div class="col-md-2 pull-right">
-                    <a ng-click="refreshCohort()">Refresh</a>
+                    <a ng-click="refreshCohort($event)" style="font-size:16px">Refresh</a>
                 </div>
             </div>
             <div id="cohort-explorer-summary" class="row">
                 <div class="col-sm-4">
                     <div>
-                        <h3 id="cohort-name">{{cohort.COHORT_DEFINITION.COHORT_DEFINITION_NAME}}
+                        <h3 id="cohort-name">{{cohort.cohortDefinition.cohortDefinitionName}}
                             <!--
-                            <small ng-show="cohort.COHORT_DEFINITION.COHORT_DEFINITION_DESCRIPTION != null"
-                                   data-toggle="tooltip" data-placement="bottom" title="{{cohort.COHORT_DEFINITION.COHORT_DEFINITION_DESCRIPTION}}">
+                            <small ng-show="cohort.cohortDefinition.cohortDefinitionDescription != null"
+                                   data-toggle="tooltip" data-placement="bottom" title="{{cohort.cohortDefinition.cohortDefinitionDescription}}">
                                 <a class="definition">definition</a>
                             </small>
                             -->
                         </h3>
                         <div>
                             <p class="cohort-description">
-                                {{cohort.COHORT_DEFINITION.COHORT_DEFINITION_DESCRIPTION}}
+                                {{cohort.cohortDefinition.cohortDefinitionDescription}}
                             </p>
                         </div>
                         <div class="summary-grouper">
-                            <div ng-show="cohort.TOTAL_PATIENTS != null">
+                            <div ng-show="cohort.totalPatients != null">
                                 <label style="text-decoration:underline">Summary</label>
                             </div>
-                            <div ng-show="cohort.TOTAL_PATIENTS != null">
-                                <label class="cohort-desc">Total Patients: </label>{{cohort.TOTAL_PATIENTS}}</div>
-                            <div ng-show="cohort.MEAN_OBS_PERIOD != null">
-                                <label class="cohort-desc">Mean Observation Period: </label>{{cohort.MEAN_OBS_PERIOD}}</div>
-                            <div ng-show="cohort.MEAN_AGE != null">
-                                <label class="cohort-desc">Mean Age: </label>{{cohort.MEAN_AGE}}</div>
+                            <div ng-show="cohort.totalPatients != null">
+                                <label class="cohort-desc">Total Patients: </label>{{cohort.totalPatients}}</div>
+                            <div ng-show="cohort.meanObsPeriod != null">
+                                <label class="cohort-desc">Mean Observation Period: </label>{{cohort.meanObsPeriod}}</div>
+                            <div ng-show="cohort.meanAge != null">
+                                <label class="cohort-desc">Mean Age: </label>{{cohort.meanAge}}</div>
                         </div>
 
                     </div>
                 </div>
 
                 <div class="col-sm-4">
-                    <div ng-show="cohort.AGE_DISTRIBUTION != null && cohort.AGE_DISTRIBUTION.length > 0">
+                    <div ng-show="cohort.ageDistribution != null && cohort.ageDistribution.length > 0">
                         <h4 style="text-align:center">Age Distribution</h4>
                         <div id="age_dist" class="d3-wrapper" />
                     </div>
                 </div>
                 </div>
                 <div class="col-sm-4">
-                    <div ng-show="cohort.GENDER_DISTRIBUTION != null && cohort.GENDER_DISTRIBUTION.length > 0">
+                    <div ng-show="cohort.genderDistribution != null && cohort.genderDistribution.length > 0">
                         <h4 style="text-align:center">Gender Distribution</h4>
                         <div id="gender_dist" class="d3-wrapper"/>
                     </div>
@@ -101,35 +101,71 @@
                                  <input id="auto-filter-input" placeholder="Type to filter..." type="text" class="form-control auto-filter-check-list-input" style="margin-top:8px" filter-key="cohort-analyses"/>
                                  <div class="multiselect-wrapper" filter-key="cohort-analyses">
                                      <div id="auto-filter-div" class="multiselect form-control" style="margin:3px;height:350px;overflow-y:auto;width:100%;" filter-key="cohort-analyses">
-                                         <div ng-repeat="(k, v) in cohort.ANALYSES_MAP">
+                                        <span style="float:right">
+                                            <div class="btn-group btn-group-xs" style="margin-right:15px">
+                                                <button type="button" class="btn btn-default auto-filter-check-list-select" filter-key="cohort-analyses" id="select-filter-button" >Select all</button>
+                                                <button type="button" class="btn btn-default auto-filter-check-list-clear" filter-key="cohort-analyses" id="deselect-filter-button">Deselect all</button>
+                                            </div>
+                                        </span>
+                                         <div ng-repeat="(k, v) in cohort.analysesMap">
                                              <label class="toggle-parent-label" key="{{k}}" ng-click="parentAnalysesClick($event)">
                                                  <input type="checkbox" class="toggle-checkbox-parent-item" filter-key="cohort-analyses"
                                                         style="margin:4px" value="{{k}}" />
                                                  {{k}}
                                              </label>
                                              <div ng-repeat="item in v">
-                                                 <label class="toggle-child-label {{item.CLASS}}" >
+                                                 <label class="toggle-child-label {{item.class}}" >
                                                      <input type="checkbox" class="toggle-checkbox-item"
-                                                            style="margin:2px" filter-key="cohort-analyses" value="{{item.ANALYSIS_NAME}}" analysis-id="{{item.ANALYSIS_ID}}" parent="{{k}}" />
-                                                     {{item.ANALYSIS_NAME}}
-                                                     <span ng-show="item.LAST_UPDATE_TIME_FORMATTED != null" class="last-update-time"> ({{item.LAST_UPDATE_TIME_FORMATTED}})</span>
+                                                            style="margin:2px" filter-key="cohort-analyses" value="{{item.analysisName}}" analysis-id="{{item.analysisId}}" parent="{{k}}" />
+                                                     {{item.analysisName}}
+                                                     <span ng-show="item.lastUpdateTimeFormatted != null" class="last-update-time"> (Last Run {{item.lastUpdateTimeFormatted}})</span>
                                                  </label>
                                              </div>
                                          </div>
 
                                      </div>
-                                     <span style="float:right">
-                                            <div class="btn-group btn-group-xs">
-                                                <button type="button" class="btn btn-default auto-filter-check-list-select" filter-key="cohort-analyses" >Check current</button>
-                                                <button type="button" class="btn btn-default auto-filter-check-list-clear" filter-key="cohort-analyses">Uncheck current</button>
-                                            </div>
-                                     </span>
+
                                  </div>
                             </span>
             </div>
-            <div class="col-md-12">
-                <button class="btn btn-lg btn-heracles analyses-button" filter-key="cohort-analyses" ng-click="submitJob($event)" data-loading-text="...">Begin Analysis</button>
+            <!--toggle buttons-->
+            <div class="col-sm-8">
+                <h4>Concept Filters</h4>
+                <span class="label label-default toggle-filter-control" toggle-filter="condition" down="false">
+                    <span class="toggle-operator">+</span><span class="toggle-label">Condition</span></span>
+                <span class="label label-default toggle-filter-control" toggle-filter="drug" down="false">
+                    <span class="toggle-operator">+</span><span class="toggle-label">Drug</span></span>
+                <span class="label label-default toggle-filter-control" toggle-filter="procedure" down="false">
+                        <span class="toggle-operator">+</span><span class="toggle-label">Procedure</span></span>
+                <span  class="label label-default toggle-filter-control" toggle-filter="observation" down="false">
+                        <span class="toggle-operator">+</span><span class="toggle-label">Observation</span></span>
+                <span class="label label-default toggle-filter-control" toggle-filter="measurement" down="false">
+                        <span class="toggle-operator">+</span><span class="toggle-label">Measurement</span></span>
             </div>
+            <div class="col-sm-4" style="height:30px">&nbsp;</div>
+            <!--inputs-->
+            <div class="col-sm-8" id="concept-input-div" style="padding-top:5px">
+                <div class="toggle-filter-input-wrapper" toggle-filter="condition" style="display:none;">
+                    <input type="text" class="form-control toggle-filter-input" toggle-filter="condition" />
+                </div>
+                <div class="toggle-filter-input-wrapper" toggle-filter="drug" style="display:none;">
+                    <input type="text" class="form-control toggle-filter-input" toggle-filter="drug" />
+                </div>
+                <div class="toggle-filter-input-wrapper" toggle-filter="procedure" style="display:none;">
+                    <input type="text" class="form-control toggle-filter-input" toggle-filter="procedure" />
+                </div>
+                <div class="toggle-filter-input-wrapper" toggle-filter="observation" style="display:none;">
+                    <input type="text" class="form-control toggle-filter-input" toggle-filter="observation" />
+                </div>
+                <div class="toggle-filter-input-wrapper" toggle-filter="measurement" style="display:none;">
+                    <input type="text" class="form-control toggle-filter-input" toggle-filter="measurement" />
+                </div>
+            </div>
+            <div class="col-sm-4" style="height:60px">&nbsp;</div>
+            <div class="col-sm-12">
+                <button class="btn btn-lg btn-heracles analyses-button pull-right" filter-key="cohort-analyses" ng-click="submitJob($event)" data-loading-text="...">Begin Analysis</button>
+            </div>
+            <div class="col-sm-12" style="padding:10px">&nbsp;</div>
         </div>
 
         <div class="row">
@@ -179,6 +215,9 @@
 
 <script src="build/Heracles.config.js" type="text/javascript"></script>
 <script src="lib/requirejs/require.js" data-main="src/js/require.main"></script>
+<script type="application/javascript">
+    require(['heracles.angular']);
+</script>
 
 </body>
 

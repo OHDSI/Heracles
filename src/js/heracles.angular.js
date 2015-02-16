@@ -10,38 +10,51 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $,
                 $scope.showCohort = function(datum) {
                     $scope.selected = datum;
                     //$http.get('src/data/sample-cohort-explorer.json')
-                    $http.get(getWebApiUrl() + "/cohortanalysis/" + datum.COHORT_DEFINITION_ID + "/summary")
+                    $http.get(getWebApiUrl() + "/cohortanalysis/" + datum.cohortDefinitionId + "/summary")
                         .then(function(res){
                             $scope.cohort = res.data;
 
-                            if (res.data.ANALYSES) {
+                            if (res.data.analyses) {
                                 var map = {};
-                                $.each(res.data.ANALYSES, function() {
-                                    var prettifyAnalysisType = this.ANALYSIS_TYPE.split("_").join(" ");
+                                $.each(res.data.analyses, function() {
+                                    var prettifyAnalysisType = this.analysisType.split("_").join(" ");
                                     if (!map[prettifyAnalysisType]) {
                                         map[prettifyAnalysisType] = [];
                                     }
-                                    this.CLASS = +this.ANALYSIS_COMPLETE ? "analysis-complete" : "analysis-open";
+                                    this.class = +this.analysisComplete ? "analysis-complete" : "analysis-open";
                                     map[prettifyAnalysisType].push(this);
                                 });
-                                $scope.cohort.ANALYSES_MAP = map;
+                                $scope.cohort.analysesMap = map;
 
                             }
-                            if ($scope.cohort.AGE_DISTRIBUTION !== null && $scope.cohort.AGE_DISTRIBUTION.length > 0) {
-                                HeraclesD3.showAgeDistribution($scope.cohort.AGE_DISTRIBUTION);
+                            if ($scope.cohort.meanAge !== null) {
+                                $scope.cohort.meanAge = Math.round(+$scope.cohort.meanAge);
                             }
-                            if ($scope.cohort.GENDER_DISTRIBUTION !== null && $scope.cohort.GENDER_DISTRIBUTION.length > 0) {
-                                HeraclesD3.showGenderDistribution($scope.cohort.GENDER_DISTRIBUTION);
+                            if ($scope.cohort.ageDistribution !== null && $scope.cohort.ageDistribution.length > 0) {
+                                HeraclesD3.showAgeDistribution($scope.cohort.ageDistribution);
+                            }
+                            if ($scope.cohort.genderDistribution !== null && $scope.cohort.genderDistribution.length > 0) {
+                                HeraclesD3.showGenderDistribution($scope.cohort.genderDistribution);
                             }
                         });
                 };
 
-                $scope.refreshCohort = function() {
+                $scope.refreshCohort = function($event) {
+                    var link = $(event.target);
+                    if (link.prop('disabled')) {
+                        return;
+                    }
                     if ($scope.selected) {
+                        link.text("Refreshing...");
+                        link.prop('disabled', true);
                         $("input:checkbox").prop("checked", false);
                         $("#auto-filter-input").val("");
                         $("#auto-filter-div").find("label").show();
                         $scope.showCohort($scope.selected);
+                        setTimeout(function() {
+                            link.text("Refresh");
+                            link.prop('disabled', false);
+                        }, 1500);
                     }
                 };
 
@@ -56,20 +69,20 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $,
                     var btn = $(event.currentTarget);
                     btn.button('loading');
                     var cohortJob = {};
-                    cohortJob.SMALL_CELL_COUNT = "1";
-                    cohortJob.COHORT_DEFINITION_IDS = [];
-                    cohortJob.COHORT_DEFINITION_IDS.push($scope.cohort.COHORT_DEFINITION.COHORT_DEFINITION_ID);
-                    cohortJob.ANALYSIS_IDS = [];
+                    cohortJob.smallCellCount = "1";
+                    cohortJob.cohortDefinitionIds = [];
+                    cohortJob.cohortDefinitionIds.push($scope.cohort.cohortDefinition.cohortDefinitionId);
+                    cohortJob.analysisIds = [];
                     $(".toggle-checkbox-item:checked").each(function () {
-                        cohortJob.ANALYSIS_IDS.push($(this).attr("analysis-id"));
+                        cohortJob.analysisIds.push($(this).attr("analysis-id"));
                     });
-                    cohortJob.RUN_HERACLES_HEEL = false;
+                    cohortJob.runHeraclesHeel = false;
                     // TODO
-                    cohortJob.CONDITION_CONCEPT_IDS = [];
-                    cohortJob.DRUG_CONCEPT_IDS = [];
-                    cohortJob.PROCEDURE_CONCEPT_IDS = [];
-                    cohortJob.OBSERVATION_CONCEPT_IDS = [];
-                    cohortJob.MEASUREMENT_CONCEPT_IDS = [];
+                    cohortJob.conditionConceptIds = [];
+                    cohortJob.drugConceptIds = [];
+                    cohortJob.procedureConceptIds = [];
+                    cohortJob.observationConceptIds = [];
+                    cohortJob.measurementConceptIds = [];
                     $http.post(getWebApiUrl() + "/cohortanalysis", cohortJob).
                         success(function(data, status, headers, config) {
                             btn.button('reset');

@@ -54,6 +54,11 @@ a {
 .toggle-filter-control {
 	font-size: 90%;
 	background-color:#aaa;
+    cursor:pointer;
+}
+
+.toggle-filter-active {
+    background-color: #666;
 }
  
 .multiselect {
@@ -82,6 +87,10 @@ a {
 
 .analysis-complete {
     color: #898989;
+}
+
+.analysis-open {
+
 }
 
 .cohort-description {

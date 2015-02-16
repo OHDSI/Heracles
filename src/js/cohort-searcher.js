@@ -19,7 +19,7 @@ require(['domReady!', 'jquery', 'typeahead', 'handlebars', 'angular', 'monster',
 
         // initialize the cohort type ahead, constructs the suggestion engine
         var bloodhoundCohorts = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('COHORT_DEFINITION_NAME'),
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('cohortDefinitionName'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             limit: 10,
             // if we get to have a lot of cohorts, prefetch may not work, and we'll have to use remote
@@ -52,7 +52,7 @@ require(['domReady!', 'jquery', 'typeahead', 'handlebars', 'angular', 'monster',
                     'Unable to find any cohorts that match the current query',
                     '</div>'
                 ].join('\n'),
-                suggestion: Handlebars.compile('<p><strong>{{COHORT_DEFINITION_NAME}}</strong> – {{COHORT_DEFINITION_DESCRIPTION}}</p>')
+                suggestion: Handlebars.compile('<p><strong>{{cohortDefinitionName}}</strong> – {{cohortDefinitionDescription}}</p>')
             }
         });
 

@@ -9,7 +9,7 @@
     "COHORT_INITIATION_DATE": "2015-02-10"
   },
   "TOTAL_PATIENTS": "100",
-  "MEAN_AGE": "41.99",
+  "meanAge": "41.99",
   "MEAN_OBS_PERIOD": null,
   "GENDER_DISTRIBUTION": [
     {

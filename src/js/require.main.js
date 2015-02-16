@@ -30,4 +30,4 @@ require.config({
     ]
 });
 
-require(['heracles.angular']);
+

@@ -1,7 +1,7 @@
-define(['jquery', 'd3', 'angular'], function (jquery, d3, angular) {
+define(['jquery', 'd3'], function (jquery, d3) {
     var COLOR_RANGE = ["#AF0C3C", "#290F2E", "#0E7184", "#F0D31A", "#FE7D0D"];
     var HIDDEN_DIV_HEIGHT = 250;
-    var DEFAULT_HEIGHT = 275;
+    var DEFAULT_HEIGHT = 225;
 
 
     function HeraclesD3() {}
