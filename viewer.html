@@ -41,8 +41,16 @@
         </div>
     </div>
 
-    <div class="row" ng-controller="CohortViewerCtrl">
+    <div id="cohort-viewer-main" class="row" ng-controller="CohortViewerCtrl" style="display: none">
+        <div class="row" style="padding-top:3px">
+            <div class="col-md-10">
+                <a ng-click="goBack($event)" style="font-size:16px">&laquo;Back</a>
+            </div>
+            <div class="col-md-2 pull-right">
+                <a ng-click="refreshCohortVisualization($event)" style="font-size:16px">Refresh</a>
+            </div>
         </div>
+    </div>
 
 </div>
 

@@ -13,6 +13,12 @@ require(['domReady!', 'jquery', 'bootstrap'], function (domReady, $, b) {
                     $("#age_dist").empty();
                     $("#gender_dist").empty();
 
+                    // reset stuff
+                    $("input:checkbox").prop("checked", false);
+                    $(".toggle-filter-input").val("");
+                    $("#auto-filter-input").val("");
+                    $("#auto-filter-div").find("label").show();
+
                     setTimeout(function () {
                         //reset focus
                         $("#cohorts-typeahead").focus();
@@ -26,7 +32,7 @@ require(['domReady!', 'jquery', 'bootstrap'], function (domReady, $, b) {
 
         // focus on input box
         setTimeout(function () {
-            $("#cohorts-typeahead").focus();
+            $(".heracles-typeahead").focus();
         }, 3000);
 
         $("#auto-filter-input").keyup(function() {

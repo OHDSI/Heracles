@@ -48,6 +48,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $,
                         link.text("Refreshing...");
                         link.prop('disabled', true);
                         $("input:checkbox").prop("checked", false);
+                        $(".toggle-filter-input").val("");
                         $("#auto-filter-input").val("");
                         $("#auto-filter-div").find("label").show();
                         $scope.showCohort($scope.selected);
@@ -65,9 +66,17 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $,
                         $("#messageModal").modal('show');
                         return;
                     }
-
+                    // send notice to user
                     var btn = $(event.currentTarget);
                     btn.button('loading');
+                    $scope.job.job_link = null;
+                    $scope.job.label = "Submitting...";
+                    $scope.job.message = "Your job is being submitted. Please wait to receive a status update...";
+                    if (!$("#jobStatusModal").is(":visible")) {
+                        $("#jobStatusModal").modal("show");
+                    }
+
+                    // submit job
                     var cohortJob = {};
                     cohortJob.smallCellCount = "1";
                     cohortJob.cohortDefinitionIds = [];
@@ -77,12 +86,23 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $,
                         cohortJob.analysisIds.push($(this).attr("analysis-id"));
                     });
                     cohortJob.runHeraclesHeel = false;
-                    // TODO
+
+                    // set concepts
                     cohortJob.conditionConceptIds = [];
                     cohortJob.drugConceptIds = [];
                     cohortJob.procedureConceptIds = [];
                     cohortJob.observationConceptIds = [];
                     cohortJob.measurementConceptIds = [];
+
+                    $(".toggle-filter-input").each(function() {
+                        if ($(this).val().trim() !== "") {
+                            var key = $(this).attr("toggle-filter");
+                            var ary = _.words($(this).val(), /[^, ]+/g);
+                            if (ary.length > 0) {
+                                cohortJob[(key + "ConceptIds")] = ary;
+                            }
+                        }
+                    })
                     $http.post(getWebApiUrl() + "/cohortanalysis", cohortJob).
                         success(function(data, status, headers, config) {
                             btn.button('reset');
@@ -108,7 +128,10 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $,
                         $scope.job.label = "Failure";
                         $scope.job.message = "Your job failed.";
                     }
-                    $("#jobStatusModal").modal("show");
+                    if (!$("#jobStatusModal").is(":visible")) {
+                        $("#jobStatusModal").modal("show");
+                    }
+
                 }
 
                 $scope.parentAnalysesClick = function($event) {
@@ -123,7 +146,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $,
             angular.bootstrap(document, ['HeraclesAnalysis']);
 
             // include other scripts
-            require(['cohort-searcher', 'auto-filter-box', 'heracles.main']);
+            require(['cohort-searcher', 'auto-filter-box', 'heracles.main', 'heracles-common']);
         });
     }
 );
