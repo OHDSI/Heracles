@@ -5,7 +5,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $,
             angular.module('HeraclesResults', []).controller('CohortViewerCtrl', function($scope, $http) {
                 $scope.refreshCohortVisualization = function(evt) {
 
-                }
+                };
                 
                 $scope.goBack = function (evt) {
                     $(evt.target).slideUp("fast", function () {
@@ -13,7 +13,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $,
                             $("#cohorts").focus();
                         });
                     });
-                }
+                };
             });
 
             // manually boostrap angular since using amd

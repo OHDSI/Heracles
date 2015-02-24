@@ -23,7 +23,10 @@ require.config({
         'domReady':'../../lib/requirejs/plugins/domReady',
         'lodash' : '../../lib/lodash/lodash',
         'monster' : '../../lib/cookie-monster/cookie-monster',
-        'heracles-d3' : 'heracles-d3'
+        'heracles-d3' : 'heracles-d3',
+        'd3.chart' : '../../lib/d3/d3.chart.js',
+        'd3.tip' : '../../lib/d3/d3.tip.js',
+        'jnj.chart' : '../../lib/ohdsi/jnj.chart.js'
     },
     priority: [
         "angular"
