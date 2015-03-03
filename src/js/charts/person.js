@@ -5,7 +5,7 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
     PersonRenderer.prototype.constructor = PersonRenderer;
 
     PersonRenderer.render = function(cohort) {
-        var id = cohort.cohortDefinitionId;
+        var id = cohort.id;
         this.baseUrl = getWebApiUrl() + '/cohortresults/' + id;
 
 

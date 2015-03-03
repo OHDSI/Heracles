@@ -19,7 +19,7 @@ require(['domReady!', 'jquery', 'typeahead', 'handlebars', 'angular', 'monster',
 
         // initialize the cohort type ahead, constructs the suggestion engine
         var bloodhoundCohorts = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('cohortDefinitionName'),
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             limit: 10,
             // if we get to have a lot of cohorts, prefetch may not work, and we'll have to use remote
@@ -52,13 +52,13 @@ require(['domReady!', 'jquery', 'typeahead', 'handlebars', 'angular', 'monster',
                     'Unable to find any cohorts that match the current query',
                     '</div>'
                 ].join('\n'),
-                suggestion: Handlebars.compile('<p><strong>{{cohortDefinitionName}}</strong> – {{cohortDefinitionDescription}}</p>')
+                suggestion: Handlebars.compile('<p><strong>{{name}}</strong> – {{description}}</p>')
             }
         });
 
         // on select a cohort
         $("#cohorts-typeahead").bind('typeahead:selected', function (obj, datum, name) {
-            $("#cohorts").val(datum.cohortDefinitionName);
+            $("#cohorts").val(datum.name);
 
             $(".page-one").slideUp("fast", function () {
                 // set page data
