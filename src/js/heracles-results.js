@@ -1,8 +1,9 @@
 // configure angular
-require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', '../js/charts/dashboard'],
-    function (angular, $, b, HeraclesD3, j, DashboardRenderer) {
+require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', '../js/charts/dashboard', '../js/charts/person'],
+    function (angular, $, b, HeraclesD3, j, DashboardRenderer, PersonRenderer) {
         var renderers = {
-            'dashboard' : DashboardRenderer
+            'dashboard' : DashboardRenderer,
+            'person' : PersonRenderer
         };
         angular.element().ready(function() {
             // setup angular controller on angular ready
@@ -22,6 +23,18 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', '../js/charts
 
 
                 $scope.refreshCommonData = function(){
+                    $.getJSON(getWebApiUrl() + "/cohortresults/" + $scope.cohort.cohortDefinitionId + "/person/population", function (data) {
+                        var summary = {};
+                        $.each(data, function() {
+                            if (this.ATTRIBUTE_NAME.toLowerCase() === "source name") {
+                                summary.sourceName = this.ATTRIBUTE_VALUE;
+                            } else if (this.ATTRIBUTE_NAME.toLowerCase() === "number of persons"){
+                                summary.numPersons = this.ATTRIBUTE_VALUE;
+                            }
+                        });
+                        $scope.summary = summary;
+                        $scope.$apply();
+                    });
 
                 };
 
@@ -48,6 +61,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', '../js/charts
                     var id = $(this).attr("id");
                     $scope.active = id;
                     $scope.template = 'src/templates/' + id + '.html';
+                    $scope.refreshCommonData();
                     $scope.$apply();
 
                     var renderer = renderers[id];
