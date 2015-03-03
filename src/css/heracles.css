@@ -1,5 +1,6 @@
 @import "typeahead.css";
 @import url("../../lib/bootstrap/bootstrap.css");
+@import url("../../lib/jasny-bootstrap/css/jasny-bootstrap.min.css");
 
 .sub-text {
 	color: #BEEDF6;
@@ -134,4 +135,88 @@ a {
 
 .heracles-link > a {
     color: darkgray;
+}
+
+.navbar-offcanvas, .navmenu {
+    width: 180px;
+}
+
+html, body {
+    height: 100%;
+}
+body {
+    padding: 50px 0 0 0;
+}
+
+.navmenu {
+    padding-top: 50px;
+}
+
+.navbar {
+    display: block;
+    text-align: center;
+}
+.navbar-brand {
+    display: inline-block;
+    float: none;
+}
+.navbar-toggle {
+    position: absolute;
+    float: left;
+    margin-left: 15px;
+}
+
+.container {
+    max-width: 100%;
+}
+
+.chart-well > svg {
+    padding: 3px;
+}
+
+.rotate {
+
+    /* Safari */
+    -webkit-transform: rotate(-90deg);
+
+    /* Firefox */
+    -moz-transform: rotate(-90deg);
+
+    /* IE */
+    -ms-transform: rotate(-90deg);
+
+    /* Opera */
+    -o-transform: rotate(-90deg);
+
+    /* Internet Explorer */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+
+}
+
+.chart-template > .row {
+    display: table;
+}
+
+.chart-template > .row [class*="col-"] {
+    float: none;
+    display: table-cell;
+    vertical-align: top;
+}
+
+@media (min-width: 1px) {
+    .navbar-toggle {
+        display: block !important;
+    }
+}
+
+@media (min-width: 992px) {
+    #viewer-container {
+        padding: 0 0 0 200px;
+    }
+    .navmenu {
+        padding-top: 0;
+    }
+    .navbar {
+        display: none !important; /* IE8 fix */
+    }
 }

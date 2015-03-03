@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container" id="searcher-container">
     <!-- Header and app info -->
     <div class="row page-one">
         <div class="col-md-12">
@@ -40,17 +40,45 @@
             </div>
         </div>
     </div>
-
-    <div id="cohort-viewer-main" class="row" ng-controller="CohortViewerCtrl" style="display: none">
-        <div class="row" style="padding-top:3px">
-            <div class="col-md-10">
-                <a ng-click="goBack($event)" style="font-size:16px">&laquo;Back</a>
-            </div>
-            <div class="col-md-2 pull-right">
-                <a ng-click="refreshCohortVisualization($event)" style="font-size:16px">Refresh</a>
-            </div>
-        </div>
+</div>
+<div  id="viewer-container" style="display: none" ng-controller="CohortViewerCtrl">
+    <div class="navmenu navmenu-default navmenu-fixed-left offcanvas-sm" style="width:180px">
+        <a class="navmenu-brand visible-md visible-lg" href="#">OHDSI Heracles</a>
+        <ul class="nav navmenu-nav">
+            <li class="active"><a id="dashboard" class="chartTypes">Dashboard</a></li>
+            <li><a id="heraclesHeel" class="chartTypes">Heracles Heel</a></li>
+            <li><a id="person" class="chartTypes">Person</a></li>
+            <li><a id="observationPeriods" class="chartTypes">Observation Periods</a></li>
+            <li><a id="dataDensity" class="chartTypes">Data Density</a></li>
+            <li><a id="condition" class="chartTypes">Condition</a></li>
+            <li><a id="conditionEras" class="chartTypes">Condition Eras</a></li>
+            <li><a id="observations" class="chartTypes">Observations</a></li>
+            <li><a id="drugEras" class="chartTypes">Drug Eras</a></li>
+            <li><a id="drugExposures" class="chartTypes">Drug Exposures</a></li>
+            <li><a id="procedures" class="chartTypes">Procedures</a></li>
+            <li><a id="visits" class="chartTypes">Visits</a></li>
+            <li><a id="death" class="chartTypes">Death</a></li>
+        </ul>
+        <ul class="nav navmenu-nav" style="border-top:1px solid #898989;">
+            <li><a ng-click="refreshCohortVisualization($event)" style="font-size:16px">Refresh</a></li>
+            <li><a ng-click="goBack($event)" style="font-size:16px">&laquo; Back</a></li>
+        </ul>
     </div>
+
+    <div class="navbar navbar-default navbar-fixed-top hidden-md hidden-lg">
+        <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".navmenu">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">OHDSI Heracles</a>
+    </div>
+
+    <div class="container">
+            <div id="chart-wrapper" ng-include="template">
+            </div>
+    </div>
+
 
 </div>
 

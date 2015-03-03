@@ -1,0 +1,38 @@
+<div class="chart-template">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{cohort.cohortDefinitionName}} Summary</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="col-xs-12 personSummary">
+                        <div>
+                            <div>
+                                <div class="row">
+                                    <div class="col-xs-6    ">Source name:</div>
+                                    <div class="col-xs-6">{{summary.sourceName}}</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-6">Number of persons:</div>
+                                    <div class="col-xs-6">{{summary.numberOfPersons}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Population by Gender</h3>
+                </div>
+                <div id="reportDashboard" class="panel-body">
+                    <div id="genderPie" class="chart-well"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

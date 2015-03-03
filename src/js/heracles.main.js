@@ -19,12 +19,16 @@ require(['domReady!', 'jquery', 'bootstrap'], function (domReady, $, b) {
                     $("#auto-filter-input").val("");
                     $("#auto-filter-div").find("label").show();
 
-                    setTimeout(function () {
-                        //reset focus
-                        $("#cohorts-typeahead").focus();
-                    }, 3000);
+
+                    setTimeout(function() {
+                        $("#cohorts").focus();
+                    }, 300);
                 });
             });
+
+            setTimeout(function() {
+                $("#cohorts").focus();
+            }, 300);
         });
 
         // initialize bootstrap data toggle

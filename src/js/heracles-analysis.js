@@ -150,5 +150,17 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $,
             // include other scripts
             require(['cohort-searcher', 'auto-filter-box', 'heracles.main', 'heracles-common']);
         });
+
+
+        $(document).ready(function() {
+            setTimeout(function() {
+                $("#cohorts").focus();
+            }, 300);
+        });
+        $(document).ready(function() {
+            setTimeout(function() {
+                $("#cohorts").focus();
+            }, 300);
+        });
     }
 );
