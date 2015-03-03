@@ -10,7 +10,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $,
                 $scope.showCohort = function(datum) {
                     $scope.selected = datum;
                     //$http.get('src/data/sample-cohort-explorer.json')
-                    $http.get(getWebApiUrl() + "/cohortanalysis/" + datum.cohortDefinitionId + "/summary")
+                    $http.get(getWebApiUrl() + "/cohortanalysis/" + datum.id + "/summary")
                         .then(function(res){
                             $scope.cohort = res.data;
 
@@ -80,7 +80,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $,
                     var cohortJob = {};
                     cohortJob.smallCellCount = "1";
                     cohortJob.cohortDefinitionIds = [];
-                    cohortJob.cohortDefinitionIds.push($scope.cohort.cohortDefinition.cohortDefinitionId);
+                    cohortJob.cohortDefinitionIds.push($scope.cohort.cohortDefinition.id);
                     cohortJob.analysisIds = [];
                     $(".toggle-checkbox-item:checked").each(function () {
                         cohortJob.analysisIds.push($(this).attr("analysis-id"));

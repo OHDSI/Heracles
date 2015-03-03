@@ -23,7 +23,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', '../js/charts
 
 
                 $scope.refreshCommonData = function(){
-                    $.getJSON(getWebApiUrl() + "/cohortresults/" + $scope.cohort.cohortDefinitionId + "/person/population", function (data) {
+                    $.getJSON(getWebApiUrl() + "/cohortresults/" + $scope.cohort.id + "/person/population", function (data) {
                         var summary = {};
                         $.each(data, function() {
                             if (this.ATTRIBUTE_NAME.toLowerCase() === "source name") {
@@ -71,7 +71,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', '../js/charts
                 });
 
                 $("#cohorts-viewer-typeahead").bind('typeahead:selected', function (obj, datum, name) {
-                    $("#cohorts").val(datum.cohortDefinitionName);
+                    $("#cohorts").val(datum.name);
                     $scope.cohort = datum;
                     CohortService.setCohort(datum);
 
