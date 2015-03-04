@@ -30,12 +30,16 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $,
                             if ($scope.cohort.meanAge !== null) {
                                 $scope.cohort.meanAge = Math.round(+$scope.cohort.meanAge);
                             }
+                            /*
                             if ($scope.cohort.ageDistribution !== null && $scope.cohort.ageDistribution.length > 0) {
                                 HeraclesD3.showAgeDistribution($scope.cohort.ageDistribution);
                             }
                             if ($scope.cohort.genderDistribution !== null && $scope.cohort.genderDistribution.length > 0) {
                                 HeraclesD3.showGenderDistribution($scope.cohort.genderDistribution);
                             }
+                            */
+
+                            HeraclesD3.renderOHDSIDefaults($scope.cohort.cohortDefinition);
                         });
                 };
 

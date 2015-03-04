@@ -1,4 +1,4 @@
-define(['jquery', 'd3'], function (jquery, d3) {
+define(['jquery', 'd3', 'jnj_chart', 'ohdsi_common'], function (jquery, d3, jnj_chart, common) {
     var COLOR_RANGE = ["#AF0C3C", "#290F2E", "#0E7184", "#F0D31A", "#FE7D0D"];
     var DEFAULT_HEIGHT = 175;
 
@@ -239,6 +239,55 @@ define(['jquery', 'd3'], function (jquery, d3) {
             attr("class", "yAxis");
 
     };
+
+    HeraclesD3.renderOHDSIDefaults = function(cohort) {
+        var id = cohort.id;
+        this.baseUrl = getWebApiUrl() + '/cohortresults/' + id;
+
+
+        // gender
+        $.getJSON(this.baseUrl + '/person/gender', function(data) {
+            d3.selectAll("#gender_dist svg").remove();
+            genderDonut = new jnj_chart.donut();
+            genderDonut.render(common.mapConceptData(data), "#gender_dist", 260, 100, {
+                colors: d3.scale.ordinal()
+                    .domain([8507, 8551, 8532])
+                    .range(["#1f77b4", " #CCC", "#ff7f0e"]),
+                margin: {
+                    top: 5,
+                    bottom: 10,
+                    right: 150,
+                    left: 10
+                }
+            });
+        });
+
+        // age at first obs histogram
+        $.getJSON(this.baseUrl + '/observationperiod/ageatfirst', function(data) {
+
+            var histData = {};
+            histData.INTERVAL_SIZE = 1;
+            histData.MIN = 0;
+            histData.MAX = 100;
+            histData.INTERVALS = 100;
+            histData.DATA = {
+                COUNT_VALUE : [], INTERVAL_INDEX : [], PERCENT_VALUE : []
+            };
+            $.each(data, function () {
+                histData.DATA.COUNT_VALUE.push(+this.COUNT_VALUE);
+                histData.DATA.INTERVAL_INDEX.push(+this.INTERVAL_INDEX);
+                histData.DATA.PERCENT_VALUE.push(+this.PERCENT_VALUE);
+            });
+            d3.selectAll("#age_dist svg").remove();
+            var ageAtFirstObservationData = common.mapHistogram(histData)
+            var ageAtFirstObservationHistogram = new jnj_chart.histogram();
+            ageAtFirstObservationHistogram.render(ageAtFirstObservationData, "#age_dist", 460, 195, {
+                xFormat: d3.format('d'),
+                xLabel: 'Age',
+                yLabel: 'People'
+            });
+        });
+    }
 
 
 

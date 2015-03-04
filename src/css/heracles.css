@@ -541,7 +541,7 @@ table.data td {
 }
 
 @media (min-width: 992px) {
-    #viewer-container {
+    #viewer-container, #cohort-explorer-main {
         padding: 0 0 0 200px;
     }
     .navmenu {

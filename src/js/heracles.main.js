@@ -1,6 +1,3 @@
-/**
- * Created by cahilton on 2/4/15.
- */
 
 require(['domReady!', 'jquery', 'bootstrap'], function (domReady, $, b) {
 
