@@ -1,5 +1,5 @@
 // configure angular
-require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $, b, HeraclesD3) {
+require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', '../js/heracles-common'], function (angular, $, b, HeraclesD3, j, heraclesCommon) {
         angular.element().ready(function() {
             // setup angular controller on angular ready
             angular.module('HeraclesAnalysis', []).controller('CohortExplorerCtrl', function($scope, $http) {
@@ -17,7 +17,11 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $,
                             if (res.data.analyses) {
                                 var map = {};
                                 $.each(res.data.analyses, function() {
+
                                     var prettifyAnalysisType = this.analysisType.split("_").join(" ");
+                                    if (!$scope.cohort.firstAnalysis) {
+                                        $scope.cohort.firstAnalysis = prettifyAnalysisType;
+                                    }
                                     if (!map[prettifyAnalysisType]) {
                                         map[prettifyAnalysisType] = [];
                                     }
@@ -40,7 +44,16 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $,
                             */
 
                             HeraclesD3.renderOHDSIDefaults($scope.cohort.cohortDefinition);
+                            $("#run-analysis-container").show();
                         });
+                };
+
+                $scope.scrollAnalysesClick = function($event, k) {
+
+                    $('#auto-filter-div').animate({
+                         scrollTop: ($('#auto-filter-div').scrollTop() + $(".toggle-parent-label[key='" + k + "']").position().top - $('#auto-filter-div').height()/2 + $(".toggle-parent-label[key='" + k + "']").height()/2)
+                        }, 1000);
+
                 };
 
                 $scope.refreshCohort = function($event) {
@@ -146,25 +159,35 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3'], function (angular, $,
                     var checked = parent.find("input:checkbox").prop("checked");
                     $("input[parent='" + key + "']:visible").prop("checked", checked);
                 };
+
+                $(document).ready(function() {
+                    var param = $.urlParam('cohortId');
+                    if (param && param !== '') {
+                        var datum = { id : param };
+                        $(".page-one").hide();
+                        $scope.showCohort(datum);
+
+                        // show div
+                        $("#cohort-explorer-main").show();
+
+                    }
+                    else {
+                        setTimeout(function () {
+                            $("#cohorts").focus();
+                        }, 300);
+                    }
+                });
             });
+
 
             // manually boostrap angular since using amd
             angular.bootstrap(document, ['HeraclesAnalysis']);
 
             // include other scripts
-            require(['cohort-searcher', 'auto-filter-box', 'heracles.main', 'heracles-common']);
+            require(['cohort-searcher', 'auto-filter-box', 'heracles.main']);
         });
 
 
-        $(document).ready(function() {
-            setTimeout(function() {
-                $("#cohorts").focus();
-            }, 300);
-        });
-        $(document).ready(function() {
-            setTimeout(function() {
-                $("#cohorts").focus();
-            }, 300);
-        });
+
     }
 );

@@ -40,7 +40,7 @@ module.exports = function(grunt) {
                     jQuery: true
                 }
             },
-            uses_defaults: ['src/js/*.js']
+            uses_defaults: ['src/js/*.js', 'src/js/charts/*.js']
         },
         cssmin: {
             target: {

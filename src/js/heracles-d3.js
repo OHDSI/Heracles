@@ -279,7 +279,7 @@ define(['jquery', 'd3', 'jnj_chart', 'ohdsi_common'], function (jquery, d3, jnj_
                 histData.DATA.PERCENT_VALUE.push(+this.PERCENT_VALUE);
             });
             d3.selectAll("#age_dist svg").remove();
-            var ageAtFirstObservationData = common.mapHistogram(histData)
+            var ageAtFirstObservationData = common.mapHistogram(histData);
             var ageAtFirstObservationHistogram = new jnj_chart.histogram();
             ageAtFirstObservationHistogram.render(ageAtFirstObservationData, "#age_dist", 460, 195, {
                 xFormat: d3.format('d'),
@@ -287,7 +287,7 @@ define(['jquery', 'd3', 'jnj_chart', 'ohdsi_common'], function (jquery, d3, jnj_
                 yLabel: 'People'
             });
         });
-    }
+    };
 
 
 

@@ -1,6 +1,8 @@
 // configure angular
-require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', '../js/charts/dashboard', '../js/charts/person'],
-    function (angular, $, b, HeraclesD3, j, DashboardRenderer, PersonRenderer) {
+require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', '../js/heracles-common',
+        '../js/charts/dashboard', '../js/charts/person'],
+    function (angular, $, b, HeraclesD3, j, heraclesCommon,
+              DashboardRenderer, PersonRenderer) {
         var renderers = {
             'dashboard' : DashboardRenderer,
             'person' : PersonRenderer
@@ -50,8 +52,35 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', '../js/charts
                     });
                 };
 
+                $scope.setupAndDisplayCohort = function(datum, animate) {
+                    function doIt() {
+                        // show default div
+
+                        $("#dashboard").trigger("click");
+                        $scope.$apply();
+                    }
+
+                    $("#cohorts").val(datum.name);
+                    $scope.cohort = datum;
+                    //console.log(datum);
+                    CohortService.setCohort(datum);
+
+                    if (animate) {
+                        $("#searcher-container").slideUp("fast", function () {
+                            doIt();
+                            $("#viewer-container").slideDown("slow");
+                        });
+                    } else {
+                        $("#searcher-container").hide();
+                        doIt();
+                        $("#viewer-container").show();
+
+                    }
+
+                };
+
                 // include other scripts
-                require(['cohort-searcher', 'heracles-common']);
+                require(['cohort-searcher']);
 
                 $(".chartTypes").click(function () {
                     var self = $(this);
@@ -71,18 +100,33 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', '../js/charts
                 });
 
                 $("#cohorts-viewer-typeahead").bind('typeahead:selected', function (obj, datum, name) {
-                    $("#cohorts").val(datum.name);
-                    $scope.cohort = datum;
-                    console.log(datum);
-                    CohortService.setCohort(datum);
+                   $scope.setupAndDisplayCohort(datum, true);
+                });
 
-                    $("#searcher-container").slideUp("fast", function () {
+                $(document).ready(function() {
 
-                        // show default div
-                        $("#viewer-container").slideDown("slow");
-                        $("#dashboard").trigger("click");
-                        $scope.$apply();
-                    });
+                    function doDefault() {
+                        setTimeout(function () {
+                            $("#cohorts").focus();
+                        }, 300);
+                    }
+
+                    var param = $.urlParam('cohortId');
+                    if (param && param !== '') {
+                        $http.get(getWebApiUrl() + '/cohortdefinition/' + param).
+                            success(function(data, status, headers, config) {
+                                if (data) {
+                                    $scope.setupAndDisplayCohort(data, false);
+                                }
+                            }).
+                            error(function(data, status, headers, config) {
+                                console.log("unable to retrieve cohort");
+                                doDefault();
+                            });
+                    } else {
+                        doDefault();
+                    }
+
                 });
             });
 
@@ -91,10 +135,6 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', '../js/charts
 
         });
 
-        $(document).ready(function() {
-            setTimeout(function() {
-                $("#cohorts").focus();
-            }, 300);
-        });
+
     }
 );

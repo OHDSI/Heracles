@@ -46,7 +46,7 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
                 histData.DATA.PERCENT_VALUE.push(+this.PERCENT_VALUE);
             });
             d3.selectAll("#ageatfirstobservation svg").remove();
-            var ageAtFirstObservationData = common.mapHistogram(histData)
+            var ageAtFirstObservationData = common.mapHistogram(histData);
             var ageAtFirstObservationHistogram = new jnj_chart.histogram();
             ageAtFirstObservationHistogram.render(ageAtFirstObservationData, "#ageatfirstobservation", 460, 195, {
                 xFormat: d3.format('d'),

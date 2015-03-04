@@ -1,7 +1,20 @@
-/**
- * Created by cahilton on 2/3/15.
- */
+
 require(['domReady!', 'jquery', 'typeahead', 'handlebars', 'angular', 'monster', 'lodash'], function (domReady, $, t, Handlebars, angular, monster, _) {
+
+    function getUrlParameter(sParam)
+    {
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++)
+        {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] === sParam)
+            {
+                return sParameterName[1];
+            }
+        }
+    }
+
     $(domReady).ready(function () {
 
         var lastRefreshed = monster.get('last-refreshed');

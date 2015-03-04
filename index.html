@@ -50,7 +50,13 @@
             <ul class="nav navmenu-nav" style="border-bottom:1px solid #898989;">
                 <li><a id="cohort-explorer-back"  style="font-size:16px">&laquo;Back</a></li>
                 <li><a ng-click="refreshCohort($event)" style="font-size:16px">Refresh</a></li>
-                <li><a href="viewer.html">Heracles Viewer</a></li>
+                <li><a ng-href="viewer.html?cohortId={{cohort.cohortDefinition.id}}">Heracles Viewer</a></li>
+            </ul>
+            <a class="navmenu-brand" style="font-weight: bold" ng-click="scrollAnalysesClick($event, cohort.firstAnalysis)">Analysis Types</a>
+            <ul class="nav navmenu-nav">
+                <li ng-repeat="(k, v) in cohort.analysesMap" key="{{k}}" >
+                    <a ng-click="scrollAnalysesClick($event, k)">{{k}}</a>
+                </li>
             </ul>
 
         </div>
@@ -64,7 +70,7 @@
             <a class="navbar-brand" href="#">OHDSI Heracles</a>
         </div>
 
-        <div class="container detail-container" style="padding-left: 30px; padding-right: 30px">
+        <div id="run-analysis-container" class="container detail-container" style="padding-left: 30px; padding-right: 30px;display: none" >
             <div id="cohort-explorer-summary" class="row">
                 <div class="col-sm-4">
                     <div>
@@ -104,9 +110,9 @@
                 </div>
                 </div>
                 <div class="col-sm-4">
-                    <div ng-show="cohort.genderDistribution != null && cohort.genderDistribution.length > 0">
+                    <div ng-show="cohort.genderDistribution != null && cohort.genderDistribution.length > 0" >
                         <h4 style="text-align:center">Gender Distribution</h4>
-                        <div id="gender_dist" class="d3-wrapper"/>
+                        <div id="gender_dist" class="d3-wrapper" style="margin-left:20%"/>
                     </div>
 
                 </div>
@@ -117,7 +123,7 @@
                             <span class="toggle-filter-span" filter-key="cohort-analyses">
                                  <input id="auto-filter-input" placeholder="Type to filter..." type="text" class="form-control auto-filter-check-list-input" style="margin-top:8px" filter-key="cohort-analyses"/>
                                  <div class="multiselect-wrapper" filter-key="cohort-analyses">
-                                     <div id="auto-filter-div" class="multiselect form-control" style="margin:3px;height:250px;overflow-y:auto;width:100%;" filter-key="cohort-analyses">
+                                     <div id="auto-filter-div" class="multiselect form-control" style="margin:3px;height:270px;overflow-y:auto;width:100%;" filter-key="cohort-analyses">
                                         <span style="float:right">
                                             <div class="btn-group btn-group-xs" style="margin-right:15px">
                                                 <button type="button" class="btn btn-default auto-filter-check-list-select" filter-key="cohort-analyses" id="select-filter-button" >Select all</button>
