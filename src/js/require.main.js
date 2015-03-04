@@ -10,7 +10,8 @@ require.config({
         "typeahead" : { "deps" :['jquery'] },
         "heracles-d3" : { "deps" : ['jquery', 'd3']},
         "jasny" : {"deps" : ['jquery', 'bootstrap']},
-        "ohdsi_common" : {"deps" : ['d3']}
+        "ohdsi_common" : {"deps" : ['d3']},
+        "heracles-common" : {"deps" : ['jquery']}
 
     },
     paths: {
@@ -30,7 +31,8 @@ require.config({
         'heracles-d3' : 'heracles-d3',
         'd3.chart' : '../../lib/d3/d3.chart',
         'jnj_chart' : '../../lib/ohdsi/jnj.chart',
-        'ohdsi_common' : '../../lib/ohdsi/common'
+        'ohdsi_common' : '../../lib/ohdsi/common',
+        'heracles_common' : 'heracles-common'
     },
     priority: [
         "angular"
