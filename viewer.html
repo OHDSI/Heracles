@@ -42,8 +42,13 @@
     </div>
 </div>
 <div  id="viewer-container" style="display: none" ng-controller="CohortViewerCtrl">
-    <div class="navmenu navmenu-default navmenu-fixed-left offcanvas-sm" style="width:180px">
-        <a class="navmenu-brand visible-md visible-lg" href="#">OHDSI Heracles</a>
+    <div class="navmenu navmenu-default navmenu-fixed-left offcanvas-sm" style="width:200px">
+        <a class="navmenu-brand visible-md visible-lg" href="#" style="font-weight: bold">OHDSI Heracles</a>
+        <ul class="nav navmenu-nav" style="border-bottom:1px solid #898989;">
+            <li><a ng-click="goBack($event)" style="font-size:16px">&laquo;Back</a></li>
+            <li><a ng-click="refreshCohortVisualization($event)" style="font-size:16px">Refresh</a></li>
+            <li><a href="index.html">Heracles Runner</a></li>
+        </ul>
         <ul class="nav navmenu-nav">
             <li class="active"><a id="dashboard" class="chartTypes">Dashboard</a></li>
             <li><a id="heraclesHeel" class="chartTypes">Heracles Heel</a></li>
@@ -59,10 +64,7 @@
             <li><a id="visits" class="chartTypes">Visits</a></li>
             <li><a id="death" class="chartTypes">Death</a></li>
         </ul>
-        <ul class="nav navmenu-nav" style="border-top:1px solid #898989;">
-            <li><a ng-click="refreshCohortVisualization($event)" style="font-size:16px">Refresh</a></li>
-            <li><a ng-click="goBack($event)" style="font-size:16px">&laquo; Back</a></li>
-        </ul>
+
     </div>
 
     <div class="navbar navbar-default navbar-fixed-top hidden-md hidden-lg">
@@ -74,7 +76,7 @@
         <a class="navbar-brand" href="#">OHDSI Heracles</a>
     </div>
 
-    <div class="container">
+    <div class="container detail-container">
             <div id="chart-wrapper" ng-include="template">
             </div>
     </div>

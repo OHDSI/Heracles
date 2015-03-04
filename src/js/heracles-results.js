@@ -73,6 +73,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', '../js/charts
                 $("#cohorts-viewer-typeahead").bind('typeahead:selected', function (obj, datum, name) {
                     $("#cohorts").val(datum.name);
                     $scope.cohort = datum;
+                    console.log(datum);
                     CohortService.setCohort(datum);
 
                     $("#searcher-container").slideUp("fast", function () {
