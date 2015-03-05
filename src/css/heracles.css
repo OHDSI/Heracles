@@ -569,3 +569,7 @@ table.data td {
     margin-left: 15px;
     border-radius: 5px;
 }
+
+.cohort-name-header {
+    padding-left: 6px;
+}
