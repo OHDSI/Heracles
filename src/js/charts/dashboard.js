@@ -13,7 +13,7 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
 
 
         // gender
-        $.getJSON(this.baseUrl + '/person/gender', function(data) {
+        $.getJSON(this.baseUrl + '/raw/person/gender', function(data) {
             d3.selectAll("#genderPie svg").remove();
             genderDonut = new jnj_chart.donut();
             genderDonut.render(common.mapConceptData(data), "#genderPie", 260, 100, {
@@ -30,7 +30,7 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
         });
 
         // age at first obs histogram
-        $.getJSON(this.baseUrl + '/observationperiod/ageatfirst', function(data) {
+        $.getJSON(this.baseUrl + '/raw/observationperiod/ageatfirst', function(data) {
 
             var histData = {};
             histData.INTERVAL_SIZE = 1;
@@ -56,7 +56,7 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
         });
 
         // cumulative observation
-        $.getJSON(this.baseUrl + '/observationperiod/cumulativeduration', function(data) {
+        $.getJSON(this.baseUrl + '/raw/observationperiod/cumulativeduration', function(data) {
             var result = {};
             result.SERIES_NAME = [];
             result.X_LENGTH_OF_OBSERVATION = [];
@@ -96,7 +96,7 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
             });
         });
 
-        $.getJSON(this.baseUrl + '/observationperiod/observedbymonth', function(data) {
+        $.getJSON(this.baseUrl + '/raw/observationperiod/observedbymonth', function(data) {
 
             var result = {
                 MONTH_YEAR : [], COUNT_VALUE : [], PERCENT_VALUE : []

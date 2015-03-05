@@ -246,7 +246,7 @@ define(['jquery', 'd3', 'jnj_chart', 'ohdsi_common'], function (jquery, d3, jnj_
 
 
         // gender
-        $.getJSON(this.baseUrl + '/person/gender', function(data) {
+        $.getJSON(this.baseUrl + '/raw/person/gender', function(data) {
             d3.selectAll("#gender_dist svg").remove();
             genderDonut = new jnj_chart.donut();
             genderDonut.render(common.mapConceptData(data), "#gender_dist", 260, 100, {
@@ -263,7 +263,7 @@ define(['jquery', 'd3', 'jnj_chart', 'ohdsi_common'], function (jquery, d3, jnj_
         });
 
         // age at first obs histogram
-        $.getJSON(this.baseUrl + '/observationperiod/ageatfirst', function(data) {
+        $.getJSON(this.baseUrl + '/raw/observationperiod/ageatfirst', function(data) {
 
             var histData = {};
             histData.INTERVAL_SIZE = 1;

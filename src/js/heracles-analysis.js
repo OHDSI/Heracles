@@ -1,5 +1,5 @@
 // configure angular
-require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', '../js/heracles-common'], function (angular, $, b, HeraclesD3, j, heraclesCommon) {
+require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_common'], function (angular, $, b, HeraclesD3, j, heraclesCommon) {
         angular.element().ready(function() {
             // setup angular controller on angular ready
             angular.module('HeraclesAnalysis', []).controller('CohortExplorerCtrl', function($scope, $http) {

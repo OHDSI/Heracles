@@ -1,5 +1,5 @@
 // configure angular
-require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', '../js/heracles-common',
+require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_common',
         '../js/charts/dashboard', '../js/charts/person'],
     function (angular, $, b, HeraclesD3, j, heraclesCommon,
               DashboardRenderer, PersonRenderer) {
@@ -25,7 +25,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', '../js/heracl
 
 
                 $scope.refreshCommonData = function(){
-                    $.getJSON(getWebApiUrl() + "/cohortresults/" + $scope.cohort.id + "/person/population", function (data) {
+                    $.getJSON(getWebApiUrl() + "/cohortresults/" + $scope.cohort.id + "/raw/person/population", function (data) {
                         var summary = {};
                         $.each(data, function() {
                             if (this.ATTRIBUTE_NAME.toLowerCase() === "source name") {
@@ -57,7 +57,6 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', '../js/heracl
                         // show default div
 
                         $("#dashboard").trigger("click");
-                        $scope.$apply();
                     }
 
                     $("#cohorts").val(datum.name);
@@ -79,6 +78,17 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', '../js/heracl
 
                 };
 
+                $scope.renderVisualizationSection = function(id) {
+                    $scope.active = id;
+                    $scope.template = 'src/templates/' + id + '.html';
+                    $scope.refreshCommonData();
+
+                    var renderer = renderers[id];
+                    if (renderer) {
+                        renderer.render(CohortService.getCohort());
+                    }
+                };
+
                 // include other scripts
                 require(['cohort-searcher']);
 
@@ -88,15 +98,8 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', '../js/heracl
                     self.parent("li").addClass("active");
 
                     var id = $(this).attr("id");
-                    $scope.active = id;
-                    $scope.template = 'src/templates/' + id + '.html';
-                    $scope.refreshCommonData();
-                    $scope.$apply();
+                    $scope.renderVisualizationSection(id);
 
-                    var renderer = renderers[id];
-                    if (renderer) {
-                        renderer.render(CohortService.getCohort());
-                    }
                 });
 
                 $("#cohorts-viewer-typeahead").bind('typeahead:selected', function (obj, datum, name) {
