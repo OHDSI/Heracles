@@ -37,14 +37,8 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
             histData.MIN = 0;
             histData.MAX = 100;
             histData.INTERVALS = 100;
-            histData.DATA = {
-                COUNT_VALUE : [], INTERVAL_INDEX : [], PERCENT_VALUE : []
-            };
-            $.each(data, function () {
-                histData.DATA.COUNT_VALUE.push(+this.COUNT_VALUE);
-                histData.DATA.INTERVAL_INDEX.push(+this.INTERVAL_INDEX);
-                histData.DATA.PERCENT_VALUE.push(+this.PERCENT_VALUE);
-            });
+            histData.DATA = common.normalizeArray(data, true);
+
             d3.selectAll("#ageatfirstobservation svg").remove();
             var ageAtFirstObservationData = common.mapHistogram(histData);
             var ageAtFirstObservationHistogram = new jnj_chart.histogram();
@@ -57,15 +51,7 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
 
         // cumulative observation
         $.getJSON(this.baseUrl + '/raw/observationperiod/cumulativeduration', function(data) {
-            var result = {};
-            result.SERIES_NAME = [];
-            result.X_LENGTH_OF_OBSERVATION = [];
-            result.Y_PERCENT_PERSONS = [];
-            $.each(data, function() {
-                result.SERIES_NAME.push(this.SERIES_NAME);
-                result.X_LENGTH_OF_OBSERVATION.push(this.X_LENGTH_OF_OBSERVATION);
-                result.Y_PERCENT_PERSONS.push(this.Y_PERCENT_PERSONS);
-            });
+            var result = common.normalizeArray(data, false);
             d3.selectAll("#cumulativeobservation svg").remove();
             var cumulativeObservationLine = new jnj_chart.line();
             var cumulativeData = common.normalizeDataframe(result).X_LENGTH_OF_OBSERVATION
@@ -98,14 +84,7 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
 
         $.getJSON(this.baseUrl + '/raw/observationperiod/observedbymonth', function(data) {
 
-            var result = {
-                MONTH_YEAR : [], COUNT_VALUE : [], PERCENT_VALUE : []
-            };
-            $.each(data, function() {
-                result.MONTH_YEAR.push(this.MONTH_YEAR);
-                result.COUNT_VALUE.push(this.COUNT_VALUE);
-                result.PERCENT_VALUE.push(this.PERCENT_VALUE);
-            });
+            var result = common.normalizeArray(data, false);
 
             var byMonthSeries = common.mapMonthYearDataToSeries(result, {
                 dateField: 'MONTH_YEAR',

@@ -1,11 +1,16 @@
 // configure angular
-require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_common'], function (angular, $, b, HeraclesD3, j, heraclesCommon) {
+require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_common', 'lodash'], function (angular, $, b, HeraclesD3, j, heraclesCommon, _) {
         angular.element().ready(function() {
             // setup angular controller on angular ready
             angular.module('HeraclesAnalysis', []).controller('CohortExplorerCtrl', function($scope, $http) {
 
                 $scope.job = {};
                 $scope.message = {};
+                $scope.visualizationPacks = {
+                    "Default" : [1, 2 ,101, 108, 110],
+                    "Condition" : [1, 400, 401]
+                };
+                $scope.analysisCount = 0;
 
                 $scope.showCohort = function(datum) {
                     $scope.selected = datum;
@@ -18,7 +23,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                                 var map = {};
                                 $.each(res.data.analyses, function() {
 
-                                    var prettifyAnalysisType = this.analysisType.split("_").join(" ");
+                                    var prettifyAnalysisType = _.startCase(this.analysisType.toLowerCase());
                                     if (!$scope.cohort.firstAnalysis) {
                                         $scope.cohort.firstAnalysis = prettifyAnalysisType;
                                     }
@@ -73,6 +78,18 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                             link.text("Refresh");
                             link.prop('disabled', false);
                         }, 1500);
+                    }
+                };
+
+                $scope.selectVizPack = function($event, vizType) {
+                    var vals = $scope.visualizationPacks[vizType];
+                    if (vals) {
+                        $.each(vals, function() {
+                            if (!$(".toggle-checkbox-item[analysis-id=" + this + "]").prop("checked")) {
+                                $(".toggle-checkbox-item[analysis-id=" + this + "]").prop("checked", true);
+                                $scope.analysisClick();
+                            }
+                        });
                     }
                 };
 
@@ -153,11 +170,16 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 
                 }
 
+                $scope.analysisClick = function() {
+                    $scope.analysisCount = $(".toggle-checkbox-item:checked").length;
+                };
+
                 $scope.parentAnalysesClick = function($event) {
                     var parent = $(event.currentTarget);
                     var key = parent.attr("key");
                     var checked = parent.find("input:checkbox").prop("checked");
                     $("input[parent='" + key + "']:visible").prop("checked", checked);
+                    $scope.analysisClick();
                 };
 
                 $(document).ready(function() {

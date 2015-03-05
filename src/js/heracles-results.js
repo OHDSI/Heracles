@@ -1,11 +1,12 @@
 // configure angular
 require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_common',
-        '../js/charts/dashboard', '../js/charts/person'],
+        '../js/charts/dashboard', '../js/charts/person', '../js/charts/conditions'],
     function (angular, $, b, HeraclesD3, j, heraclesCommon,
-              DashboardRenderer, PersonRenderer) {
+              DashboardRenderer, PersonRenderer, ConditionRenderer) {
         var renderers = {
             'dashboard' : DashboardRenderer,
-            'person' : PersonRenderer
+            'person' : PersonRenderer,
+            'condition' : ConditionRenderer
         };
         angular.element().ready(function() {
             // setup angular controller on angular ready
@@ -47,7 +48,9 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                 $scope.goBack = function (evt) {
                     $("#viewer-container").slideUp("fast", function () {
                         $("#searcher-container").slideDown('fast', function () {
-                            $("#cohorts").focus();
+                            $("#cohorts")
+                                .val("")
+                                .focus();
                         });
                     });
                 };

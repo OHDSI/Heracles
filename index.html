@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Heracles</title>
-    <link rel="stylesheet" type="text/css" href="build/Heracles.min.css">
+    <link rel="stylesheet" type="text/css" href="build/css/Heracles.min.css">
 </head>
 <body>
 
@@ -56,6 +56,12 @@
             <ul class="nav navmenu-nav">
                 <li ng-repeat="(k, v) in cohort.analysesMap" key="{{k}}" >
                     <a ng-click="scrollAnalysesClick($event, k)">{{k}}</a>
+                </li>
+            </ul>
+            <a class="navmenu-brand" style="font-weight: bold">Visualization Packs</a>
+            <ul class="nav navmenu-nav">
+                <li ng-repeat="(k, v) in visualizationPacks" key="{{k}}" >
+                    <a ng-click="selectVizPack($event, k)">{{k}}</a>
                 </li>
             </ul>
 
@@ -119,7 +125,7 @@
             </div>
 
             <div class="col-md-12">
-                <h4>Run Cohort Analyses</h4>
+                <h4>Run Cohort Analyses ({{analysisCount}})</h4>
                             <span class="toggle-filter-span" filter-key="cohort-analyses">
                                  <input id="auto-filter-input" placeholder="Type to filter..." type="text" class="form-control auto-filter-check-list-input" style="margin-top:8px" filter-key="cohort-analyses"/>
                                  <div class="multiselect-wrapper" filter-key="cohort-analyses">
@@ -138,7 +144,7 @@
                                              </label>
                                              <div ng-repeat="item in v">
                                                  <label class="toggle-child-label {{item.class}}" >
-                                                     <input type="checkbox" class="toggle-checkbox-item"
+                                                     <input type="checkbox" class="toggle-checkbox-item" ng-click="analysisClick()"
                                                             style="margin:2px" filter-key="cohort-analyses" value="{{item.analysisName}}" analysis-id="{{item.analysisId}}" parent="{{k}}" />
                                                      {{item.analysisName}}
                                                      <span ng-show="item.lastUpdateTimeFormatted != null" class="last-update-time"> (Last Run {{item.lastUpdateTimeFormatted}})</span>
@@ -236,7 +242,7 @@
     </div>
 </div>
 
-<script src="build/Heracles.config.js" type="text/javascript"></script>
+<script src="build/js/Heracles.config.js" type="text/javascript"></script>
 <script src="lib/requirejs/require.js" data-main="src/js/require.main"></script>
 <script type="application/javascript">
     require(['heracles-analysis']);

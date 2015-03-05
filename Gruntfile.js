@@ -45,7 +45,7 @@ module.exports = function(grunt) {
         cssmin: {
             target: {
                 files: {
-                    'build/<%= pkg.name %>.min.css' : ['src/css/heracles.css']
+                    'build/css/<%= pkg.name %>.min.css' : ['src/css/heracles.css']
                 }
             }
         },
@@ -63,7 +63,7 @@ module.exports = function(grunt) {
     // reads the web api property and loads into the config
     grunt.registerTask("initwebapi", "Initializes the web api configuration", function() {
         grunt.log.writeln('The webapi property is: ' + grunt.config('pkg.web_api_url') + '. Set this in your package.json before running this task.');
-        var out = 'build/' + grunt.config('pkg.name') + '.config.js';
+        var out = 'build/js/' + grunt.config('pkg.name') + '.config.js';
 
         var contents = "function getWebApiUrl() { " +
             "return '" + grunt.config('pkg.web_api_url')  + "';" +

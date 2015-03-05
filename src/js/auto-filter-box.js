@@ -58,6 +58,8 @@ require(['domReady!', 'jquery', 'bootstrap'], function (domReady, $, b) {
 
     function toggleVisibleReports(checked, selector) {
         $(selector).find("input[type='checkbox']:visible").prop('checked', checked);
+        angular.element($('#cohort-explorer-main')).scope().analysisClick();
+        angular.element($('#cohort-explorer-main')).scope().$apply();
     }
 
 

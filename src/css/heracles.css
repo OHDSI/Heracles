@@ -137,6 +137,10 @@ a {
     color: darkgray;
 }
 
+.navmenu-nav > li > a {
+    padding: 6px 15px;
+}
+
 .navbar-offcanvas, .navmenu {
     width: 200px;
 }
@@ -228,6 +232,10 @@ body {
 
 .panel {
     width: 100%;
+}
+
+.panel-table {
+    margin: 20px;
 }
 
 .report {
