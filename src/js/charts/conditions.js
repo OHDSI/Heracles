@@ -29,139 +29,162 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
         });
 
         condition_occurrence.drilldown = function (concept_id, concept_name) {
+            $('#spinner-modal').modal('show');
+
             $('.drilldown svg').remove();
             $('#conditionDrilldownTitle').text(concept_name);
             $('#reportConditionOccurrencesDrilldown').removeClass('hidden');
 
             $.ajax({
                 type: "GET",
-                url: 'data/' + page_vm.datasource().folder + '/conditions/condition_' + concept_id + '.json',
+                url: ConditionRenderer.baseUrl + '/condition/' + concept_id,
                 success: function (data) {
                     // age at first diagnosis visualization
+                    d3.selectAll("#ageAtFirstDiagnosis svg").remove();
                     var boxplot = new jnj_chart.boxplot();
                     bpseries = [];
-                    bpdata = common.normalizeDataframe(data.AGE_AT_FIRST_DIAGNOSIS);
-                    for (i = 0; i < bpdata.CATEGORY.length; i++) {
-                        bpseries.push({
-                            Category: bpdata.CATEGORY[i],
-                            min: bpdata.MIN_VALUE[i],
-                            max: bpdata.MAX_VALUE[i],
-                            median: bpdata.MEDIAN_VALUE[i],
-                            LIF: bpdata.P10_VALUE[i],
-                            q1: bpdata.P25_VALUE[i],
-                            q3: bpdata.P75_VALUE[i],
-                            UIF: bpdata.P90_VALUE[i]
+                    bpdata = common.normalizeArray(data.ageAtFirstDiagnosis, true);
+                    if (!bpdata.empty) {
+                        for (i = 0; i < bpdata.CATEGORY.length; i++) {
+                            bpseries.push({
+                                Category: bpdata.CATEGORY[i],
+                                min: bpdata.MIN_VALUE[i],
+                                max: bpdata.MAX_VALUE[i],
+                                median: bpdata.MEDIAN_VALUE[i],
+                                LIF: bpdata.P10_VALUE[i],
+                                q1: bpdata.P25_VALUE[i],
+                                q3: bpdata.P75_VALUE[i],
+                                UIF: bpdata.P90_VALUE[i]
+                            });
+                        }
+                        boxplot.render(bpseries, "#ageAtFirstDiagnosis", 500, 300, {
+                            xLabel: 'Gender',
+                            yLabel: 'Age at First Diagnosis'
                         });
                     }
-                    boxplot.render(bpseries, "#ageAtFirstDiagnosis", 500, 300, {
-                        xLabel: 'Gender',
-                        yLabel: 'Age at First Diagnosis'
-                    });
 
                     // prevalence by month
-                    var byMonthSeries = common.mapMonthYearDataToSeries(data.PREVALENCE_BY_MONTH, {
-                        dateField: 'X_CALENDAR_MONTH',
-                        yValue: 'Y_PREVALENCE_1000PP',
-                        yPercent: 'Y_PREVALENCE_1000PP'
-                    });
+                    d3.selectAll("#conditionPrevalenceByMonth svg").remove();
+                    var byMonthData = common.normalizeArray(data.prevalenceByMonth, true);
+                    if (!byMonthData.empty) {
+                        var byMonthSeries = common.mapMonthYearDataToSeries(byMonthData, {
 
-                    d3.selectAll("#reportConditionOccurrences #conditionPrevalenceByMonth svg").remove();
-                    var prevalenceByMonth = new jnj_chart.line();
-                    prevalenceByMonth.render(byMonthSeries, "#reportConditionOccurrences #conditionPrevalenceByMonth", 1000, 300, {
-                        xScale: d3.time.scale().domain(d3.extent(byMonthSeries[0].values, function (d) {
-                            return d.xValue;
-                        })),
-                        xFormat: d3.time.format("%m/%Y"),
-                        tickFormat: d3.time.format("%Y"),
-                        xLabel: "Date",
-                        yLabel: "Prevalence per 1000 People"
-                    });
+                            dateField: 'X_CALENDAR_MONTH',
+                            yValue: 'Y_PREVALENCE_1000PP',
+                            yPercent: 'Y_PREVALENCE_1000PP'
+                        });
+
+
+                        var prevalenceByMonth = new jnj_chart.line();
+                        prevalenceByMonth.render(byMonthSeries, "#conditionPrevalenceByMonth", 1000, 300, {
+                            xScale: d3.time.scale().domain(d3.extent(byMonthSeries[0].values, function (d) {
+                                return d.xValue;
+                            })),
+                            xFormat: d3.time.format("%m/%Y"),
+                            tickFormat: d3.time.format("%Y"),
+                            xLabel: "Date",
+                            yLabel: "Prevalence per 1000 People"
+                        });
+                    }
 
                     // condition type visualization
-                    var donut = new jnj_chart.donut();
-                    donut.render(common.mapConceptData(data.CONDITIONS_BY_TYPE), "#conditionsByType", 500, 300, {
-                        margin: {
-                            top: 5,
-                            left: 5,
-                            right: 200,
-                            bottom: 5
-                        }
-                    });
+                    var conditionType = common.mapConceptData(data.conditionsByType);
+                    d3.selectAll("#conditionsByType svg").remove();
+                    if (conditionType) {
+                        var donut = new jnj_chart.donut();
+                        donut.render(conditionType, "#conditionsByType", 500, 300, {
+                            margin: {
+                                top: 5,
+                                left: 5,
+                                right: 200,
+                                bottom: 5
+                            }
+                        });
+                    }
 
                     // render trellis
-                    trellisData = data.PREVALENCE_BY_GENDER_AGE_YEAR;
+                    d3.selectAll("#trellisLinePlot svg").remove();
+                    trellisData = common.normalizeArray(data.prevalenceByGenderAgeYear, true);
 
-                    var allDeciles = ["0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80-89", "90-99"];
-                    var allSeries = ["MALE", "FEMALE"];
-                    var minYear = d3.min(trellisData.X_CALENDAR_YEAR),
-                        maxYear = d3.max(trellisData.X_CALENDAR_YEAR);
+                    if (!trellisData.empty) {
+                        var allDeciles = ["0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80-89", "90-99"];
+                        var allSeries = ["MALE", "FEMALE"];
+                        var minYear = d3.min(trellisData.X_CALENDAR_YEAR),
+                            maxYear = d3.max(trellisData.X_CALENDAR_YEAR);
 
-                    var seriesInitializer = function (tName, sName, x, y) {
-                        return {
-                            TRELLIS_NAME: tName,
-                            SERIES_NAME: sName,
-                            X_CALENDAR_YEAR: x,
-                            Y_PREVALENCE_1000PP: y
+                        var seriesInitializer = function (tName, sName, x, y) {
+                            return {
+                                TRELLIS_NAME: tName,
+                                SERIES_NAME: sName,
+                                X_CALENDAR_YEAR: x,
+                                Y_PREVALENCE_1000PP: y
+                            };
                         };
-                    };
 
-                    var nestByDecile = d3.nest()
-                        .key(function (d) {
-                            return d.TRELLIS_NAME;
-                        })
-                        .key(function (d) {
-                            return d.SERIES_NAME;
-                        })
-                        .sortValues(function (a, b) {
-                            return a.X_CALENDAR_YEAR - b.X_CALENDAR_YEAR;
-                        });
+                        var nestByDecile = d3.nest()
+                            .key(function (d) {
+                                return d.TRELLIS_NAME;
+                            })
+                            .key(function (d) {
+                                return d.SERIES_NAME;
+                            })
+                            .sortValues(function (a, b) {
+                                return a.X_CALENDAR_YEAR - b.X_CALENDAR_YEAR;
+                            });
 
-                    // map data into chartable form
-                    var normalizedSeries = trellisData.TRELLIS_NAME.map(function (d, i) {
-                        var item = {};
-                        var container = this;
-                        d3.keys(container).forEach(function (p) {
-                            item[p] = container[p][i];
-                        });
-                        return item;
-                    }, trellisData);
+                        // map data into chartable form
+                        var normalizedSeries = trellisData.TRELLIS_NAME.map(function (d, i) {
+                            var item = {};
+                            var container = this;
+                            d3.keys(container).forEach(function (p) {
+                                item[p] = container[p][i];
+                            });
+                            return item;
+                        }, trellisData);
 
-                    var dataByDecile = nestByDecile.entries(normalizedSeries);
-                    // fill in gaps
-                    var yearRange = d3.range(minYear, maxYear, 1);
+                        var dataByDecile = nestByDecile.entries(normalizedSeries);
+                        // fill in gaps
+                        var yearRange = d3.range(minYear, maxYear, 1);
 
-                    dataByDecile.forEach(function (trellis) {
-                        trellis.values.forEach(function (series) {
-                            series.values = yearRange.map(function (year) {
-                                yearData = series.values.filter(function (f) {
-                                    return f.X_CALENDAR_YEAR === year;
-                                })[0] || seriesInitializer(trellis.key, series.key, year, 0);
-                                yearData.date = new Date(year, 0, 1);
-                                return yearData;
+                        dataByDecile.forEach(function (trellis) {
+                            trellis.values.forEach(function (series) {
+                                series.values = yearRange.map(function (year) {
+                                    yearData = series.values.filter(function (f) {
+                                        return f.X_CALENDAR_YEAR === year;
+                                    })[0] || seriesInitializer(trellis.key, series.key, year, 0);
+                                    yearData.date = new Date(year, 0, 1);
+                                    return yearData;
+                                });
                             });
                         });
-                    });
 
-                    // create svg with range bands based on the trellis names
-                    var chart = new jnj_chart.trellisline();
-                    chart.render(dataByDecile, "#reportConditionOccurrences #trellisLinePlot", 1000, 300, {
-                        trellisSet: allDeciles,
-                        trellisLabel: "Age Decile",
-                        seriesLabel: "Year of Observation",
-                        yLabel: "Prevalence Per 1000 People",
-                        xFormat: d3.time.format("%Y"),
-                        yFormat: d3.format("0.2f"),
-                        tickPadding: 20,
-                        colors: d3.scale.ordinal()
-                            .domain(["MALE", "FEMALE"])
-                            .range(["#1f77b4", "#ff7f0e"])
+                        // create svg with range bands based on the trellis names
+                        var chart = new jnj_chart.trellisline();
+                        chart.render(dataByDecile, "#trellisLinePlot", 1000, 300, {
+                            trellisSet: allDeciles,
+                            trellisLabel: "Age Decile",
+                            seriesLabel: "Year of Observation",
+                            yLabel: "Prevalence Per 1000 People",
+                            xFormat: d3.time.format("%Y"),
+                            yFormat: d3.format("0.2f"),
+                            tickPadding: 20,
+                            colors: d3.scale.ordinal()
+                                .domain(["MALE", "FEMALE"])
+                                .range(["#1f77b4", "#ff7f0e"])
 
-                    });
+                        });
+                    }
+
+                    $('#spinner-modal').modal('hide');
+                }, error : function(data) {
+                    $('#spinner-modal').modal('hide');
                 }
             });
         };
 
         condition_occurrence.render = function (url) {
+
+            $('#spinner-modal').modal('show');
             format_pct = d3.format('.2%');
             format_fixed = d3.format('.2f');
             format_comma = d3.format(',');
@@ -180,100 +203,105 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                 success: function (data) {
                     var normalizedData = common.normalizeDataframe(common.normalizeArray(data, true));
                     data = normalizedData;
-                    var table_data = normalizedData.CONCEPT_PATH.map(function (d, i) {
-                        conceptDetails = this.CONCEPT_PATH[i].split('||');
-                        return {
-                            concept_id: this.CONCEPT_ID[i],
-                            soc: conceptDetails[0],
-                            hlgt: conceptDetails[1],
-                            hlt: conceptDetails[2],
-                            pt: conceptDetails[3],
-                            snomed: conceptDetails[4],
-                            num_persons: format_comma(this.NUM_PERSONS[i]),
-                            percent_persons: format_pct(this.PERCENT_PERSONS[i]),
-                            records_per_person: format_fixed(this.RECORDS_PER_PERSON[i])
-                        };
-                    }, data);
+                    if (!data.empty) {
+                        var table_data = normalizedData.CONCEPT_PATH.map(function (d, i) {
+                            conceptDetails = this.CONCEPT_PATH[i].split('||');
+                            return {
+                                concept_id: this.CONCEPT_ID[i],
+                                soc: conceptDetails[0],
+                                hlgt: conceptDetails[1],
+                                hlt: conceptDetails[2],
+                                pt: conceptDetails[3],
+                                snomed: conceptDetails[4],
+                                num_persons: format_comma(this.NUM_PERSONS[i]),
+                                percent_persons: format_pct(this.PERCENT_PERSONS[i]),
+                                records_per_person: format_fixed(this.RECORDS_PER_PERSON[i])
+                            };
+                        }, data);
 
-                    datatable = $('#condition_table').DataTable({
-                        order: [ 6, 'desc' ],
-                        dom: 'Clfrtip',
-                        data: table_data,
-                        columns: [
-                            {
-                                data: 'concept_id',
-                                visible: false
+                        datatable = $('#condition_table').DataTable({
+                            order: [6, 'desc'],
+                            dom: 'Clfrtip',
+                            data: table_data,
+                            columns: [
+                                {
+                                    data: 'concept_id',
+                                    visible: false
+                                },
+                                {
+                                    data: 'soc'
+                                },
+                                {
+                                    data: 'hlgt',
+                                    visible: false
+                                },
+                                {
+                                    data: 'hlt'
+                                },
+                                {
+                                    data: 'pt',
+                                    visible: false
+                                },
+                                {
+                                    data: 'snomed'
+                                },
+                                {
+                                    data: 'num_persons',
+                                    className: 'numeric'
+                                },
+                                {
+                                    data: 'percent_persons',
+                                    className: 'numeric'
+                                },
+                                {
+                                    data: 'records_per_person',
+                                    className: 'numeric'
+                                }
+                            ],
+                            pageLength: 5,
+                            lengthChange: false,
+                            deferRender: true,
+                            destroy: true
+                        });
+
+                        $('#reportConditionOccurrences').show();
+
+                        tree = buildHierarchyFromJSON(data, threshold);
+                        var treemap = new jnj_chart.treemap();
+                        treemap.render(tree, '#treemap_container', width, height, {
+                            onclick: function (node) {
+                                condition_occurrence.drilldown(node.id, node.name);
                             },
-                            {
-                                data: 'soc'
+                            getsizevalue: function (node) {
+                                return node.num_persons;
                             },
-                            {
-                                data: 'hlgt',
-                                visible: false
+                            getcolorvalue: function (node) {
+                                return node.records_per_person;
                             },
-                            {
-                                data: 'hlt'
+                            getcontent: function (node) {
+                                var result = '',
+                                    steps = node.path.split('||'),
+                                    i = steps.length - 1;
+                                result += '<div class="pathleaf">' + steps[i] + '</div>';
+                                result += '<div class="pathleafstat">Prevalence: ' + format_pct(node.pct_persons) + '</div>';
+                                result += '<div class="pathleafstat">Number of People: ' + format_comma(node.num_persons) + '</div>';
+                                result += '<div class="pathleafstat">Records per Person: ' + format_fixed(node.records_per_person) + '</div>';
+                                return result;
                             },
-                            {
-                                data: 'pt',
-                                visible: false
-                            },
-                            {
-                                data: 'snomed'
-                            },
-                            {
-                                data: 'num_persons',
-                                className: 'numeric'
-                            },
-                            {
-                                data: 'percent_persons',
-                                className: 'numeric'
-                            },
-                            {
-                                data: 'records_per_person',
-                                className: 'numeric'
+                            gettitle: function (node) {
+                                var title = '',
+                                    steps = node.path.split('||');
+                                for (i = 0; i < steps.length - 1; i++) {
+                                    title += ' <div class="pathstep">' + Array(i + 1).join('&nbsp;&nbsp') + steps[i] + ' </div>';
+                                }
+                                return title;
                             }
-                        ],
-                        pageLength: 5,
-                        lengthChange: false,
-                        deferRender: true,
-                        destroy: true
-                    });
-
-                    $('#reportConditionOccurrences').show();
-
-                    tree = buildHierarchyFromJSON(data, threshold);
-                    var treemap = new jnj_chart.treemap();
-                    treemap.render(tree, '#treemap_container', width, height, {
-                        onclick: function (node) {
-                            condition_occurrence.drilldown(node.id, node.name);
-                        },
-                        getsizevalue: function (node) {
-                            return node.num_persons;
-                        },
-                        getcolorvalue: function (node) {
-                            return node.records_per_person;
-                        },
-                        getcontent: function (node) {
-                            var result = '',
-                                steps = node.path.split('||'),
-                                i = steps.length - 1;
-                            result += '<div class="pathleaf">' + steps[i] + '</div>';
-                            result += '<div class="pathleafstat">Prevalence: ' + format_pct(node.pct_persons) + '</div>';
-                            result += '<div class="pathleafstat">Number of People: ' + format_comma(node.num_persons) + '</div>';
-                            result += '<div class="pathleafstat">Records per Person: ' + format_fixed(node.records_per_person) + '</div>';
-                            return result;
-                        },
-                        gettitle: function (node) {
-                            var title = '',
-                                steps = node.path.split('||');
-                            for (i = 0; i < steps.length - 1; i++) {
-                                title += ' <div class="pathstep">' + Array(i + 1).join('&nbsp;&nbsp') + steps[i] + ' </div>';
-                            }
-                            return title;
-                        }
-                    });
-                    $('[data-toggle="popover"]').popover();
+                        });
+                        $('[data-toggle="popover"]').popover();
+                    }
+                    $('#spinner-modal').modal('hide');
+                }, error : function(data) {
+                    $('#spinner-modal').modal('hide');
                 }
 
             });

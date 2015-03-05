@@ -8,7 +8,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                 $scope.message = {};
                 $scope.visualizationPacks = {
                     "Default" : [1, 2 ,101, 108, 110],
-                    "Condition" : [1, 400, 401]
+                    "Condition" : [1, 116, 117, 400, 401, 402, 404, 405, 406]
                 };
                 $scope.analysisCount = 0;
 
