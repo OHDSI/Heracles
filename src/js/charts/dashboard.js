@@ -11,12 +11,11 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
         var id = cohort.id;
         this.baseUrl = getWebApiUrl() + '/cohortresults/' + id;
 
-
-        // gender
-        $.getJSON(this.baseUrl + '/raw/person/gender', function(data) {
+        $.getJSON(this.baseUrl + '/dashboard', function(data) {
+            // gender
             d3.selectAll("#genderPie svg").remove();
             genderDonut = new jnj_chart.donut();
-            genderDonut.render(common.mapConceptData(data), "#genderPie", 260, 100, {
+            genderDonut.render(common.mapConceptData(data.gender), "#genderPie", 260, 100, {
                 colors: d3.scale.ordinal()
                     .domain([8507, 8551, 8532])
                     .range(["#1f77b4", " #CCC", "#ff7f0e"]),
@@ -27,17 +26,14 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
                     left: 10
                 }
             });
-        });
 
-        // age at first obs histogram
-        $.getJSON(this.baseUrl + '/raw/observationperiod/ageatfirst', function(data) {
-
+            // age at first obs histogram
             var histData = {};
             histData.INTERVAL_SIZE = 1;
             histData.MIN = 0;
             histData.MAX = 100;
             histData.INTERVALS = 100;
-            histData.DATA = common.normalizeArray(data, true);
+            histData.DATA = common.normalizeArray(data.ageAtFirstObservation, true);
 
             d3.selectAll("#ageatfirstobservation svg").remove();
             var ageAtFirstObservationData = common.mapHistogram(histData);
@@ -47,11 +43,9 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
                 xLabel: 'Age',
                 yLabel: 'People'
             });
-        });
 
-        // cumulative observation
-        $.getJSON(this.baseUrl + '/raw/observationperiod/cumulativeduration', function(data) {
-            var result = common.normalizeArray(data, false);
+            // cumulative observation
+            var result = common.normalizeArray(data.cumulativeObservation, false);
             d3.selectAll("#cumulativeobservation svg").remove();
             var cumulativeObservationLine = new jnj_chart.line();
             var cumulativeData = common.normalizeDataframe(result).X_LENGTH_OF_OBSERVATION
@@ -80,13 +74,11 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
                 xLabel: cumulativeObservationXLabel,
                 yLabel: 'Percent of Population'
             });
-        });
 
-        $.getJSON(this.baseUrl + '/raw/observationperiod/observedbymonth', function(data) {
+            // observedByMonth
+            var observedByMonth = common.normalizeArray(data.observedByMonth, false);
 
-            var result = common.normalizeArray(data, false);
-
-            var byMonthSeries = common.mapMonthYearDataToSeries(result, {
+            var byMonthSeries = common.mapMonthYearDataToSeries(observedByMonth, {
                 dateField: 'MONTH_YEAR',
                 yValue: 'COUNT_VALUE',
                 yPercent: 'PERCENT_VALUE'

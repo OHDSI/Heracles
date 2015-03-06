@@ -13,6 +13,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                 $scope.analysisCount = 0;
 
                 $scope.showCohort = function(datum) {
+                    $scope.analysisCount = 0;
                     $scope.selected = datum;
                     //$http.get('src/data/sample-cohort-explorer.json')
                     $http.get(getWebApiUrl() + "/cohortanalysis/" + datum.id + "/summary")
@@ -73,6 +74,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                         $(".toggle-filter-input").val("");
                         $("#auto-filter-input").val("");
                         $("#auto-filter-div").find("label").show();
+                        $scope.analysisCount = 0;
                         $scope.showCohort($scope.selected);
                         setTimeout(function() {
                             link.text("Refresh");
