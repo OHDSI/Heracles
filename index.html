@@ -50,7 +50,7 @@
             <ul class="nav navmenu-nav" style="border-bottom:1px solid #898989;">
                 <li><a id="cohort-explorer-back"  style="font-size:16px">&laquo;Back</a></li>
                 <li><a ng-click="refreshCohort($event)" style="font-size:16px">Refresh</a></li>
-                <li><a ng-href="viewer.html?cohortId={{cohort.cohortDefinition.id}}">Heracles Viewer</a></li>
+                <li><a ng-href="viewer.html?cohortId={{cohort.cohortDefinition.id}}" >Heracles Viewer</a></li>
             </ul>
             <a class="navmenu-brand" style="font-weight: bold" ng-click="scrollAnalysesClick($event, cohort.firstAnalysis)">Analysis Types</a>
             <ul class="nav navmenu-nav">
@@ -80,7 +80,7 @@
             <div id="cohort-explorer-summary" class="row">
                 <div class="col-sm-4">
                     <div>
-                        <h3 id="cohort-name">{{cohort.cohortDefinition.name}}
+                        <h3 id="cohort-name" >{{cohort.cohortDefinition.name}}
                             <!--
                             <small ng-show="cohort.cohortDefinition.description != null"
                                    data-toggle="tooltip" data-placement="bottom" title="{{cohort.cohortDefinition.description}}">
@@ -89,7 +89,7 @@
                             -->
                         </h3>
                         <div>
-                            <p class="cohort-description">
+                            <p class="cohort-description" >
                                 {{cohort.cohortDefinition.description}}
                             </p>
                         </div>
@@ -97,11 +97,11 @@
                             <div ng-show="cohort.totalPatients != null">
                                 <label style="text-decoration:underline">Summary</label>
                             </div>
-                            <div ng-show="cohort.totalPatients != null">
+                            <div ng-show="cohort.totalPatients != null" >
                                 <label class="cohort-desc">Total Patients: </label>{{cohort.totalPatients}}</div>
-                            <div ng-show="cohort.meanObsPeriod != null">
+                            <div ng-show="cohort.meanObsPeriod != null" >
                                 <label class="cohort-desc">Mean Observation Period: </label>{{cohort.meanObsPeriod}}</div>
-                            <div ng-show="cohort.meanAge != null">
+                            <div ng-show="cohort.meanAge != null" >
                                 <label class="cohort-desc">Mean Age: </label>{{cohort.meanAge}}</div>
                         </div>
 
@@ -109,14 +109,14 @@
                 </div>
 
                 <div class="col-sm-4">
-                    <div ng-show="cohort.ageDistribution != null && cohort.ageDistribution.length > 0">
+                    <div >
                         <h4 style="text-align:center">Age Distribution</h4>
                         <div id="age_dist" class="d3-wrapper" />
                     </div>
                 </div>
                 </div>
                 <div class="col-sm-4">
-                    <div ng-show="cohort.genderDistribution != null && cohort.genderDistribution.length > 0" >
+                    <div >
                         <h4 style="text-align:center">Gender Distribution</h4>
                         <div id="gender_dist" class="d3-wrapper" style="margin-left:20%"/>
                     </div>
@@ -216,6 +216,17 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="spinner-modal">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <h3><i class="fa fa-cog fa-spin"></i> Loading...</h3>
                     </div>
                 </div>
             </div>

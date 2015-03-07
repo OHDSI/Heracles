@@ -240,19 +240,17 @@ define(['jquery', 'd3', 'jnj_chart', 'ohdsi_common'], function (jquery, d3, jnj_
 
     };
 
-    HeraclesD3.renderOHDSIDefaults = function(cohort) {
-        var id = cohort.id;
-        this.baseUrl = getWebApiUrl() + '/cohortresults/' + id;
+    HeraclesD3.renderOHDSIDefaults = function(data) {
 
 
         // gender
-        $.getJSON(this.baseUrl + '/raw/person/gender', function(data) {
+        if (data.genderDistribution) {
             d3.selectAll("#gender_dist svg").remove();
-            genderDonut = new jnj_chart.donut();
-            genderDonut.render(common.mapConceptData(data), "#gender_dist", 260, 100, {
+            var genderDonut = new jnj_chart.donut();
+            genderDonut.render(common.mapConceptData(data.genderDistribution), "#gender_dist", 260, 100, {
                 colors: d3.scale.ordinal()
                     .domain([8507, 8551, 8532])
-                    .range(["#1f77b4", " #CCC", "#ff7f0e"]),
+                    .range(["#1F78B4", "#33A02C", "#FB9A99"]),
                 margin: {
                     top: 5,
                     bottom: 10,
@@ -260,33 +258,27 @@ define(['jquery', 'd3', 'jnj_chart', 'ohdsi_common'], function (jquery, d3, jnj_
                     left: 10
                 }
             });
-        });
+        }
 
         // age at first obs histogram
-        $.getJSON(this.baseUrl + '/raw/observationperiod/ageatfirst', function(data) {
-
+        if (data.ageDistribution) {
             var histData = {};
             histData.INTERVAL_SIZE = 1;
-            histData.MIN = 0;
-            histData.MAX = 100;
-            histData.INTERVALS = 100;
-            histData.DATA = {
-                COUNT_VALUE : [], INTERVAL_INDEX : [], PERCENT_VALUE : []
-            };
-            $.each(data, function () {
-                histData.DATA.COUNT_VALUE.push(+this.COUNT_VALUE);
-                histData.DATA.INTERVAL_INDEX.push(+this.INTERVAL_INDEX);
-                histData.DATA.PERCENT_VALUE.push(+this.PERCENT_VALUE);
-            });
-            d3.selectAll("#age_dist svg").remove();
-            var ageAtFirstObservationData = common.mapHistogram(histData);
-            var ageAtFirstObservationHistogram = new jnj_chart.histogram();
-            ageAtFirstObservationHistogram.render(ageAtFirstObservationData, "#age_dist", 460, 195, {
-                xFormat: d3.format('d'),
-                xLabel: 'Age',
-                yLabel: 'People'
-            });
-        });
+            histData.DATA = common.normalizeArray(data.ageDistribution, true);
+            if (!histData.DATA.empty) {
+                histData.MIN = 0;
+                histData.MAX = 100;
+                histData.INTERVALS = 100;
+                d3.selectAll("#age_dist svg").remove();
+                var ageAtFirstObservationData = common.mapHistogram(histData);
+                var ageAtFirstObservationHistogram = new jnj_chart.histogram();
+                ageAtFirstObservationHistogram.render(ageAtFirstObservationData, "#age_dist", 460, 195, {
+                    xFormat: d3.format('d'),
+                    xLabel: 'Age',
+                    yLabel: 'People'
+                });
+            }
+        }
     };
 
 

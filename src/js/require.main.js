@@ -34,7 +34,8 @@ require.config({
         'ohdsi_common' : '../../lib/ohdsi/common',
         'heracles_common' : 'heracles-common',
         "datatables": "../../lib/datatables/jquery.datatables",
-        "datatables-colvis": "../../lib/datatables/jquery.datatables.colvis.min"
+        "datatables-colvis": "../../lib/datatables/jquery.datatables.colvis.min",
+        "colorbrewer" : "../../lib/colorbrewer/colorbrewer"
     },
     priority: [
         "angular"

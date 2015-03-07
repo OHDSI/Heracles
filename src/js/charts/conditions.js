@@ -1,11 +1,13 @@
-define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "datatables-colvis"],
-    function ($, bootstrap, d3, jnj_chart, common, DataTables, DataTablesColvis) {
+define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "datatables-colvis", "colorbrewer"],
+    function ($, bootstrap, d3, jnj_chart, common, DataTables, DataTablesColvis, colorbrewer) {
 
     function ConditionRenderer() {}
     ConditionRenderer.prototype = {};
     ConditionRenderer.prototype.constructor = ConditionRenderer;
 
     ConditionRenderer.render = function(cohort) {
+        d3.selectAll("svg").remove();
+
         var id = cohort.id;
         this.baseUrl = getWebApiUrl() + '/cohortresults/' + id;
 
@@ -98,7 +100,10 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 left: 5,
                                 right: 200,
                                 bottom: 5
-                            }
+                            },
+                            colors : d3.scale.ordinal()
+                                .domain(conditionType)
+                                .range(colorbrewer.Paired[10])
                         });
                     }
 
@@ -169,8 +174,8 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             yFormat: d3.format("0.2f"),
                             tickPadding: 20,
                             colors: d3.scale.ordinal()
-                                .domain(["MALE", "FEMALE"])
-                                .range(["#1f77b4", "#ff7f0e"])
+                                .domain(["MALE", "FEMALE", "UNKNOWN",])
+                                .range(["#1F78B4", "#FB9A99", "#33A02C"])
 
                         });
                     }
@@ -277,6 +282,9 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             },
                             getcolorvalue: function (node) {
                                 return node.records_per_person;
+                            },
+                            getcolorrange: function() {
+                                return colorbrewer.Paired[3];
                             },
                             getcontent: function (node) {
                                 var result = '',

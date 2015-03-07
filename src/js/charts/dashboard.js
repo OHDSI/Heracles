@@ -10,7 +10,9 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
     DashboardRenderer.render = function(cohort) {
         var id = cohort.id;
         this.baseUrl = getWebApiUrl() + '/cohortresults/' + id;
+        d3.selectAll("svg").remove();
 
+        $('#spinner-modal').modal('show');
         $.getJSON(this.baseUrl + '/dashboard', function(data) {
             // gender
             d3.selectAll("#genderPie svg").remove();
@@ -18,7 +20,7 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
             genderDonut.render(common.mapConceptData(data.gender), "#genderPie", 260, 100, {
                 colors: d3.scale.ordinal()
                     .domain([8507, 8551, 8532])
-                    .range(["#1f77b4", " #CCC", "#ff7f0e"]),
+                    .range(["#1F78B4", "#33A02C", "#FB9A99"]),
                 margin: {
                     top: 5,
                     bottom: 10,
@@ -96,6 +98,10 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
                 xLabel: "Date",
                 yLabel: "People"
             });
+            $('#spinner-modal').modal('hide');
+        })
+        .fail(function() {
+                $('#spinner-modal').modal('hide');
         });
 
     };

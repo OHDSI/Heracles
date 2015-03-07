@@ -8,21 +8,26 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                 $scope.message = {};
                 $scope.visualizationPacks = {
                     "Default" : [1, 2 ,101, 108, 110],
-                    "Condition" : [1, 116, 117, 400, 401, 402, 404, 405, 406]
+                    "Drug Exposure" : [700, 701, 706, 715, 705, 704, 116, 702, 117, 717, 716, 1],
+                    "Condition" : [116, 117, 400, 401, 402, 404, 405, 406, 1],
+                    "Drug Era" : [900, 907, 906, 904, 902, 116, 117, 1],
+                    "Condition Era" : [1000, 1007, 1006, 1004, 1002, 116, 117, 1]
                 };
                 $scope.analysisCount = 0;
 
                 $scope.showCohort = function(datum) {
+                    $('#spinner-modal').modal('show');
+                    $("#run-analysis-container").hide();
                     $scope.analysisCount = 0;
                     $scope.selected = datum;
                     //$http.get('src/data/sample-cohort-explorer.json')
                     $http.get(getWebApiUrl() + "/cohortanalysis/" + datum.id + "/summary")
-                        .then(function(res){
-                            $scope.cohort = res.data;
+                        .success(function(data, status, headers, config) {
+                            $scope.cohort = data;
 
-                            if (res.data.analyses) {
+                            if (data.analyses) {
                                 var map = {};
-                                $.each(res.data.analyses, function() {
+                                $.each(data.analyses, function() {
 
                                     var prettifyAnalysisType = _.startCase(this.analysisType.toLowerCase());
                                     if (!$scope.cohort.firstAnalysis) {
@@ -48,9 +53,14 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                                 HeraclesD3.showGenderDistribution($scope.cohort.genderDistribution);
                             }
                             */
-
-                            HeraclesD3.renderOHDSIDefaults($scope.cohort.cohortDefinition);
                             $("#run-analysis-container").show();
+                            HeraclesD3.renderOHDSIDefaults($scope.cohort);
+
+                            $('#spinner-modal').modal('hide');
+                        }).error(function(data, status, headers, config) {
+                            console.log("failed to load analyses");
+                            $("#run-analysis-container").show();
+                            $('#spinner-modal').modal('hide');
                         });
                 };
 
@@ -86,12 +96,21 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                 $scope.selectVizPack = function($event, vizType) {
                     var vals = $scope.visualizationPacks[vizType];
                     if (vals) {
+                        var first;
                         $.each(vals, function() {
+                            if (!first) {
+                                first = $(".toggle-checkbox-item[analysis-id=" + this + "]");
+                            }
                             if (!$(".toggle-checkbox-item[analysis-id=" + this + "]").prop("checked")) {
                                 $(".toggle-checkbox-item[analysis-id=" + this + "]").prop("checked", true);
                                 $scope.analysisClick();
                             }
                         });
+                        if (first) {
+                            $('#auto-filter-div').animate({
+                                scrollTop: ($('#auto-filter-div').scrollTop() + first.position().top - $('#auto-filter-div').height()/2 + first.height()/2)
+                            }, 1000);
+                        }
                     }
                 };
 

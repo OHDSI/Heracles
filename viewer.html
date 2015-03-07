@@ -80,8 +80,10 @@
     </div>
 
     <div class="container detail-container">
-            <div id="chart-wrapper" ng-include="template">
+        <div id="chart-container">
+            <div id="chart-wrapper" ng-include="template" ng-cloak>
             </div>
+        </div>
     </div>
 
     <div class="modal fade" id="spinner-modal">

@@ -1,13 +1,14 @@
 @import "typeahead.css";
 @import url("../../lib/bootstrap/bootstrap.css");
 @import url("../../lib/jasny-bootstrap/css/jasny-bootstrap.min.css");
+@import url("../../lib/colorbrewer/colorbrewer.css");
 
 .sub-text {
 	color: #BEEDF6;
 }
 
 .sub-text-alt {
-    color: #D4C5F8;
+    color: #C9F3E5;
 }
 
 .header-sub {
@@ -24,12 +25,12 @@
 }
 
 .jumbotron-alt {
-    background: #6E46CF;
+    background: #229C73;
     color: white;
-    background: -webkit-linear-gradient(#6E46CF, #2E0A84); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(#6E46CF, #2E0A84); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(#6E46CF, #2E0A84); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(#6E46CF, #2E0A84); /* Standard syntax */
+    background: -webkit-linear-gradient(#229C73, #026A48); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#229C73, #026A48); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#229C73, #026A48); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#229C73, #026A48); /* Standard syntax */
 }
 
 .large-input {
@@ -581,4 +582,8 @@ table.data td {
     color: rgba(255,255,255,1);
     box-shadow: none;
     border: none;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
 }

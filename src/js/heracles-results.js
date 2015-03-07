@@ -1,12 +1,13 @@
 // configure angular
 require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_common',
-        '../js/charts/dashboard', '../js/charts/person', '../js/charts/conditions'],
+        '../js/charts/dashboard', '../js/charts/person', '../js/charts/conditions', '../js/charts/drugExposures'],
     function (angular, $, b, HeraclesD3, j, heraclesCommon,
-              DashboardRenderer, PersonRenderer, ConditionRenderer) {
+              DashboardRenderer, PersonRenderer, ConditionRenderer, DrugExposureRenderer) {
         var renderers = {
             'dashboard' : DashboardRenderer,
             'person' : PersonRenderer,
-            'condition' : ConditionRenderer
+            'condition' : ConditionRenderer,
+            'drugExposures' : DrugExposureRenderer
         };
         angular.element().ready(function() {
             // setup angular controller on angular ready
@@ -82,6 +83,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                 };
 
                 $scope.renderVisualizationSection = function(id) {
+                    $("#chart-container").hide();
                     $scope.active = id;
                     $scope.template = 'src/templates/' + id + '.html';
                     $scope.refreshCommonData();
@@ -90,6 +92,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                     if (renderer) {
                         renderer.render(CohortService.getCohort());
                     }
+                    $("#chart-container").show();
                 };
 
                 // include other scripts
