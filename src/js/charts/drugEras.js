@@ -1,11 +1,11 @@
 define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "datatables-colvis", "colorbrewer"],
     function ($, bootstrap, d3, jnj_chart, common, DataTables, DataTablesColvis, colorbrewer) {
 
-        function ConditionErasRenderer() {}
-        ConditionErasRenderer.prototype = {};
-        ConditionErasRenderer.prototype.constructor = ConditionErasRenderer;
+        function DrugErasRenderer() {}
+        DrugErasRenderer.prototype = {};
+        DrugErasRenderer.prototype.constructor = DrugErasRenderer;
 
-        ConditionErasRenderer.render = function(cohort) {
+        DrugErasRenderer.render = function(cohort) {
             d3.selectAll("svg").remove();
 
             var id = cohort.id;
@@ -15,14 +15,14 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
             var datatable;
 
             // bind to all matching elements upon creation
-            $(document).on('click', '#conditionera_table tbody tr', function () {
-                $('#conditionera_table tbody tr.selected').removeClass('selected');
+            $(document).on('click', '#drugera_table tbody tr', function () {
+                $('#drugera_table tbody tr.selected').removeClass('selected');
                 $(this).addClass('selected');
                 var data = datatable.data()[datatable.row(this)[0]];
                 if (data) {
                     var did = data.concept_id;
-                    var concept_name = data.snomed;
-                    ConditionErasRenderer.drilldown(did, concept_name);
+                    var concept_name = data.ingredient;
+                    DrugErasRenderer.drilldown(did, concept_name);
                 }
             });
 
@@ -61,20 +61,20 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                 }
             }
 
-            ConditionErasRenderer.drilldown = function (concept_id, concept_name) {
+            DrugErasRenderer.drilldown = function (concept_id, concept_name) {
                 $('#spinner-modal').modal('show');
 
                 $('.drilldown svg').remove();
-                $('#conditionerasDrilldownTitle').text(concept_name);
-                $('#reportConditionErasDrilldown').removeClass('hidden');
+                $('#drugErasDrilldownTitle').text(concept_name);
+                $('#reportDrugErasDrilldown').removeClass('hidden');
 
                 $.ajax({
                     type: "GET",
-                    url: ConditionErasRenderer.baseUrl + '/conditionera/' + concept_id,
+                    url: DrugErasRenderer.baseUrl + '/drugera/' + concept_id,
                     success: function (data) {
-                        // age at first diagnosis visualization
-                        boxplot_helper(data.ageAtFirstDiagnosis,'#conditioneras_age_at_first_diagnosis',500,300,'Gender','Age at First Diagnosis');
-                        boxplot_helper(data.lengthOfEra,'#conditioneras_length_of_era',500,300,'', 'Days');
+                        // age at first exposure visualization
+                        boxplot_helper(data.ageAtFirstExposure,'#drugeras_age_at_first_exposure',500,300,'Gender','Age at First Exposure');
+                        boxplot_helper(data.lengthOfEra,'#drugeras_length_of_era',500,300,'', 'Days');
 
                         // prevalence by month
                         var byMonth = common.normalizeArray(data.prevalenceByMonth, true);
@@ -85,9 +85,9 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 yPercent: 'Y_PREVALENCE_1000PP'
                             });
 
-                            d3.selectAll("#conditioneraPrevalenceByMonth svg").remove();
+                            d3.selectAll("#drugeraPrevalenceByMonth svg").remove();
                             var prevalenceByMonth = new jnj_chart.line();
-                            prevalenceByMonth.render(byMonthSeries, "#conditioneraPrevalenceByMonth", 1000, 300, {
+                            prevalenceByMonth.render(byMonthSeries, "#drugeraPrevalenceByMonth", 1000, 300, {
                                 xScale: d3.time.scale().domain(d3.extent(byMonthSeries[0].values, function (d) {
                                     return d.xValue;
                                 })),
@@ -244,7 +244,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
             var format_fixed = d3.format('.2f');
             var format_comma = d3.format(',');
 
-            $('#reportConditionEras svg').remove();
+            $('#reportDrugEras svg').remove();
 
             var width = 1000;
             var height = 250;
@@ -253,7 +253,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
 
             $.ajax({
                 type: "GET",
-                url: ConditionErasRenderer.baseUrl + '/raw/conditionera/sqlConditionEraTreemap',
+                url: DrugErasRenderer.baseUrl + '/raw/drugera/sqlDrugEraTreemap',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
                     var normalizedData = common.normalizeDataframe(common.normalizeArray(data, true));
@@ -263,19 +263,18 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             var conceptDetails = this.CONCEPT_PATH[i].split('||');
                             return {
                                 concept_id: this.CONCEPT_ID[i],
-                                soc: conceptDetails[0],
-                                hlgt: conceptDetails[1],
-                                hlt: conceptDetails[2],
-                                pt: conceptDetails[3],
-                                snomed: conceptDetails[4],
+                                atc1: conceptDetails[0],
+                                atc3: conceptDetails[1],
+                                atc5: conceptDetails[2],
+                                ingredient: conceptDetails[3],
                                 num_persons: format_comma(this.NUM_PERSONS[i]),
                                 percent_persons: format_pct(this.PERCENT_PERSONS[i]),
-                                length_of_era: this.LENGTH_OF_ERA[i]
+                                length_of_era: format_fixed(this.LENGTH_OF_ERA[i])
                             };
                         }, data);
 
-                        datatable = $('#conditionera_table').DataTable({
-                            order: [ 6, 'desc' ],
+                        datatable = $('#drugera_table').DataTable({
+                            order: [ 5, 'desc' ],
                             dom: 'Clfrtip',
                             data: table_data,
                             columns: [
@@ -284,21 +283,17 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                     visible: false
                                 },
                                 {
-                                    data: 'soc'
+                                    data: 'atc1'
                                 },
                                 {
-                                    data: 'hlgt',
+                                    data: 'atc3',
                                     visible: false
                                 },
                                 {
-                                    data: 'hlt'
+                                    data: 'atc5'
                                 },
                                 {
-                                    data: 'pt',
-                                    visible: false
-                                },
-                                {
-                                    data: 'snomed'
+                                    data: 'ingredient'
                                 },
                                 {
                                     data: 'num_persons',
@@ -319,13 +314,13 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             destroy: true
                         });
 
-                        $('#reportConditionEras').show();
+                        $('#reportDrugEras').show();
 
                         var tree = buildHierarchyFromJSON(data, threshold);
                         var treemap = new jnj_chart.treemap();
                         treemap.render(tree, '#treemap_container', width, height, {
                             onclick: function (node) {
-                                ConditionErasRenderer.drilldown(node.id, node.name);
+                                DrugErasRenderer.drilldown(node.id, node.name);
                             },
                             getsizevalue: function (node) {
                                 return node.num_persons;
@@ -364,9 +359,9 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
 
             });
 
-            return ConditionErasRenderer;
+            return DrugErasRenderer;
 
         };
 
-        return ConditionErasRenderer;
+        return DrugErasRenderer;
     });
