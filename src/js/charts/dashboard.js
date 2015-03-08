@@ -48,35 +48,36 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
 
             // cumulative observation
             var result = common.normalizeArray(data.cumulativeObservation, false);
-            d3.selectAll("#cumulativeobservation svg").remove();
-            var cumulativeObservationLine = new jnj_chart.line();
-            var cumulativeData = common.normalizeDataframe(result).X_LENGTH_OF_OBSERVATION
-                .map(function (d, i) {
-                    var item = {
-                        xValue: this.X_LENGTH_OF_OBSERVATION[i],
-                        yValue: this.Y_PERCENT_PERSONS[i]
-                    };
-                    return item;
-                }, result);
+            if (!result.empty) {
+                d3.selectAll("#cumulativeobservation svg").remove();
+                var cumulativeObservationLine = new jnj_chart.line();
+                var cumulativeData = common.normalizeDataframe(result).X_LENGTH_OF_OBSERVATION
+                    .map(function (d, i) {
+                        var item = {
+                            xValue: this.X_LENGTH_OF_OBSERVATION[i],
+                            yValue: this.Y_PERCENT_PERSONS[i]
+                        };
+                        return item;
+                    }, result);
 
-            var cumulativeObservationXLabel = 'Days';
-            if (cumulativeData.length > 0) {
-                if (cumulativeData.slice(-1)[0].xValue - cumulativeData[0].xValue > 1000) {
-                    // convert x data to years
-                    cumulativeData.forEach(function (d) {
-                        d.xValue = d.xValue / 365.25;
-                    });
-                    cumulativeObservationXLabel = 'Years';
+                var cumulativeObservationXLabel = 'Days';
+                if (cumulativeData.length > 0) {
+                    if (cumulativeData.slice(-1)[0].xValue - cumulativeData[0].xValue > 1000) {
+                        // convert x data to years
+                        cumulativeData.forEach(function (d) {
+                            d.xValue = d.xValue / 365.25;
+                        });
+                        cumulativeObservationXLabel = 'Years';
+                    }
                 }
+
+                cumulativeObservationLine.render(cumulativeData, "#cumulativeobservation", 450, 260, {
+                    yFormat: d3.format('0%'),
+                    interpolate: "step-before",
+                    xLabel: cumulativeObservationXLabel,
+                    yLabel: 'Percent of Population'
+                });
             }
-
-            cumulativeObservationLine.render(cumulativeData, "#cumulativeobservation", 450, 260, {
-                yFormat: d3.format('0%'),
-                interpolate: "step-before",
-                xLabel: cumulativeObservationXLabel,
-                yLabel: 'Percent of Population'
-            });
-
             // observedByMonth
             var observedByMonth = common.normalizeArray(data.observedByMonth, false);
 
