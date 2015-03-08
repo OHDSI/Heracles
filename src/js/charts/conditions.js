@@ -11,7 +11,6 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
         var id = cohort.id;
         this.baseUrl = getWebApiUrl() + '/cohortresults/' + id;
 
-        var condition_occurrence = {};
         var threshold;
         var datatable;
 
@@ -19,18 +18,19 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
         $(document).on('click', '#condition_table tbody tr', function () {
             $('#condition_table tbody tr.selected').removeClass('selected');
             $(this).addClass('selected');
-            id = datatable.data()[datatable.row(this)[0]].concept_id;
-            concept_name = datatable.data()[datatable.row(this)[0]].snomed;
-            condition_occurrence.drilldown(id, concept_name);
+            var data = datatable.data()[datatable.row(this)[0]];
+            if (data) {
+                var did =  data.concept_id;
+                var concept_name = data.snomed;
+                ConditionRenderer.drilldown(did, concept_name);
+            }
         });
 
-        $('#myTab a').click(function (e) {
-            e.preventDefault();
-            $(this).tab('show');
+        $(document).on( 'shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
             $(window).trigger("resize");
         });
 
-        condition_occurrence.drilldown = function (concept_id, concept_name) {
+        ConditionRenderer.drilldown = function (concept_id, concept_name) {
             $('#spinner-modal').modal('show');
 
             $('.drilldown svg').remove();
@@ -44,8 +44,8 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                     // age at first diagnosis visualization
                     d3.selectAll("#ageAtFirstDiagnosis svg").remove();
                     var boxplot = new jnj_chart.boxplot();
-                    bpseries = [];
-                    bpdata = common.normalizeArray(data.ageAtFirstDiagnosis, true);
+                    var bpseries = [];
+                    var bpdata = common.normalizeArray(data.ageAtFirstDiagnosis, true);
                     if (!bpdata.empty) {
                         for (i = 0; i < bpdata.CATEGORY.length; i++) {
                             bpseries.push({
@@ -109,11 +109,10 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
 
                     // render trellis
                     d3.selectAll("#trellisLinePlot svg").remove();
-                    trellisData = common.normalizeArray(data.prevalenceByGenderAgeYear, true);
+                    var trellisData = common.normalizeArray(data.prevalenceByGenderAgeYear, true);
 
                     if (!trellisData.empty) {
                         var allDeciles = ["0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80-89", "90-99"];
-                        var allSeries = ["MALE", "FEMALE"];
                         var minYear = d3.min(trellisData.X_CALENDAR_YEAR),
                             maxYear = d3.max(trellisData.X_CALENDAR_YEAR);
 
@@ -154,7 +153,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         dataByDecile.forEach(function (trellis) {
                             trellis.values.forEach(function (series) {
                                 series.values = yearRange.map(function (year) {
-                                    yearData = series.values.filter(function (f) {
+                                    var yearData = series.values.filter(function (f) {
                                         return f.X_CALENDAR_YEAR === year;
                                     })[0] || seriesInitializer(trellis.key, series.key, year, 0);
                                     yearData.date = new Date(year, 0, 1);
@@ -187,133 +186,6 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
             });
         };
 
-        condition_occurrence.render = function (url) {
-
-            $('#spinner-modal').modal('show');
-            format_pct = d3.format('.2%');
-            format_fixed = d3.format('.2f');
-            format_comma = d3.format(',');
-
-            $('#reportConditionOccurrences svg').remove();
-
-            width = 1000;
-            height = 250;
-            minimum_area = 50;
-            threshold = minimum_area / (width * height);
-
-            $.ajax({
-                type: "GET",
-                url: url,
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    var normalizedData = common.normalizeDataframe(common.normalizeArray(data, true));
-                    data = normalizedData;
-                    if (!data.empty) {
-                        var table_data = normalizedData.CONCEPT_PATH.map(function (d, i) {
-                            conceptDetails = this.CONCEPT_PATH[i].split('||');
-                            return {
-                                concept_id: this.CONCEPT_ID[i],
-                                soc: conceptDetails[0],
-                                hlgt: conceptDetails[1],
-                                hlt: conceptDetails[2],
-                                pt: conceptDetails[3],
-                                snomed: conceptDetails[4],
-                                num_persons: format_comma(this.NUM_PERSONS[i]),
-                                percent_persons: format_pct(this.PERCENT_PERSONS[i]),
-                                records_per_person: format_fixed(this.RECORDS_PER_PERSON[i])
-                            };
-                        }, data);
-
-                        datatable = $('#condition_table').DataTable({
-                            order: [6, 'desc'],
-                            dom: 'Clfrtip',
-                            data: table_data,
-                            columns: [
-                                {
-                                    data: 'concept_id',
-                                    visible: false
-                                },
-                                {
-                                    data: 'soc'
-                                },
-                                {
-                                    data: 'hlgt',
-                                    visible: false
-                                },
-                                {
-                                    data: 'hlt'
-                                },
-                                {
-                                    data: 'pt',
-                                    visible: false
-                                },
-                                {
-                                    data: 'snomed'
-                                },
-                                {
-                                    data: 'num_persons',
-                                    className: 'numeric'
-                                },
-                                {
-                                    data: 'percent_persons',
-                                    className: 'numeric'
-                                },
-                                {
-                                    data: 'records_per_person',
-                                    className: 'numeric'
-                                }
-                            ],
-                            pageLength: 5,
-                            lengthChange: false,
-                            deferRender: true,
-                            destroy: true
-                        });
-
-                        $('#reportConditionOccurrences').show();
-
-                        tree = buildHierarchyFromJSON(data, threshold);
-                        var treemap = new jnj_chart.treemap();
-                        treemap.render(tree, '#treemap_container', width, height, {
-                            onclick: function (node) {
-                                condition_occurrence.drilldown(node.id, node.name);
-                            },
-                            getsizevalue: function (node) {
-                                return node.num_persons;
-                            },
-                            getcolorvalue: function (node) {
-                                return node.records_per_person;
-                            },
-                            getcolorrange: function() {
-                                return colorbrewer.Paired[3];
-                            },
-                            getcontent: function (node) {
-                                var result = '',
-                                    steps = node.path.split('||'),
-                                    i = steps.length - 1;
-                                result += '<div class="pathleaf">' + steps[i] + '</div>';
-                                result += '<div class="pathleafstat">Prevalence: ' + format_pct(node.pct_persons) + '</div>';
-                                result += '<div class="pathleafstat">Number of People: ' + format_comma(node.num_persons) + '</div>';
-                                result += '<div class="pathleafstat">Records per Person: ' + format_fixed(node.records_per_person) + '</div>';
-                                return result;
-                            },
-                            gettitle: function (node) {
-                                var title = '',
-                                    steps = node.path.split('||');
-                                for (i = 0; i < steps.length - 1; i++) {
-                                    title += ' <div class="pathstep">' + Array(i + 1).join('&nbsp;&nbsp') + steps[i] + ' </div>';
-                                }
-                                return title;
-                            }
-                        });
-                        $('[data-toggle="popover"]').popover();
-                    }
-                    $('#spinner-modal').modal('hide');
-                }, error : function(data) {
-                    $('#spinner-modal').modal('hide');
-                }
-
-            });
-        };
 
         function buildHierarchyFromJSON(data, threshold) {
             var total = 0;
@@ -377,9 +249,132 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
         }
 
         // show the treemap
-        condition_occurrence.render(ConditionRenderer.baseUrl + '/raw/condition/sqlConditionTreemap');
+        $('#spinner-modal').modal('show');
+        var format_pct = d3.format('.2%');
+        var format_fixed = d3.format('.2f');
+        var format_comma = d3.format(',');
 
-        return condition_occurrence;
+        $('#reportConditionOccurrences svg').remove();
+
+        var width = 1000;
+        var height = 250;
+        var minimum_area = 50;
+        threshold = minimum_area / (width * height);
+
+        $.ajax({
+            type: "GET",
+            url: ConditionRenderer.baseUrl + '/raw/condition/sqlConditionTreemap',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                var normalizedData = common.normalizeDataframe(common.normalizeArray(data, true));
+                data = normalizedData;
+                if (!data.empty) {
+                    var table_data = normalizedData.CONCEPT_PATH.map(function (d, i) {
+                        conceptDetails = this.CONCEPT_PATH[i].split('||');
+                        return {
+                            concept_id: this.CONCEPT_ID[i],
+                            soc: conceptDetails[0],
+                            hlgt: conceptDetails[1],
+                            hlt: conceptDetails[2],
+                            pt: conceptDetails[3],
+                            snomed: conceptDetails[4],
+                            num_persons: format_comma(this.NUM_PERSONS[i]),
+                            percent_persons: format_pct(this.PERCENT_PERSONS[i]),
+                            records_per_person: format_fixed(this.RECORDS_PER_PERSON[i])
+                        };
+                    }, data);
+
+                    datatable = $('#condition_table').DataTable({
+                        order: [6, 'desc'],
+                        dom: 'Clfrtip',
+                        data: table_data,
+                        columns: [
+                            {
+                                data: 'concept_id',
+                                visible: false
+                            },
+                            {
+                                data: 'soc'
+                            },
+                            {
+                                data: 'hlgt',
+                                visible: false
+                            },
+                            {
+                                data: 'hlt'
+                            },
+                            {
+                                data: 'pt',
+                                visible: false
+                            },
+                            {
+                                data: 'snomed'
+                            },
+                            {
+                                data: 'num_persons',
+                                className: 'numeric'
+                            },
+                            {
+                                data: 'percent_persons',
+                                className: 'numeric'
+                            },
+                            {
+                                data: 'records_per_person',
+                                className: 'numeric'
+                            }
+                        ],
+                        pageLength: 5,
+                        lengthChange: false,
+                        deferRender: true,
+                        destroy: true
+                    });
+
+                    $('#reportConditionOccurrences').show();
+
+                    tree = buildHierarchyFromJSON(data, threshold);
+                    var treemap = new jnj_chart.treemap();
+                    treemap.render(tree, '#treemap_container', width, height, {
+                        onclick: function (node) {
+                            ConditionRenderer.drilldown(node.id, node.name);
+                        },
+                        getsizevalue: function (node) {
+                            return node.num_persons;
+                        },
+                        getcolorvalue: function (node) {
+                            return node.records_per_person;
+                        },
+                        getcolorrange: function() {
+                            return colorbrewer.Paired[3];
+                        },
+                        getcontent: function (node) {
+                            var result = '',
+                                steps = node.path.split('||'),
+                                i = steps.length - 1;
+                            result += '<div class="pathleaf">' + steps[i] + '</div>';
+                            result += '<div class="pathleafstat">Prevalence: ' + format_pct(node.pct_persons) + '</div>';
+                            result += '<div class="pathleafstat">Number of People: ' + format_comma(node.num_persons) + '</div>';
+                            result += '<div class="pathleafstat">Records per Person: ' + format_fixed(node.records_per_person) + '</div>';
+                            return result;
+                        },
+                        gettitle: function (node) {
+                            var title = '',
+                                steps = node.path.split('||');
+                            for (i = 0; i < steps.length - 1; i++) {
+                                title += ' <div class="pathstep">' + Array(i + 1).join('&nbsp;&nbsp') + steps[i] + ' </div>';
+                            }
+                            return title;
+                        }
+                    });
+                    $('[data-toggle="popover"]').popover();
+                }
+                $('#spinner-modal').modal('hide');
+            }, error : function(data) {
+                $('#spinner-modal').modal('hide');
+            }
+
+        });
+
+        return ConditionRenderer;
 
     };
 

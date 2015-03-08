@@ -1,13 +1,16 @@
 // configure angular
 require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_common',
-        '../js/charts/dashboard', '../js/charts/person', '../js/charts/conditions', '../js/charts/drugExposures'],
+        '../js/charts/dashboard', '../js/charts/person', '../js/charts/conditions', '../js/charts/drugExposures',
+        '../js/charts/conditionEras'],
     function (angular, $, b, HeraclesD3, j, heraclesCommon,
-              DashboardRenderer, PersonRenderer, ConditionRenderer, DrugExposureRenderer) {
+              DashboardRenderer, PersonRenderer, ConditionRenderer, DrugExposureRenderer,
+              ConditionErasRenderer) {
         var renderers = {
             'dashboard' : DashboardRenderer,
             'person' : PersonRenderer,
             'condition' : ConditionRenderer,
-            'drugExposures' : DrugExposureRenderer
+            'drugExposures' : DrugExposureRenderer,
+            'conditionEras' : ConditionErasRenderer
         };
         angular.element().ready(function() {
             // setup angular controller on angular ready
