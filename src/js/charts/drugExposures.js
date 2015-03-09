@@ -39,18 +39,18 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                 if (!normalized.empty) {
                     var bpdata = (common.normalizeDataframe(normalized));
 
-                    for (var i = 0; i < bpdata.CATEGORY.length; i++) {
+                    for (var i = 0; i < bpdata.category.length; i++) {
                         bpseries.push({
-                            Category: bpdata.CATEGORY[i],
-                            min: bpdata.MIN_VALUE[i],
-                            max: bpdata.MAX_VALUE[i],
-                            median: bpdata.MEDIAN_VALUE[i],
-                            LIF: bpdata.P10_VALUE[i],
-                            q1: bpdata.P25_VALUE[i],
-                            q3: bpdata.P75_VALUE[i],
-                            UIF: bpdata.P90_VALUE[i]
+                            Category: bpdata.category[i],
+                            min: bpdata.minValue[i],
+                            max: bpdata.maxValue[i],
+                            median: bpdata.medianValue[i],
+                            LIF: bpdata.p10Value[i],
+                            q1: bpdata.p25Value[i],
+                            q3: bpdata.p75Value[i],
+                            UIF: bpdata.p90Value[i]
                         });
-                        yMax = Math.max(yMax, bpdata.P90_VALUE[i]);
+                        yMax = Math.max(yMax, bpdata.p90Value[i]);
                     }
 
 
@@ -100,9 +100,9 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         var prevByMonth = common.normalizeArray(data.prevalenceByMonth, true);
                         if (!prevByMonth.empty) {
                             var byMonthSeries = common.mapMonthYearDataToSeries(prevByMonth, {
-                                dateField: 'X_CALENDAR_MONTH',
-                                yValue: 'Y_PREVALENCE_1000PP',
-                                yPercent: 'Y_PREVALENCE_1000PP'
+                                dateField: 'xCalendarMonth',
+                                yValue: 'yPrevalence1000Pp',
+                                yPercent: 'yPrevalence1000Pp'
                             });
 
                             d3.selectAll("#drugPrevalenceByMonth svg").remove();
@@ -124,31 +124,31 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         if (!trellisData.empty) {
 
                             var allDeciles = ["0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80-89", "90-99"];
-                            var minYear = d3.min(trellisData.X_CALENDAR_YEAR),
-                                maxYear = d3.max(trellisData.X_CALENDAR_YEAR);
+                            var minYear = d3.min(trellisData.xCalendarYear),
+                                maxYear = d3.max(trellisData.xCalendarYear);
 
                             var seriesInitializer = function (tName, sName, x, y) {
                                 return {
-                                    TRELLIS_NAME: tName,
-                                    SERIES_NAME: sName,
-                                    X_CALENDAR_YEAR: x,
-                                    Y_PREVALENCE_1000PP: y
+                                    trellisName: tName,
+                                    seriesName: sName,
+                                    xCalendarYear: x,
+                                    yPrevalence1000Pp: y
                                 };
                             };
 
                             var nestByDecile = d3.nest()
                                 .key(function (d) {
-                                    return d.TRELLIS_NAME;
+                                    return d.trellisName;
                                 })
                                 .key(function (d) {
-                                    return d.SERIES_NAME;
+                                    return d.seriesName;
                                 })
                                 .sortValues(function (a, b) {
-                                    return a.X_CALENDAR_YEAR - b.X_CALENDAR_YEAR;
+                                    return a.xCalendarYear - b.xCalendarYear;
                                 });
 
                             // map data into chartable form
-                            var normalizedSeries = trellisData.TRELLIS_NAME.map(function (d, i) {
+                            var normalizedSeries = trellisData.trellisName.map(function (d, i) {
                                 var item = {};
                                 var container = this;
                                 d3.keys(container).forEach(function (p) {
@@ -165,7 +165,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 trellis.values.forEach(function (series) {
                                     series.values = yearRange.map(function (year) {
                                         var yearData = series.values.filter(function (f) {
-                                            return f.X_CALENDAR_YEAR === year;
+                                            return f.xCalendarYear === year;
                                         })[0] || seriesInitializer(trellis.key, series.key, year, 0);
                                         yearData.date = new Date(year, 0, 1);
                                         return yearData;
@@ -204,12 +204,12 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                     "children": []
                 };
 
-                for (i = 0; i < data.PERCENT_PERSONS.length; i++) {
-                    total += data.PERCENT_PERSONS[i];
+                for (i = 0; i < data.percentPersons.length; i++) {
+                    total += data.percentPersons[i];
                 }
 
-                for (var i = 0; i < data.CONCEPT_PATH.length; i++) {
-                    var parts = data.CONCEPT_PATH[i].split("||");
+                for (var i = 0; i < data.conceptPath.length; i++) {
+                    var parts = data.conceptPath[i].split("||");
                     var currentNode = root;
                     for (var j = 0; j < parts.length; j++) {
                         var children = currentNode.children;
@@ -238,17 +238,17 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             // Reached the end of the path; create a leaf node.
                             childNode = {
                                 "name": nodeName,
-                                "num_persons": data.NUM_PERSONS[i],
-                                "id": data.CONCEPT_ID[i],
-                                "path": data.CONCEPT_PATH[i],
-                                "pct_persons": data.PERCENT_PERSONS[i],
-                                "records_per_person": data.RECORDS_PER_PERSON[i]
+                                "num_persons": data.numPersons[i],
+                                "id": data.conceptId[i],
+                                "path": data.conceptPath[i],
+                                "pct_persons": data.percentPersons[i],
+                                "records_per_person": data.recordsPerPerson[i]
                             };
 
                             // we only include nodes with sufficient size in the treemap display
                             // sufficient size is configurable in the calculation of threshold
                             // which is a function of the number of pixels in the treemap display
-                            if ((data.PERCENT_PERSONS[i] / total) > threshold) {
+                            if ((data.percentPersons[i] / total) > threshold) {
                                 children.push(childNode);
                             }
                         }
@@ -270,24 +270,24 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
             threshold = minimum_area / (width * height);
             $.ajax({
                 type: "GET",
-                url: DrugExposureRenderer.baseUrl + '/raw/drug/sqlDrugTreemap',
+                url: DrugExposureRenderer.baseUrl + '/drug',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
                     var normalizedData = common.normalizeDataframe(common.normalizeArray(data, true));
                     data = normalizedData;
                     if (!data.empty) {
-                        var table_data = normalizedData.CONCEPT_PATH.map(function (d, i) {
-                            conceptDetails = this.CONCEPT_PATH[i].split('||');
+                        var table_data = normalizedData.conceptPath.map(function (d, i) {
+                            conceptDetails = this.conceptPath[i].split('||');
                             return {
-                                concept_id: this.CONCEPT_ID[i],
+                                concept_id: this.conceptId[i],
                                 atc1: conceptDetails[0],
                                 atc3: conceptDetails[1],
                                 atc5: conceptDetails[2],
                                 ingredient: conceptDetails[3],
                                 rxnorm: conceptDetails[4],
-                                num_persons: format_comma(this.NUM_PERSONS[i]),
-                                percent_persons: format_pct(this.PERCENT_PERSONS[i]),
-                                records_per_person: format_fixed(this.RECORDS_PER_PERSON[i])
+                                num_persons: format_comma(this.numPersons[i]),
+                                percent_persons: format_pct(this.percentPersons[i]),
+                                records_per_person: format_fixed(this.recordsPerPerson[i])
                             };
                         }, data);
 
@@ -336,7 +336,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             destroy: true
                         });
 
-                        tree = buildHierarchyFromJSON(data, threshold);
+                        var tree = buildHierarchyFromJSON(data, threshold);
                         var treemap = new jnj_chart.treemap();
                         treemap.render(tree, '#treemap_container', width, height, {
                             onclick: function (node) {

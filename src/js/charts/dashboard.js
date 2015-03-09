@@ -31,11 +31,11 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
 
             // age at first obs histogram
             var histData = {};
-            histData.INTERVAL_SIZE = 1;
-            histData.MIN = 0;
-            histData.MAX = 100;
-            histData.INTERVALS = 100;
-            histData.DATA = common.normalizeArray(data.ageAtFirstObservation, true);
+            histData.intervalSize = 1;
+            histData.min = 0;
+            histData.max = 100;
+            histData.intervals = 100;
+            histData.data = common.normalizeArray(data.ageAtFirstObservation, true);
 
             d3.selectAll("#ageatfirstobservation svg").remove();
             var ageAtFirstObservationData = common.mapHistogram(histData);
@@ -51,11 +51,11 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
             if (!result.empty) {
                 d3.selectAll("#cumulativeobservation svg").remove();
                 var cumulativeObservationLine = new jnj_chart.line();
-                var cumulativeData = common.normalizeDataframe(result).X_LENGTH_OF_OBSERVATION
+                var cumulativeData = common.normalizeDataframe(result).xLengthOfObservation
                     .map(function (d, i) {
                         var item = {
-                            xValue: this.X_LENGTH_OF_OBSERVATION[i],
-                            yValue: this.Y_PERCENT_PERSONS[i]
+                            xValue: this.xLengthOfObservation[i],
+                            yValue: this.yPercentPersons[i]
                         };
                         return item;
                     }, result);
@@ -82,9 +82,9 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
             var observedByMonth = common.normalizeArray(data.observedByMonth, false);
 
             var byMonthSeries = common.mapMonthYearDataToSeries(observedByMonth, {
-                dateField: 'MONTH_YEAR',
-                yValue: 'COUNT_VALUE',
-                yPercent: 'PERCENT_VALUE'
+                dateField: 'monthYear',
+                yValue: 'countValue',
+                yPercent: 'percentValue'
             });
 
             d3.selectAll("#oppeoplebymonthsingle svg").remove();
