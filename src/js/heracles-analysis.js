@@ -11,7 +11,8 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                     "Drug Exposure" : [700, 701, 706, 715, 705, 704, 116, 702, 117, 717, 716, 1],
                     "Condition" : [116, 117, 400, 401, 402, 404, 405, 406, 1],
                     "Drug Era" : [900, 907, 906, 904, 902, 116, 117, 1],
-                    "Condition Era" : [1000, 1007, 1006, 1004, 1002, 116, 117, 1]
+                    "Condition Era" : [1000, 1007, 1006, 1004, 1002, 116, 117, 1],
+                    "Person" : [0, 1, 2, 3, 4, 5]
                 };
                 $scope.analysisCount = 0;
 

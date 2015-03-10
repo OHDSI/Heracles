@@ -29,21 +29,31 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 
             app.controller('CohortViewerCtrl', function($scope, $http, CohortService) {
 
+                $scope.defaultSummary = {
+                    sourceName : "",
+                    numPersons : 0
+                };
+
+                $scope.summary = $scope.defaultSummary;
 
                 $scope.refreshCommonData = function(){
-                    $.getJSON(getWebApiUrl() + "/cohortresults/" + $scope.cohort.id + "/raw/person/population", function (data) {
-                        var summary = {};
-                        $.each(data, function() {
-                            if (this.ATTRIBUTE_NAME.toLowerCase() === "source name") {
-                                summary.sourceName = this.ATTRIBUTE_VALUE;
-                            } else if (this.ATTRIBUTE_NAME.toLowerCase() === "number of persons"){
-                                summary.numPersons = this.ATTRIBUTE_VALUE;
-                            }
+                    if ($scope.active === "dashboard" || $scope.active === "person") {
+                        $.getJSON(getWebApiUrl() + "/cohortresults/" + $scope.cohort.id + "/raw/person/population", function (data) {
+                            var summary = {};
+                            $.each(data, function () {
+                                if (this.ATTRIBUTE_NAME.toLowerCase() === "source name") {
+                                    summary.sourceName = this.ATTRIBUTE_VALUE;
+                                } else if (this.ATTRIBUTE_NAME.toLowerCase() === "number of persons") {
+                                    summary.numPersons = (this.ATTRIBUTE_VALUE).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                }
+                            });
+                            $scope.summary = summary;
+                            $scope.$apply();
                         });
-                        $scope.summary = summary;
+                    } else {
+                        $scope.summary;
                         $scope.$apply();
-                    });
-
+                    }
                 };
 
                 $scope.refreshCohortVisualization = function(evt) {
