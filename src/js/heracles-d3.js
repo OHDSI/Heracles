@@ -263,12 +263,12 @@ define(['jquery', 'd3', 'jnj_chart', 'ohdsi_common'], function (jquery, d3, jnj_
         // age at first obs histogram
         if (data.ageDistribution) {
             var histData = {};
-            histData.INTERVAL_SIZE = 1;
-            histData.DATA = common.normalizeArray(data.ageDistribution, true);
-            if (!histData.DATA.empty) {
-                histData.MIN = 0;
-                histData.MAX = 100;
-                histData.INTERVALS = 100;
+            histData.intervalSize = 1;
+            histData.data = common.normalizeArray(data.ageDistribution, true);
+            if (!histData.data.empty) {
+                histData.min = 0;
+                histData.max = 100;
+                histData.intervals = 100;
                 d3.selectAll("#age_dist svg").remove();
                 var ageAtFirstObservationData = common.mapHistogram(histData);
                 var ageAtFirstObservationHistogram = new jnj_chart.histogram();
