@@ -46,22 +46,23 @@
     <!-- Cohort Explorer -->
     <div>
         <div class="navmenu navmenu-default navmenu-fixed-left offcanvas-sm" style="width:200px">
-            <a class="navmenu-brand visible-md visible-lg" href="#" style="font-weight: bold">OHDSI Heracles</a>
+            <a class="navmenu-brand visible-md visible-lg" href="index.html" style="font-weight: bold">OHDSI Heracles</a>
             <ul class="nav navmenu-nav" style="border-bottom:1px solid #898989;">
                 <li><a id="cohort-explorer-back"  style="font-size:16px">&laquo;Back</a></li>
                 <li><a ng-click="refreshCohort($event)" style="font-size:16px">Refresh</a></li>
                 <li><a ng-href="viewer.html?cohortId={{cohort.cohortDefinition.id}}" >Heracles Viewer</a></li>
             </ul>
-            <a class="navmenu-brand" style="font-weight: bold" ng-click="scrollAnalysesClick($event, cohort.firstAnalysis)">Analysis Types</a>
-            <ul class="nav navmenu-nav">
-                <li ng-repeat="(k, v) in cohort.analysesMap" key="{{k}}" >
-                    <a ng-click="scrollAnalysesClick($event, k)">{{k}}</a>
-                </li>
-            </ul>
+
             <a class="navmenu-brand" style="font-weight: bold">Visualization Packs</a>
             <ul class="nav navmenu-nav">
                 <li ng-repeat="(k, v) in visualizationPacks" key="{{k}}" >
                     <a ng-click="selectVizPack($event, k)">{{k}}</a>
+                </li>
+            </ul>
+            <a class="navmenu-brand" style="font-weight: bold" ng-click="scrollAnalysesClick($event, cohort.firstAnalysis)">Analysis Types</a>
+            <ul class="nav navmenu-nav">
+                <li ng-repeat="(k, v) in cohort.analysesMap" key="{{k}}" >
+                    <a ng-click="scrollAnalysesClick($event, k)">{{k}}</a>
                 </li>
             </ul>
 
