@@ -13,6 +13,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                     "Drug Era" : [900, 907, 906, 904, 902, 116, 117, 1],
                     "Condition Era" : [1000, 1007, 1006, 1004, 1002, 116, 117, 1],
                     "Person" : [0, 1, 2, 3, 4, 5],
+                    "Cohort Specific" : [1805, 1806, 1814, 1815, 116, 117, 1],
                     "Heracles Heel" : [
                         7,
                         8,
