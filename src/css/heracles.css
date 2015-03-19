@@ -598,3 +598,12 @@ table.data td {
 .reportDrilldown {
     padding: 20px;
 }
+
+.donut-tip {
+    padding: 4px 6px;
+    border-radius: 4px;
+    background-color: rgba(0,0,0,.9);
+    font-size: 11px;
+    text-align: center;
+    color: #fff;
+}
