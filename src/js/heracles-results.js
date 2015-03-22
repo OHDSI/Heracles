@@ -1,10 +1,12 @@
 // configure angular
 require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_common',
         '../js/charts/dashboard', '../js/charts/person', '../js/charts/conditions', '../js/charts/drugExposures',
-        '../js/charts/conditionEras', '../js/charts/drugEras', '../js/charts/cohortSpecific'],
+        '../js/charts/conditionEras', '../js/charts/drugEras', '../js/charts/cohortSpecific',
+        '../js/charts/observations'],
     function (angular, $, b, HeraclesD3, j, heraclesCommon,
               DashboardRenderer, PersonRenderer, ConditionRenderer, DrugExposureRenderer,
-              ConditionErasRenderer, DrugErasRenderer, CohortSpecificRenderer) {
+              ConditionErasRenderer, DrugErasRenderer, CohortSpecificRenderer,
+              ObservationsRenderer) {
         var renderers = {
             'dashboard' : DashboardRenderer,
             'person' : PersonRenderer,
@@ -12,7 +14,8 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
             'drugExposures' : DrugExposureRenderer,
             'conditionEras' : ConditionErasRenderer,
             'drugEras' : DrugErasRenderer,
-            'cohortSpecific' : CohortSpecificRenderer
+            'cohortSpecific' : CohortSpecificRenderer,
+            'observations' : ObservationsRenderer
         };
         angular.element().ready(function() {
             // setup angular controller on angular ready
@@ -52,7 +55,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                             $scope.$apply();
                         });
                     } else {
-                        $scope.summary;
+                        $scope.summary = $scope.defaultSummary;
                         $scope.$apply();
                     }
                 };

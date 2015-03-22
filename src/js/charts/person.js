@@ -47,7 +47,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
             });
 
             d3.selectAll("#ethnicityTypePie svg").remove();
-            var raceDonut = new jnj_chart.donut();
+            raceDonut = new jnj_chart.donut();
             raceDonut.render(common.mapConceptData(result.ethnicity), "#ethnicityTypePie", 260, 130, {
                 margin: {
                     top: 5,
