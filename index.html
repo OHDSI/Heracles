@@ -144,7 +144,7 @@
                                                  {{k}}
                                              </label>
                                              <div ng-repeat="item in v">
-                                                 <label class="toggle-child-label {{item.class}}" >
+                                                 <label class="toggle-child-label {{item.class}}" title="Analysis ID#: {{item.analysisId}}">
                                                      <input type="checkbox" class="toggle-checkbox-item" ng-click="analysisClick()"
                                                             style="margin:2px" filter-key="cohort-analyses" value="{{item.analysisName}}" analysis-id="{{item.analysisId}}" parent="{{k}}" />
                                                      {{item.analysisName}}

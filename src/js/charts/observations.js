@@ -180,47 +180,49 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             // Records by Unit
                             var recordsByUnit = new jnj_chart.donut();
                             var datdaRecordsByUnit = [];
+                            var recordsByUnitData = common.normalizeArray(data.recordsByUnit);
+                            if (!recordsByUnitData.empty) {
+                                if (recordsByUnitData.conceptName instanceof Array) {
+                                    datdaRecordsByUnit = recordsByUnitData.conceptName.map(function (d, i) {
+                                        var item =
+                                        {
+                                            id: this.conceptName[i],
+                                            label: this.conceptName[i],
+                                            value: this.countValue[i]
+                                        };
+                                        return item;
+                                    }, recordsByUnitData);
+                                }
+                                else {
+                                    datdaRecordsByUnit.push(
+                                        {
+                                            id: recordsByUnitData.conceptName,
+                                            label: recordsByUnitData.conceptName,
+                                            value: recordsByUnitData.countValue
+                                        });
+                                }
 
-                            if (data.recordsByUnit.conceptName instanceof Array) {
-                                datdaRecordsByUnit = data.recordsByUnit.conceptName.map(function (d, i) {
-                                    var item =
-                                    {
-                                        id: this.conceptName[i],
-                                        label: this.conceptName[i],
-                                        value: this.countValue[i]
-                                    };
-                                    return item;
-                                }, data.recordsByUnit);
+                                datdaRecordsByUnit.sort(function (a, b) {
+                                    var nameA = a.label.toLowerCase(),
+                                        nameB = b.label.toLowerCase();
+                                    if (nameA < nameB) { //sort string ascending
+                                        return -1;
+                                    }
+                                    if (nameA > nameB) {
+                                        return 1;
+                                    }
+                                    return 0; //default return value (no sorting)
+                                });
+
+                                recordsByUnit.render(datdaRecordsByUnit, "#recordsByUnit", 500, 300, {
+                                    margin: {
+                                        top: 5,
+                                        left: 5,
+                                        right: 200,
+                                        bottom: 5
+                                    }
+                                });
                             }
-                            else {
-                                datdaRecordsByUnit.push(
-                                    {
-                                        id: data.recordsByUnit.conceptName,
-                                        label: data.recordsByUnit.conceptName,
-                                        value: data.recordsByUnit.countValue
-                                    });
-                            }
-
-                            datdaRecordsByUnit.sort(function (a, b) {
-                                var nameA = a.label.toLowerCase(),
-                                    nameB = b.label.toLowerCase();
-                                if (nameA < nameB) { //sort string ascending
-                                    return -1;
-                                }
-                                if (nameA > nameB) {
-                                    return 1;
-                                }
-                                return 0; //default return value (no sorting)
-                            });
-
-                            recordsByUnit.render(datdaRecordsByUnit, "#recordsByUnit", 500, 300, {
-                                margin: {
-                                    top: 5,
-                                    left: 5,
-                                    right: 200,
-                                    bottom: 5
-                                }
-                            });
 
                             // Observation Value Distribution
                             var obsValueDist = common.normalizeArray(data.observationValueDistribution);
@@ -256,7 +258,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             if (!lowerLimitDist.empty) {
                                 var lowerLimit = new jnj_chart.boxplot();
                                 bpseries = [];
-                                bpdata = common.normalizeDataframe(data.lowerLimitDistribution);
+                                bpdata = common.normalizeDataframe(lowerLimitDist);
 
                                 bpseries = bpdata.category.map(function (d, i) {
                                     var item =
@@ -285,7 +287,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             if (!upperLimitDist.empty) {
                                 var upperLimit = new jnj_chart.boxplot();
                                 bpseries = [];
-                                bpdata = common.normalizeDataframe(data.upperLimitDistribution);
+                                bpdata = common.normalizeDataframe(upperLimitDist);
 
                                 bpseries = bpdata.category.map(function (d, i) {
                                     var item =
@@ -310,12 +312,13 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             }
 
                             // relative to norm pie
-                            if (data.valuesRelativeToNorm && data.valuesRelativeToNorm.length > 0) {
+                            var valuesRelativeToNormData = common.normalizeArray(data.valuesRelativeToNorm);
+                            if (!valuesRelativeToNormData.empty) {
                                 var relativeToNorm = new jnj_chart.donut();
-                                dataRelativeToNorm = [];
+                                var dataRelativeToNorm = [];
 
-                                if (data.valuesRelativeToNorm.conceptName instanceof Array) {
-                                    dataRelativeToNorm = data.valuesRelativeToNorm.conceptName.map(function (d, i) {
+                                if (valuesRelativeToNormData.conceptName instanceof Array) {
+                                    dataRelativeToNorm = valuesRelativeToNormData.conceptName.map(function (d, i) {
                                         var item =
                                         {
                                             id: this.conceptName[i],
@@ -323,14 +326,14 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                             value: this.countValue[i]
                                         };
                                         return item;
-                                    }, data.valuesRelativeToNorm);
+                                    }, valuesRelativeToNormData);
                                 }
                                 else {
                                     dataRelativeToNorm.push(
                                         {
-                                            id: data.valuesRelativeToNorm.conceptName,
-                                            label: data.valuesRelativeToNorm.conceptName,
-                                            value: data.valuesRelativeToNorm.countValue
+                                            id: valuesRelativeToNormData.conceptName,
+                                            label: valuesRelativeToNormData.conceptName,
+                                            value: valuesRelativeToNormData.countValue
                                         });
                                 }
 

@@ -2,11 +2,11 @@
 require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_common',
         '../js/charts/dashboard', '../js/charts/person', '../js/charts/conditions', '../js/charts/drugExposures',
         '../js/charts/conditionEras', '../js/charts/drugEras', '../js/charts/cohortSpecific',
-        '../js/charts/observations'],
+        '../js/charts/observations', '../js/charts/observationPeriod'],
     function (angular, $, b, HeraclesD3, j, heraclesCommon,
               DashboardRenderer, PersonRenderer, ConditionRenderer, DrugExposureRenderer,
               ConditionErasRenderer, DrugErasRenderer, CohortSpecificRenderer,
-              ObservationsRenderer) {
+              ObservationsRenderer, ObservationPeriodRenderer) {
         var renderers = {
             'dashboard' : DashboardRenderer,
             'person' : PersonRenderer,
@@ -15,7 +15,8 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
             'conditionEras' : ConditionErasRenderer,
             'drugEras' : DrugErasRenderer,
             'cohortSpecific' : CohortSpecificRenderer,
-            'observations' : ObservationsRenderer
+            'observations' : ObservationsRenderer,
+            'observationPeriods' : ObservationPeriodRenderer
         };
         angular.element().ready(function() {
             // setup angular controller on angular ready
