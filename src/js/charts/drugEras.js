@@ -62,6 +62,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
             }
 
             DrugErasRenderer.drilldown = function (concept_id, concept_name) {
+                $('#loading-text').text("Querying Database...");
                 $('#spinner-modal').modal('show');
 
                 $('.drilldown svg').remove();
@@ -72,6 +73,8 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                     type: "GET",
                     url: DrugErasRenderer.baseUrl + '/drugera/' + concept_id,
                     success: function (data) {
+                        $('#loading-text').text("Rendering Visualizations...");
+
                         // age at first exposure visualization
                         boxplot_helper(data.ageAtFirstExposure,'#drugeras_age_at_first_exposure',500,300,'Gender','Age at First Exposure');
                         boxplot_helper(data.lengthOfEra,'#drugeras_length_of_era',500,300,'', 'Days');
@@ -239,6 +242,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
             }
 
             // show the treemap
+            $('#loading-text').text("Querying Database...");
             $('#spinner-modal').modal('show');
             var format_pct = d3.format('.2%');
             var format_fixed = d3.format('.2f');
@@ -256,6 +260,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                 url: DrugErasRenderer.baseUrl + '/drugera',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
+                    $('#loading-text').text("Rendering Visualizations...");
                     var normalizedData = common.normalizeDataframe(common.normalizeArray(data, true));
                     data = normalizedData;
                     if (!data.empty) {

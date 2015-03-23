@@ -63,7 +63,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
             }
 
             DrugExposureRenderer.drilldown = function (concept_id, concept_name) {
-
+                $('#loading-text').text("Querying Database...");
                 $('#spinner-modal').modal('show');
 
                 $('.drilldown svg').remove();
@@ -74,6 +74,8 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                     type: "GET",
                     url: DrugExposureRenderer.baseUrl + '/drug/' + concept_id,
                     success: function (data) {
+
+                        $('#loading-text').text("Rendering Visualizations...");
 
                         // boxplots
                         boxplot_helper(data.ageAtFirstExposure, '#ageAtFirstExposure', 'Gender', 'Age at First Exposure', 360,300);
@@ -258,6 +260,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
             }
 
             // show the treemap
+            $('#loading-text').text("Querying Database...");
             $('#spinner-modal').modal('show');
 
             var format_pct = d3.format('.2%');
@@ -273,6 +276,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                 url: DrugExposureRenderer.baseUrl + '/drug',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
+                    $('#loading-text').text("Rendering Visualizations...");
                     var normalizedData = common.normalizeDataframe(common.normalizeArray(data, true));
                     data = normalizedData;
                     if (!data.empty) {

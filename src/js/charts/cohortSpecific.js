@@ -12,9 +12,10 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
         this.baseUrl = getWebApiUrl() + '/cohortresults/' + id;
         d3.selectAll("svg").remove();
 
+        $('#loading-text').text("Querying Database...");
         $('#spinner-modal').modal('show');
         $.getJSON(this.baseUrl + '/cohortspecific', function(data) {
-
+            $('#loading-text').text("Rendering Visualizations...");
             // Persons By Duration From Start To End
             var result = common.normalizeArray(data.personsByDurationFromStartToEnd, false);
             if (!result.empty) {

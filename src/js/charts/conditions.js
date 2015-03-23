@@ -31,6 +31,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
         });
 
         ConditionRenderer.drilldown = function (concept_id, concept_name) {
+            $('#loading-text').text("Querying Database...");
             $('#spinner-modal').modal('show');
 
             $('.drilldown svg').remove();
@@ -41,6 +42,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                 type: "GET",
                 url: ConditionRenderer.baseUrl + '/condition/' + concept_id,
                 success: function (data) {
+                    $('#loading-text').text("Rendering Visualizations...");
                     // age at first diagnosis visualization
                     d3.selectAll("#ageAtFirstDiagnosis svg").remove();
                     var boxplot = new jnj_chart.boxplot();
@@ -249,6 +251,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
         }
 
         // show the treemap
+        $('#loading-text').text("Querying Database...");
         $('#spinner-modal').modal('show');
         var format_pct = d3.format('.2%');
         var format_fixed = d3.format('.2f');
@@ -266,6 +269,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
             url: ConditionRenderer.baseUrl + '/condition',
             contentType: "application/json; charset=utf-8",
             success: function (data) {
+                $('#loading-text').text("Rendering Visualizations...");
                 var normalizedData = common.normalizeDataframe(common.normalizeArray(data, true));
                 data = normalizedData;
                 if (!data.empty) {

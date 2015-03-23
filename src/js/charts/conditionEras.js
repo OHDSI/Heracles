@@ -62,6 +62,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
             }
 
             ConditionErasRenderer.drilldown = function (concept_id, concept_name) {
+                $('#loading-text').text("Querying Database...");
                 $('#spinner-modal').modal('show');
 
                 $('.drilldown svg').remove();
@@ -72,6 +73,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                     type: "GET",
                     url: ConditionErasRenderer.baseUrl + '/conditionera/' + concept_id,
                     success: function (data) {
+                        $('#loading-text').text("Rendering Visualizations...");
                         // age at first diagnosis visualization
                         boxplot_helper(data.ageAtFirstDiagnosis,'#conditioneras_age_at_first_diagnosis',500,300,'Gender','Age at First Diagnosis');
                         boxplot_helper(data.lengthOfEra,'#conditioneras_length_of_era',500,300,'', 'Days');
@@ -239,6 +241,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
             }
 
             // show the treemap
+            $('#loading-text').text("Querying Database...");
             $('#spinner-modal').modal('show');
             var format_pct = d3.format('.2%');
             var format_fixed = d3.format('.2f');
@@ -256,6 +259,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                 url: ConditionErasRenderer.baseUrl + '/conditionera',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
+                    $('#loading-text').text("Rendering Visualizations...");
                     var normalizedData = common.normalizeDataframe(common.normalizeArray(data, true));
                     data = normalizedData;
                     if (!data.empty) {

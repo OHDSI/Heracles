@@ -10,6 +10,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
 
         var id = cohort.id;
         this.baseUrl = getWebApiUrl() + '/cohortresults/' + id;
+        $('#loading-text').text("Querying Database...");
         $('#spinner-modal').modal('show');
 
         $.ajax({
@@ -17,6 +18,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
             url: PersonRenderer.baseUrl + "/person",
             contentType: "application/json; charset=utf-8"
         }).done(function (result) {
+            $('#loading-text').text("Rendering Visualizations...");
             d3.selectAll("#genderPie svg").remove();
             var genderDonut = new jnj_chart.donut();
             genderDonut.render(common.mapConceptData(result.gender), "#genderPie", 260, 130, {
