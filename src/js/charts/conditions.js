@@ -175,7 +175,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             yFormat: d3.format("0.2f"),
                             tickPadding: 20,
                             colors: d3.scale.ordinal()
-                                .domain(["MALE", "FEMALE", "UNKNOWN",])
+                                .domain(["MALE", "FEMALE", "UNKNOWN"])
                                 .range(["#1F78B4", "#FB9A99", "#33A02C"])
 
                         });
