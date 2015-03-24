@@ -330,6 +330,9 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             getcolorvalue: function (node) {
                                 return node.records_per_person;
                             },
+                            getcolorrange: function() {
+                                return colorbrewer.Paired[3];
+                            },
                             getcontent: function (node) {
                                 var result = '',
                                     steps = node.path.split('||'),
