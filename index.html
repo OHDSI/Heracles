@@ -191,7 +191,18 @@
                     <input type="text" class="form-control toggle-filter-input" toggle-filter="measurement" />
                 </div>
             </div>
-            <div class="col-sm-4" style="height:60px">&nbsp;</div>
+
+            <div class="col-sm-4" style="height:45px">&nbsp;</div>
+
+            <div class="col-md-12">
+                <label>Small Cell Count: <span style="color:#aaa"> (Cell size to exclude)</span></label><br/>
+                <input type="number" value="1" id="smallCellCount" />
+                <br/>
+            </div>
+
+            <div class="col-md-12">
+                <label><input type="checkbox" id="heraclesHeel"/> Run Heracles Heel <span style="color:#aaa">(Evaluates data for errors)</span></label>
+            </div>
             <div class="col-sm-12">
                 <button class="btn btn-lg btn-heracles analyses-button pull-right" filter-key="cohort-analyses" ng-click="submitJob($event)" data-loading-text="...">Begin Analysis</button>
             </div>

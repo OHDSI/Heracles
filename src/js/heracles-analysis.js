@@ -278,7 +278,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 
                     // submit job
                     var cohortJob = {};
-                    cohortJob.smallCellCount = "1";
+                    cohortJob.smallCellCount = $("#smallCellCount").val();
                     cohortJob.cohortDefinitionIds = [];
                     cohortJob.cohortDefinitionIds.push($scope.cohort.cohortDefinition.id);
                     cohortJob.analysisIds = [];
