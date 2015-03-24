@@ -62,7 +62,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                 if (!recordsPerPerson.empty) {
                     // convert yyyymm to date
                     recordsPerPerson.xCalendarMonth.forEach(function (d, i, ar) {
-                        ar[i] = new Date(Math.floor(d / 100), (d % 100) - 1, 1)
+                        ar[i] = new Date(Math.floor(d / 100), (d % 100) - 1, 1);
                     });
 
                     // convert data-frame structure to array of objects

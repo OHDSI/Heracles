@@ -116,7 +116,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                     xCalendarYear: x,
                                     yPrevalence1000Pp: y
                                 };
-                            }
+                            };
 
                             var nestByDecile = d3.nest()
                                 .key(function (d) {
@@ -147,12 +147,12 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 trellis.values.forEach(function (series) {
                                     series.values = yearRange.map(function (year) {
                                         yearData = series.values.filter(function (f) {
-                                            return f.xCalendarYear == year;
+                                            return f.xCalendarYear === year;
                                         })[0] || seriesInitializer(trellis.key, series.key, year, 0);
                                         yearData.date = new Date(year, 0, 1);
                                         return yearData;
-                                    })
-                                })
+                                    });
+                                });
                             });
 
                             // create svg with range bands based on the trellis names
@@ -196,14 +196,14 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                     var parts = data.conceptPath[i].split("||");
                     var currentNode = root;
                     for (var j = 0; j < parts.length; j++) {
-                        var children = currentNode["children"];
+                        var children = currentNode.children;
                         var nodeName = parts[j];
                         var childNode;
                         if (j + 1 < parts.length) {
                             // Not yet at the end of the path; move down the tree.
                             var foundChild = false;
                             for (var k = 0; k < children.length; k++) {
-                                if (children[k]["name"] == nodeName) {
+                                if (children[k].name === nodeName) {
                                     childNode = children[k];
                                     foundChild = true;
                                     break;
@@ -272,7 +272,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 num_persons: format_comma(this.numPersons[i]),
                                 percent_persons: format_pct(this.percentPersons[i]),
                                 records_per_person: format_fixed(this.recordsPerPerson[i])
-                            }
+                            };
                         }, data);
 
                         datatable = $('#procedure_table').DataTable({
@@ -322,7 +322,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         var treemap = new jnj_chart.treemap();
                         treemap.render(tree, '#treemap_container', width, height, {
                             onclick: function (node) {
-                                ProceduresRenderer.drilldown(node.id, node.name)
+                                ProceduresRenderer.drilldown(node.id, node.name);
                             },
                             getsizevalue: function (node) {
                                 return node.num_persons;

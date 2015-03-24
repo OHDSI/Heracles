@@ -65,15 +65,15 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
 
                 // observation length
                 if (result.observationLength && result.observationLength.length > 0 && result.observationLengthStats) {
-                    var histData = {};
-                    histData.data = (common.normalizeArray(result.observationLength));
-                    histData.intervalSize = +result.observationLengthStats[0].intervalSize;
-                    histData.min = +result.observationLengthStats[0].minValue;
-                    histData.max = +result.observationLengthStats[0].maxValue;
-                    histData.intervals = Math.round((histData.max - histData.min + 1) / histData.intervalSize) + histData.intervalSize ;
+                    var histData2 = {};
+                    histData2.data = (common.normalizeArray(result.observationLength));
+                    histData2.intervalSize = +result.observationLengthStats[0].intervalSize;
+                    histData2.min = +result.observationLengthStats[0].minValue;
+                    histData2.max = +result.observationLengthStats[0].maxValue;
+                    histData2.intervals = Math.round((histData2.max - histData2.min + 1) / histData2.intervalSize) + histData2.intervalSize ;
                     d3.selectAll("#observationlength svg").remove();
-                    if (!histData.data.empty) {
-                        var observationLengthData = common.mapHistogram(histData);
+                    if (!histData2.data.empty) {
+                        var observationLengthData = common.mapHistogram(histData2);
                         var observationLengthXLabel = 'Days';
                         if (observationLengthData.length > 0) {
                             if (observationLengthData[observationLengthData.length - 1].x - observationLengthData[0].x > 1000) {
@@ -221,15 +221,15 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                 // observed by year
                 var obsByYearData = common.normalizeArray(result.personsWithContinuousObservationsByYear);
                 if (!obsByYearData.empty && result.personsWithContinuousObservationsByYearStats) {
-                    var histData = {};
-                    histData.data = obsByYearData;
-                    histData.intervalSize = +result.personsWithContinuousObservationsByYearStats[0].intervalSize;
-                    histData.min = +result.personsWithContinuousObservationsByYearStats[0].minValue;
-                    histData.max = +result.personsWithContinuousObservationsByYearStats[0].maxValue;
-                    histData.intervals = Math.round((histData.max - histData.min + histData.intervalSize) / histData.intervalSize) + histData.intervalSize ;
+                    var histData3 = {};
+                    histData3.data = obsByYearData;
+                    histData3.intervalSize = +result.personsWithContinuousObservationsByYearStats[0].intervalSize;
+                    histData3.min = +result.personsWithContinuousObservationsByYearStats[0].minValue;
+                    histData3.max = +result.personsWithContinuousObservationsByYearStats[0].maxValue;
+                    histData3.intervals = Math.round((histData3.max - histData3.min + histData3.intervalSize) / histData3.intervalSize) + histData3.intervalSize ;
                     d3.selectAll("#oppeoplebyyear svg").remove();
                     var observationLengthByYearHistogram = new jnj_chart.histogram();
-                    observationLengthByYearHistogram.render(common.mapHistogram(histData), "#oppeoplebyyear", 460, 195, {
+                    observationLengthByYearHistogram.render(common.mapHistogram(histData3), "#oppeoplebyyear", 460, 195, {
                         xFormat: d3.format('d'),
                         xLabel: 'Year',
                         yLabel: 'People'

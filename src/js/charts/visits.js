@@ -60,7 +60,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                     xCalendarYear: x,
                                     yPrevalence1000Pp: y
                                 };
-                            }
+                            };
 
                             var nestByDecile = d3.nest()
                                 .key(function (d) {
@@ -91,12 +91,12 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 trellis.values.forEach(function (series) {
                                     series.values = yearRange.map(function (year) {
                                         yearData = series.values.filter(function (f) {
-                                            return f.xCalendarYear == year;
+                                            return f.xCalendarYear === year;
                                         })[0] || seriesInitializer(trellis.key, series.key, year, 0);
                                         yearData.date = new Date(year, 0, 1);
                                         return yearData;
-                                    })
-                                })
+                                    });
+                                });
                             });
 
                             // create svg with range bands based on the trellis names
@@ -140,25 +140,25 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             });
                         }
 
-                        var bpdata = common.normalizeArray(data.visitDurationByType);
-                        if (!bpdata.empty) {
+                        var bpdata2 = common.normalizeArray(data.visitDurationByType);
+                        if (!bpdata2.empty) {
                             // visits by type distribution visualization
-                            var boxplot = new jnj_chart.boxplot();
-                            var bpseries = [];
-                            for (var i = 0; i < bpdata.category.length; i++) {
-                                bpseries.push({
-                                    Category: bpdata.category[i],
-                                    min: bpdata.minValue[i],
-                                    max: bpdata.maxValue[i],
-                                    median: bpdata.medianValue[i],
-                                    LIF: bpdata.p10Value[i],
-                                    q1: bpdata.p25Value[i],
-                                    q3: bpdata.p75Value[i],
-                                    UIF: bpdata.p90Value[i]
+                            var boxplot2 = new jnj_chart.boxplot();
+                            var bpseries2 = [];
+                            for (var j = 0; j < bpdata2.category.length; j++) {
+                                bpseries2.push({
+                                    Category: bpdata2.category[j],
+                                    min: bpdata2.minValue[j],
+                                    max: bpdata2.maxValue[j],
+                                    median: bpdata2.medianValue[j],
+                                    LIF: bpdata2.p10Value[j],
+                                    q1: bpdata2.p25Value[j],
+                                    q3: bpdata2.p75Value[j],
+                                    UIF: bpdata2.p90Value[j]
                                 });
                             }
 
-                            boxplot.render(bpseries, "#visitDurationByType", 500, 300, {
+                            boxplot2.render(bpseries2, "#visitDurationByType", 500, 300, {
                                 yLabel: 'Duration'
                             });
                         }
@@ -208,14 +208,14 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                     var parts = data.conceptPath[i].split("||");
                     var currentNode = root;
                     for (var j = 0; j < parts.length; j++) {
-                        var children = currentNode["children"];
+                        var children = currentNode.children;
                         var nodeName = parts[j];
                         var childNode;
                         if (j + 1 < parts.length) {
                             // Not yet at the end of the path; move down the tree.
                             var foundChild = false;
                             for (var k = 0; k < children.length; k++) {
-                                if (children[k]["name"] == nodeName) {
+                                if (children[k].name === nodeName) {
                                     childNode = children[k];
                                     foundChild = true;
                                     break;
@@ -272,7 +272,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                 success: function (data) {
                     $('#loading-text').text("Rendering Visualizations...");
 
-                    var data = common.normalizeArray(data);
+                    data = common.normalizeArray(data);
                     if (!data.empty) {
                         var normalizedData = common.normalizeDataframe(data);
                         var table_data = normalizedData.conceptPath.map(function (d, i) {
@@ -283,7 +283,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 num_persons: format_comma(this.numPersons[i]),
                                 percent_persons: format_pct(this.percentPersons[i]),
                                 records_per_person: format_fixed(this.recordsPerPerson[i])
-                            }
+                            };
                         }, data);
 
                         datatable = $('#visit_table').DataTable({
@@ -323,7 +323,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         var treemap = new jnj_chart.treemap();
                         treemap.render(tree, '#treemap_container', width, height, {
                             onclick: function (node) {
-                                VisitsRenderer.drilldown(node.id, node.name)
+                                VisitsRenderer.drilldown(node.id, node.name);
                             },
                             getsizevalue: function (node) {
                                 return node.num_persons;

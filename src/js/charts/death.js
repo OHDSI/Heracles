@@ -64,13 +64,13 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                     dataByDecile.forEach(function (trellis) {
                         trellis.values.forEach(function (series) {
                             series.values = yearRange.map(function (year) {
-                                yearData = series.values.filter(function (f) {
-                                    return f.xCalendarYear == year;
+                                var yearData = series.values.filter(function (f) {
+                                    return f.xCalendarYear === year;
                                 })[0] || seriesInitializer(trellis.key, series.key, year, 0);
                                 yearData.date = new Date(year, 0, 1);
                                 return yearData;
-                            })
-                        })
+                            });
+                        });
                     });
 
                     // create svg with range bands based on the trellis names
