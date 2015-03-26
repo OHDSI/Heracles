@@ -338,6 +338,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                         });
                                 }
 
+
                                 dataRelativeToNorm.sort(function (a, b) {
                                     var nameA = a.label.toLowerCase(),
                                         nameB = b.label.toLowerCase();
@@ -350,13 +351,17 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                     return 0; //default return value (no sorting)
                                 });
 
+
                                 relativeToNorm.render(dataRelativeToNorm, "#relativeToNorm", 500, 300, {
                                     margin: {
                                         top: 5,
                                         left: 5,
                                         right: 200,
                                         bottom: 5
-                                    }
+                                    },
+                                    colors : d3.scale.ordinal()
+                                        .domain(dataRelativeToNorm)
+                                        .range(getColors(dataRelativeToNorm))
                                 });
                             }
                         }
@@ -366,6 +371,32 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                     }
                 });
             };
+
+            function getColors(data) {
+                /*
+                console.log(data);
+
+                if (data.length <= 3) {
+                    var colors = [];
+                    $.each(data, function() {
+                        var lbl = this.label.toLowerCase();
+                        if (lbl.indexOf("above") >= 0 || lbl.indexOf("high") >= 0) {
+                            colors.push("#e31a1c");
+                        } else if (lbl.indexOf("below") >= 0 || lbl.indexOf("low") >= 0) {
+                            colors.push("#1f78b4");
+                        } else if (lbl.indexOf("normal") >= 0 || lbl.indexOf("within") >= 0) {
+                            colors.push("#33a02c");
+                        } else {
+                            colors.push("#6a3d9a");
+                        }
+                    });
+console.log(colors);
+                    return colors;
+                }
+                */
+
+                return colorbrewer.Dark2[3];
+            }
 
 
             function buildHierarchyFromJSON(data, threshold) {
