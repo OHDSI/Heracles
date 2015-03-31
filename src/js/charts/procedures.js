@@ -273,7 +273,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 percent_persons: format_pct(this.percentPersons[i]),
                                 records_per_person: format_fixed(this.recordsPerPerson[i])
                             };
-                        }, data);
+                        }, normalizedData);
 
                         datatable = $('#procedure_table').DataTable({
                             order: [5, 'desc'],
@@ -318,7 +318,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
 
                         $('#reportProcedureOccurrences').show();
 
-                        var tree = buildHierarchyFromJSON(data, threshold);
+                        var tree = buildHierarchyFromJSON(normalizedData, threshold);
                         var treemap = new jnj_chart.treemap();
                         treemap.render(tree, '#treemap_container', width, height, {
                             onclick: function (node) {

@@ -53,7 +53,7 @@
                 <li><a ng-href="viewer.html?cohortId={{cohort.cohortDefinition.id}}" >Heracles Viewer</a></li>
             </ul>
 
-            <a class="navmenu-brand" style="font-weight: bold">Visualization Packs</a>
+            <a class="navmenu-brand" style="font-weight: bold" ng-click="scrollAnalysesClick($event, cohort.firstAnalysis)">Visualization Packs</a>
             <ul class="nav navmenu-nav">
                 <li ng-repeat="(k, v) in visualizationPacks" key="{{k}}" >
                     <a ng-click="selectVizPack($event, k)">{{k}}</a>
