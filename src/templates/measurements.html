@@ -5,32 +5,32 @@
         <div class="col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Observation Prevalence
+                    Measurement Prevalence
                 </div>
                 <div class="panel-body">
                     <div class="col-sm-12">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="active"><a href="#observation-treemap-panel" role="tab" data-toggle="tab">Treemap</a>
+                            <li class="active"><a href="#measurement-treemap-panel" role="tab" data-toggle="tab">Treemap</a>
                             </li>
-                            <li><a href="#observation-table-panel" role="tab" data-toggle="tab">Table</a>
+                            <li><a href="#measurement-table-panel" role="tab" data-toggle="tab">Table</a>
                             </li>
                         </ul>
                         <div id='content' class="tab-content">
-                            <div role="tabpanel"  class="tab-pane active" id="observation-treemap-panel">
+                            <div role="tabpanel"  class="tab-pane active" id="measurement-treemap-panel">
                                 <div id="treemap_container">
                                     <div class="treemap_zoomtarget"></div>
                                 </div>
                                 <div class="treemap_legend">Box Size: Prevalence, Color: Records per Person (Blue to Green = Low to High), Use Ctrl-Click to Zoom, Alt-Click to Reset Zoom</div>
                             </div>
-                            <div role="tabpanel" class="tab-pane" id="observation-table-panel">
-                                <table id="observation_table" class="display">
+                            <div role="tabpanel" class="tab-pane" id="measurement-table-panel">
+                                <table id="measurement_table" class="display">
                                     <thead>
                                     <tr>
                                         <th>Concept Id</th>
                                         <th>Level 4</th>
                                         <th>Level 3</th>
                                         <th>Level 2</th>
-                                        <th>Observation</th>
+                                        <th>Measurement</th>
                                         <th>Person Count</th>
                                         <th>Prevalence</th>
                                         <th>Records per Person</th>
@@ -44,13 +44,13 @@
             </div>
         </div>
     </div>
-    <div id="reportObservationDrilldown" class="hidden reportDrilldown">
-        <div id="observationDrilldownTitle" class="reportTitle"></div>
+    <div id="reportMeasurementDrilldown" class="hidden reportDrilldown">
+        <div id="measurementDrilldownTitle" class="reportTitle"></div>
         <div class="row equal">
             <div class="col-sm-12">
-                <div id="panelObservationPrevalence" class="panel panel-default">
+                <div id="panelMeasurementPrevalence" class="panel panel-default">
                     <div class="panel-heading">
-                        Observation Prevalence
+                        Measurement Prevalence
                     </div>
                     <div class="panel-body">
                         <div class="drilldown" id="trellisLinePlot"></div>
@@ -60,24 +60,24 @@
         </div>
         <div class="row equal">
             <div class="col-sm-12">
-                <div id="panelObservationPrevalenceByMonth" class="panel panel-default">
+                <div id="panelMeasurementPrevalenceByMonth" class="panel panel-default">
                     <div class="panel-heading">
-                        Observation Prevalence by Month
+                        Measurement Prevalence by Month
                     </div>
                     <div class="panel-body">
-                        <div class="drilldown" id="observationPrevalenceByMonth"></div>
+                        <div class="drilldown" id="measurementPrevalenceByMonth"></div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row equal">
             <div class="col-sm-6">
-                <div id="panelObservationsByType" class="panel panel-default">
+                <div id="panelMeasurementsByType" class="panel panel-default">
                     <div class="panel-heading">
-                        Observations by Type
+                        Measurements by Type
                     </div>
                     <div class="panel-body">
-                        <div class="drilldown" id="observationsByType"></div>
+                        <div class="drilldown" id="measurementsByType"></div>
                     </div>
                 </div>
             </div>
@@ -96,7 +96,7 @@
             <div class="col-sm-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Observation Records by Unit
+                        Measurement Records by Unit
                     </div>
                     <div class="panel-body">
                         <div class="drilldown" id="recordsByUnit"></div>
@@ -106,14 +106,46 @@
             <div class="col-sm-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Observation Value Distribution
+                        Measurement Value Distribution
                     </div>
                     <div class="panel-body">
-                        <div class="drilldown" id="observationValues"></div>
+                        <div class="drilldown" id="measurementValues"></div>
                     </div>
                 </div>
             </div>
         </div>
-     </div>
+        <div class="row equal">
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Lower limit Distribution
+                    </div>
+                    <div class="panel-body">
+                        <div class="drilldown" id="lowerLimit"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Upper Limit Distribution
+                    </div>
+                    <div class="panel-body">
+                        <div class="drilldown" id="upperLimit"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Values Relative to Normal Range
+                    </div>
+                    <div class="panel-body">
+                        <div class="drilldown" id="relativeToNorm"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>

@@ -1,11 +1,11 @@
 define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "datatables-colvis", "colorbrewer"],
     function ($, bootstrap, d3, jnj_chart, common, DataTables, DataTablesColvis, colorbrewer) {
 
-        function ObservationsRenderer() {}
-        ObservationsRenderer.prototype = {};
-        ObservationsRenderer.prototype.constructor = ObservationsRenderer;
+        function MeasurementsRenderer() {}
+        MeasurementsRenderer.prototype = {};
+        MeasurementsRenderer.prototype.constructor = MeasurementsRenderer;
 
-        ObservationsRenderer.render = function(cohort) {
+        MeasurementsRenderer.render = function(cohort) {
             d3.selectAll("svg").remove();
 
             var id = cohort.id;
@@ -15,14 +15,14 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
             var datatable;
 
             // bind to all matching elements upon creation
-            $(document).on('click', '#observation_table tbody tr', function () {
-                $('#observation_table tbody tr.selected').removeClass('selected');
+            $(document).on('click', '#measurement_table tbody tr', function () {
+                $('#measurement_table tbody tr.selected').removeClass('selected');
                 $(this).addClass('selected');
                 var data = datatable.data()[datatable.row(this)[0]];
                 if (data) {
                     var did =  data.concept_id;
                     var concept_name = data.snomed;
-                    ObservationsRenderer.drilldown(did, concept_name);
+                    MeasurementsRenderer.drilldown(did, concept_name);
                 }
             });
 
@@ -30,17 +30,17 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                 $(window).trigger("resize");
             });
 
-            ObservationsRenderer.drilldown = function (concept_id, concept_name) {
+            MeasurementsRenderer.drilldown = function (concept_id, concept_name) {
                 $('#loading-text').text("Querying Database...");
                 $('#spinner-modal').modal('show');
 
                 $('.drilldown svg').remove();
-                $('#observationDrilldownTitle').text(concept_name);
-                $('#reportObservationDrilldown').removeClass('hidden');
+                $('#measurementDrilldownTitle').text(concept_name);
+                $('#reportMeasurementDrilldown').removeClass('hidden');
 
                 $.ajax({
                     type: "GET",
-                    url: ObservationsRenderer.baseUrl + '/observation/' + concept_id,
+                    url: MeasurementsRenderer.baseUrl + '/measurement/' + concept_id,
                     success: function (data) {
                         $('#loading-text').text("Rendering Visualizations...");
                         if (data) {
@@ -78,7 +78,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 });
 
                                 var prevalenceByMonth = new jnj_chart.line();
-                                prevalenceByMonth.render(byMonthSeries, "#observationPrevalenceByMonth", 1000, 300, {
+                                prevalenceByMonth.render(byMonthSeries, "#measurementPrevalenceByMonth", 1000, 300, {
                                     xScale: d3.time.scale().domain(d3.extent(byMonthSeries[0].values, function (d) {
                                         return d.xValue;
                                     })),
@@ -93,10 +93,10 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 });
                             }
 
-                            // observation type visualization
-                            if (data.observationsByType && data.observationsByType.length > 0) {
-                                var observationsByType = new jnj_chart.donut();
-                                observationsByType.render(common.mapConceptData(data.observationsByType), "#observationsByType", 500, 300, {
+                            // measurement type visualization
+                            if (data.measurementsByType && data.measurementsByType.length > 0) {
+                                var measurementsByType = new jnj_chart.donut();
+                                measurementsByType.render(common.mapConceptData(data.measurementsByType), "#measurementsByType", 500, 300, {
                                     margin: {
                                         top: 5,
                                         left: 5,
@@ -166,7 +166,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 chart.render(dataByDecile, "#trellisLinePlot", 1000, 300, {
                                     trellisSet: allDeciles,
                                     trellisLabel: "Age Decile",
-                                    seriesLabel: "Year of Observation",
+                                    seriesLabel: "Year of Measurement",
                                     yLabel: "Prevalence Per 1000 People",
                                     xFormat: d3.time.format("%Y"),
                                     yFormat: d3.format("0.2f"),
@@ -225,10 +225,10 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 });
                             }
 
-                            // Observation Value Distribution
-                            var obsValueDist = common.normalizeArray(data.observationValueDistribution);
+                            // Measurement Value Distribution
+                            var obsValueDist = common.normalizeArray(data.measurementValueDistribution);
                             if (!obsValueDist.empty) {
-                                var observationValues = new jnj_chart.boxplot();
+                                var measurementValues = new jnj_chart.boxplot();
                                 bpseries = [];
                                 bpdata = common.normalizeDataframe(obsValueDist);
 
@@ -247,14 +247,123 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                     return item;
                                 }, bpdata);
 
-                                observationValues.render(bpseries, "#observationValues", 500, 300, {
+                                measurementValues.render(bpseries, "#measurementValues", 500, 300, {
                                     yMax: d3.max(bpdata.p90Value) || bpdata.p90Value, // handle when dataframe is not array of values
                                     xLabel: 'Unit',
-                                    yLabel: 'Observation Value'
+                                    yLabel: 'Measurement Value'
                                 });
                             }
 
+                            // Lower Limit Distribution
+                            var lowerLimitDist = common.normalizeArray(data.lowerLimitDistribution);
+                            if (!lowerLimitDist.empty) {
+                                var lowerLimit = new jnj_chart.boxplot();
+                                bpseries = [];
+                                bpdata = common.normalizeDataframe(lowerLimitDist);
 
+                                bpseries = bpdata.category.map(function (d, i) {
+                                    var item =
+                                    {
+                                        Category: bpdata.category[i],
+                                        min: bpdata.minValue[i],
+                                        max: bpdata.maxValue[i],
+                                        median: bpdata.medianValue[i],
+                                        LIF: bpdata.p10Value[i],
+                                        q1: bpdata.p25Value[i],
+                                        q3: bpdata.p75Value[i],
+                                        UIF: bpdata.p90Value[i]
+                                    };
+                                    return item;
+                                }, bpdata);
+
+                                lowerLimit.render(bpseries, "#lowerLimit", 300, 200, {
+                                    yMax: d3.max(bpdata.p90Value) || bpdata.p90Value, // handle when dataframe is not array of values
+                                    xLabel: 'Unit',
+                                    yLabel: 'Measurement Value'
+                                });
+                            }
+
+                            // Upper Limit Distribution
+                            var upperLimitDist = common.normalizeArray(data.upperLimitDistribution);
+                            if (!upperLimitDist.empty) {
+                                var upperLimit = new jnj_chart.boxplot();
+                                bpseries = [];
+                                bpdata = common.normalizeDataframe(upperLimitDist);
+
+                                bpseries = bpdata.category.map(function (d, i) {
+                                    var item =
+                                    {
+                                        Category: bpdata.category[i],
+                                        min: bpdata.minValue[i],
+                                        max: bpdata.maxValue[i],
+                                        median: bpdata.medianValue[i],
+                                        LIF: bpdata.p10Value[i],
+                                        q1: bpdata.p25Value[i],
+                                        q3: bpdata.p75Value[i],
+                                        UIF: bpdata.p90Value[i]
+                                    };
+                                    return item;
+                                }, bpdata);
+
+                                upperLimit.render(bpseries, "#upperLimit", 300, 200, {
+                                    yMax: d3.max(bpdata.p90Value) || bpdata.p90Value, // handle when dataframe is not array of values
+                                    xLabel: 'Unit',
+                                    yLabel: 'Measurement Value'
+                                });
+                            }
+
+                            // relative to norm pie
+                            var valuesRelativeToNormData = common.normalizeArray(data.valuesRelativeToNorm);
+                            if (!valuesRelativeToNormData.empty) {
+                                var relativeToNorm = new jnj_chart.donut();
+                                var dataRelativeToNorm = [];
+
+                                if (valuesRelativeToNormData.conceptName instanceof Array) {
+                                    dataRelativeToNorm = valuesRelativeToNormData.conceptName.map(function (d, i) {
+                                        var item =
+                                        {
+                                            id: this.conceptName[i],
+                                            label: this.conceptName[i],
+                                            value: this.countValue[i]
+                                        };
+                                        return item;
+                                    }, valuesRelativeToNormData);
+                                }
+                                else {
+                                    dataRelativeToNorm.push(
+                                        {
+                                            id: valuesRelativeToNormData.conceptName,
+                                            label: valuesRelativeToNormData.conceptName,
+                                            value: valuesRelativeToNormData.countValue
+                                        });
+                                }
+
+
+                                dataRelativeToNorm.sort(function (a, b) {
+                                    var nameA = a.label.toLowerCase(),
+                                        nameB = b.label.toLowerCase();
+                                    if (nameA < nameB) { //sort string ascending
+                                        return -1;
+                                    }
+                                    if (nameA > nameB) {
+                                        return 1;
+                                    }
+                                    return 0; //default return value (no sorting)
+                                });
+
+
+                                relativeToNorm.render(dataRelativeToNorm, "#relativeToNorm", 500, 300, {
+                                    margin: {
+                                        top: 5,
+                                        left: 5,
+                                        right: 200,
+                                        bottom: 5
+                                    },
+                                    colors : d3.scale.ordinal()
+                                        .domain(dataRelativeToNorm)
+                                        .range(getColors(dataRelativeToNorm))
+                                });
+                            }
                         }
                         $('#spinner-modal').modal('hide');
                     }, error : function() {
@@ -358,7 +467,7 @@ console.log(colors);
             var format_fixed = d3.format('.2f');
             var format_comma = d3.format(',');
 
-            $('#reportObservationOccurrences svg').remove();
+            $('#reportMeasurementOccurrences svg').remove();
 
             var width = 1000;
             var height = 250;
@@ -367,7 +476,7 @@ console.log(colors);
 
             $.ajax({
                 type: "GET",
-                url: ObservationsRenderer.baseUrl + '/observation',
+                url: MeasurementsRenderer.baseUrl + '/measurement',
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
                     $('#loading-text').text("Rendering Visualizations...");
@@ -381,14 +490,14 @@ console.log(colors);
                                 level_4: conceptDetails[0],
                                 level_3: conceptDetails[1],
                                 level_2: conceptDetails[2],
-                                observation_name: conceptDetails[3],
+                                measurement_name: conceptDetails[3],
                                 num_persons: format_comma(this.numPersons[i]),
                                 percent_persons: format_pct(this.percentPersons[i]),
                                 records_per_person: format_fixed(this.recordsPerPerson[i])
                             };  
                         }, data);
 
-                        datatable = $('#observation_table').DataTable({
+                        datatable = $('#measurement_table').DataTable({
                             order: [6, 'desc'],
                             dom: 'Clfrtip',
                             data: table_data,
@@ -408,7 +517,7 @@ console.log(colors);
                                     data: 'level_2'
                                 },
                                 {
-                                    data: 'observation_name'
+                                    data: 'measurement_name'
                                 },
                                 {
                                     data: 'num_persons',
@@ -429,13 +538,13 @@ console.log(colors);
                             destroy: true
                         });
 
-                        $('#reportObservationOccurrences').show();
+                        $('#reportMeasurementOccurrences').show();
 
                         tree = buildHierarchyFromJSON(data, threshold);
                         var treemap = new jnj_chart.treemap();
                         treemap.render(tree, '#treemap_container', width, height, {
                             onclick: function (node) {
-                                ObservationsRenderer.drilldown(node.id, node.name);
+                                MeasurementsRenderer.drilldown(node.id, node.name);
                             },
                             getsizevalue: function (node) {
                                 return node.num_persons;
@@ -474,9 +583,9 @@ console.log(colors);
 
             });
 
-            return ObservationsRenderer;
+            return MeasurementsRenderer;
 
         };
 
-        return ObservationsRenderer;
+        return MeasurementsRenderer;
     });

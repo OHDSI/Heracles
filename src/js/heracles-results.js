@@ -3,13 +3,13 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
         '../js/charts/dashboard', '../js/charts/person', '../js/charts/conditions', '../js/charts/drugExposures',
         '../js/charts/conditionEras', '../js/charts/drugEras', '../js/charts/cohortSpecific',
         '../js/charts/observations', '../js/charts/observationPeriod', '../js/charts/dataDensity',
-        '../js/charts/death', '../js/charts/procedures', '../js/charts/visits',
+        '../js/charts/death', '../js/charts/procedures', '../js/charts/visits', '../js/charts/measurements',
         '../js/charts/heraclesHeel'],
     function (angular, $, b, HeraclesD3, j, heraclesCommon,
               DashboardRenderer, PersonRenderer, ConditionRenderer, DrugExposureRenderer,
               ConditionErasRenderer, DrugErasRenderer, CohortSpecificRenderer,
               ObservationsRenderer, ObservationPeriodRenderer, DataDensityRenderer,
-              DeathDataRenderer, ProceduresRenderer, VisitsRenderer,
+              DeathDataRenderer, ProceduresRenderer, VisitsRenderer, MeasurementsRenderer,
               HeraclesHeelRenderer) {
         var renderers = {
             'dashboard' : DashboardRenderer,
@@ -25,6 +25,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
             'death' : DeathDataRenderer,
             'procedures' : ProceduresRenderer,
             'visits' : VisitsRenderer,
+            'measurements' : MeasurementsRenderer,
             'heraclesHeel' : HeraclesHeelRenderer
         };
         angular.element().ready(function() {
