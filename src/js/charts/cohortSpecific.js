@@ -37,6 +37,7 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
                     colorBasedOnIndex : true
                 });
             }
+            common.generateCSVDownload($("#personsByDurationFromStartToEnd"), data.personsByDurationFromStartToEnd, "personsByDurationFromStartToEnd");
 
             // prevalence by month
             d3.selectAll("#prevalenceByMonth svg").remove();
@@ -61,6 +62,7 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
                     yLabel: "Prevalence per 1000 People"
                 });
             }
+            common.generateCSVDownload($("#prevalenceByMonth"), data.prevalenceByMonth, "prevalenceByMonth");
 
             // age at index
             var ageAtIndexDistribution = common.normalizeArray(data.ageAtIndexDistribution);
@@ -85,6 +87,7 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
                     yLabel: "Age"
                 });
             }
+            common.generateCSVDownload($("#ageAtIndex"), data.ageAtIndexDistribution, "ageAtIndexDistribution");
 
             // distributionAgeCohortStartByCohortStartYear
             var distributionAgeCohortStartByCohortStartYear = common.normalizeArray(data.distributionAgeCohortStartByCohortStartYear);
@@ -109,6 +112,7 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
                     yLabel: "Age"
                 });
             }
+            common.generateCSVDownload($("#distributionAgeCohortStartByCohortStartYear"), data.distributionAgeCohortStartByCohortStartYear, "distributionAgeCohortStartByCohortStartYear");
 
             // distributionAgeCohortStartByGender
             var distributionAgeCohortStartByGender = common.normalizeArray(data.distributionAgeCohortStartByGender);
@@ -133,7 +137,9 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
                     yLabel: "Age"
                 });
             }
+            common.generateCSVDownload($("#distributionAgeCohortStartByGender"), data.distributionAgeCohortStartByGender, "distributionAgeCohortStartByGender");
 
+            // persons in cohort from start to end
             var personsInCohortFromCohortStartToEnd = common.normalizeArray(data.personsInCohortFromCohortStartToEnd);
             if (!personsInCohortFromCohortStartToEnd.empty) {
                 var byMonthSeries = common.map30DayDataToSeries(personsInCohortFromCohortStartToEnd, {
@@ -151,6 +157,7 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
                     yLabel: "People"
                 });
             }
+            common.generateCSVDownload($("#personinCohortFromStartToEnd"), data.personsInCohortFromCohortStartToEnd, "personsInCohortFromCohortStartToEnd");
 
             // render trellis
             d3.selectAll("#trellisLinePlot svg").remove();
@@ -223,6 +230,7 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
 
                 });
             }
+            common.generateCSVDownload($("#trellisLinePlot"), data.numPersonsByCohortStartByGenderByAge, "numPersonsByCohortStartByGenderByAge");
 
             $('#spinner-modal').modal('hide');
         })

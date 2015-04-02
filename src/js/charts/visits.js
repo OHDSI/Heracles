@@ -1,5 +1,5 @@
-define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "datatables-colvis", "colorbrewer"],
-    function ($, bootstrap, d3, jnj_chart, common, DataTables, DataTablesColvis, colorbrewer) {
+define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "datatables-colvis", "colorbrewer", "tabletools"],
+    function ($, bootstrap, d3, jnj_chart, common, DataTables, DataTablesColvis, colorbrewer, TableTools) {
 
         function VisitsRenderer() {}
         VisitsRenderer.prototype = {};
@@ -28,6 +28,17 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
 
             $(document).on( 'shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
                 $(window).trigger("resize");
+
+                // Version 1.
+                $('table:visible').each(function()
+                {
+                    var oTableTools = TableTools.fnGetInstance(this);
+
+                    if (oTableTools && oTableTools.fnResizeRequired())
+                    {
+                        oTableTools.fnResizeButtons();
+                    }
+                });
             });
 
             VisitsRenderer.drilldown = function (concept_id, concept_name) {
@@ -115,6 +126,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
 
                             });
                         }
+                        common.generateCSVDownload($("#trellisLinePlot"), data.prevalenceByGenderAgeYear, "prevalenceByGenderAgeYear");
 
                         // age at first diagnosis visualization
                         
@@ -139,6 +151,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 yLabel: 'Age at First Occurrence'
                             });
                         }
+                        common.generateCSVDownload($("#ageAtFirstOccurrence"), data.ageAtFirstOccurrence, "ageAtFirstOccurrence");
 
                         var bpdata2 = common.normalizeArray(data.visitDurationByType);
                         if (!bpdata2.empty) {
@@ -162,6 +175,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 yLabel: 'Duration'
                             });
                         }
+                        common.generateCSVDownload($("#visitDurationByType"), data.visitDurationByType, "visitDurationByType");
 
                         // prevalence by month
                         var prevByMonthData = common.normalizeArray(data.prevalenceByMonth);
@@ -183,6 +197,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 yLabel: "Prevalence per 1000 People"
                             });
                         }
+                        common.generateCSVDownload($("#visitPrevalenceByMonth"), data.prevalenceByMonth, "visitPrevalenceByMonth");
 
                         $('#spinner-modal').modal('hide');
                     }, error : function(data) {
@@ -288,7 +303,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
 
                         datatable = $('#visit_table').DataTable({
                             order: [2, 'desc'],
-                            dom: 'Clfrtip',
+                            dom: 'T<"clear">lfrtip',
                             data: table_data,
                             columns: [
                                 {

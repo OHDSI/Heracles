@@ -57,6 +57,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         colors: d3.scale.category10()
                     });
                 }
+                common.generateCSVDownload($("#totalrecords"), result.totalRecords, "totalRecords");
 
                 var recordsPerPerson = common.normalizeArray(result.recordsPerPerson, true);
                 if (!recordsPerPerson.empty) {
@@ -94,6 +95,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         colors: d3.scale.category10()
                     });
                 }
+                common.generateCSVDownload($("#recordsperperson"), result.recordsPerPerson, "recordsPerPerson");
 
                 var conceptsData = common.normalizeArray(result.conceptsPerPerson, true);
                 if (!conceptsData.empty) {
@@ -118,6 +120,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         yLabel: 'Concepts per Person'
                     });
                 }
+                common.generateCSVDownload($("#conceptsperperson"), result.conceptsPerPerson, "conceptsPerPerson");
 
                 $('#spinner-modal').modal('hide');
             }).error(function (result) {

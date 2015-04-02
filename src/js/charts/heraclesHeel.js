@@ -1,5 +1,5 @@
-define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "datatables-colvis", "colorbrewer"],
-    function ($, bootstrap, d3, jnj_chart, common, DataTables, DataTablesColvis, colorbrewer) {
+define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "datatables-colvis", "colorbrewer", "tabletools"],
+    function ($, bootstrap, d3, jnj_chart, common, DataTables, DataTablesColvis, colorbrewer, TableTools) {
 
         function HeraclesHeelRenderer() {}
         HeraclesHeelRenderer.prototype = {};
@@ -40,10 +40,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                     }
 
                     var datatable = $('#heel_table').DataTable({
-                        dom: 'lfrt<"row"<"col-sm-4" i ><"col-sm-4" T ><"col-sm-4" p >>',
-                        tableTools: {
-                            "sSwfPath": "js/swf/copy_csv_xls_pdf.swf"
-                        },
+                        dom: 'T<"clear">lfrtip',
                         data: table_data,
                         columns: [
                             {

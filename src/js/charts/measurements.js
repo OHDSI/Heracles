@@ -1,5 +1,5 @@
-define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "datatables-colvis", "colorbrewer"],
-    function ($, bootstrap, d3, jnj_chart, common, DataTables, DataTablesColvis, colorbrewer) {
+define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "datatables-colvis", "colorbrewer", "tabletools"],
+    function ($, bootstrap, d3, jnj_chart, common, DataTables, DataTablesColvis, colorbrewer, TableTools) {
 
         function MeasurementsRenderer() {}
         MeasurementsRenderer.prototype = {};
@@ -28,6 +28,18 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
 
             $(document).on( 'shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
                 $(window).trigger("resize");
+
+
+                // Version 1.
+                $('table:visible').each(function()
+                {
+                    var oTableTools = TableTools.fnGetInstance(this);
+
+                    if (oTableTools && oTableTools.fnResizeRequired())
+                    {
+                        oTableTools.fnResizeButtons();
+                    }
+                });
             });
 
             MeasurementsRenderer.drilldown = function (concept_id, concept_name) {
@@ -67,6 +79,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                     yLabel: 'Age at First Occurrence'
                                 });
                             }
+                            common.generateCSVDownload($("#ageAtFirstOccurrence"), data.ageAtFirstOccurrence, "ageAtFirstOccurrence");
 
                             // prevalence by month
                             var prevData = common.normalizeArray(data.prevalenceByMonth);
@@ -92,6 +105,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                     yLabel: "Prevalence per 1000 People"
                                 });
                             }
+                            common.generateCSVDownload($("#measurementPrevalenceByMonth"), data.prevalenceByMonth, "measurementPrevalenceByMonth");
 
                             // measurement type visualization
                             if (data.measurementsByType && data.measurementsByType.length > 0) {
@@ -105,6 +119,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                     }
                                 });
                             }
+                            common.generateCSVDownload($("#measurementsByType"), data.measurementsByType, "measurementsByType");
 
                             // render trellis
                             var trellisData = common.normalizeArray(data.prevalenceByGenderAgeYear, true);
@@ -177,6 +192,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
 
                                 });
                             }
+                            common.generateCSVDownload($("#trellisLinePlot"), data.prevalenceByGenderAgeYear, "prevalenceByGenderAgeYear");
 
                             // Records by Unit
                             var recordsByUnit = new jnj_chart.donut();
@@ -224,6 +240,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                     }
                                 });
                             }
+                            common.generateCSVDownload($("#recordsByUnit"), data.recordsByUnit, "recordsByUnit");
 
                             // Measurement Value Distribution
                             var obsValueDist = common.normalizeArray(data.measurementValueDistribution);
@@ -253,6 +270,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                     yLabel: 'Measurement Value'
                                 });
                             }
+                            common.generateCSVDownload($("#measurementValues"), data.measurementValueDistribution, "measurementValueDistribution");
 
                             // Lower Limit Distribution
                             var lowerLimitDist = common.normalizeArray(data.lowerLimitDistribution);
@@ -282,6 +300,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                     yLabel: 'Measurement Value'
                                 });
                             }
+                            common.generateCSVDownload($("#lowerLimit"), data.lowerLimitDistribution, "lowerLimitDistribution");
 
                             // Upper Limit Distribution
                             var upperLimitDist = common.normalizeArray(data.upperLimitDistribution);
@@ -311,6 +330,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                     yLabel: 'Measurement Value'
                                 });
                             }
+                            common.generateCSVDownload($("#upperLimit"), data.upperLimitDistribution, "upperLimitDistribution");
 
                             // relative to norm pie
                             var valuesRelativeToNormData = common.normalizeArray(data.valuesRelativeToNorm);
@@ -364,6 +384,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                         .range(getColors(dataRelativeToNorm))
                                 });
                             }
+                            common.generateCSVDownload($("#relativeToNorm"), data.valuesRelativeToNorm, "relativeToNorm");
                         }
                         $('#spinner-modal').modal('hide');
                     }, error : function() {
@@ -499,7 +520,7 @@ console.log(colors);
 
                         datatable = $('#measurement_table').DataTable({
                             order: [6, 'desc'],
-                            dom: 'Clfrtip',
+                            dom: 'T<"clear">lfrtip',
                             data: table_data,
                             columns: [
                                 {

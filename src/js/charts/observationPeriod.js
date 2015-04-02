@@ -43,6 +43,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         yLabel: "Age"
                     });
                 }
+                common.generateCSVDownload($("#agebygender"), result.ageByGender, "agebygender");
 
                 // age at first obs
                 var ageAtFirstData = common.normalizeArray(result.ageAtFirst);
@@ -62,6 +63,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         yLabel: 'People'
                     });
                 }
+                common.generateCSVDownload($("#ageatfirstobservation"), result.ageAtFirst, "ageatfirstobservation");
 
                 // observation length
                 if (result.observationLength && result.observationLength.length > 0 && result.observationLengthStats) {
@@ -91,6 +93,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         });
                     }
                 }
+                common.generateCSVDownload($("#observationlength"), result.observationLength, "observationlength");
 
                 // cumulative observation
                 d3.selectAll("#cumulativeobservation svg").remove();
@@ -124,7 +127,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         yLabel: 'Percent of Population'
                     });
                 }
-
+                common.generateCSVDownload($("#cumulativeobservation"), result.cumulativeObservation, "cumulativeobservation");
 
                 // observation period length by gender
                 var obsPeriodByGenderData = common.normalizeArray(result.durationByGender);
@@ -171,6 +174,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         yLabel: opgDataYlabel
                     });
                 }
+                common.generateCSVDownload($("#opbygender"), result.durationByGender, "durationByGender");
 
                 // observation period length by age
                 d3.selectAll("#opbyage svg").remove();
@@ -217,6 +221,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         yLabel: opaDataYlabel
                     });
                 }
+                common.generateCSVDownload($("#opbyage"), result.durationByAgeDecile, "durationByAgeDecile");
 
                 // observed by year
                 var obsByYearData = common.normalizeArray(result.personsWithContinuousObservationsByYear);
@@ -235,6 +240,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         yLabel: 'People'
                     });
                 }
+                common.generateCSVDownload($("#oppeoplebyyear"), result.personsWithContinuousObservationsByYear, "personsWithContinuousObservationsByYear");
 
                 // observed by month
                 var obsByMonthData = common.normalizeArray(result.observedByMonth);
@@ -257,6 +263,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         yLabel: "People"
                     });
                 }
+                common.generateCSVDownload($("#oppeoplebymonthsingle"), result.observedByMonth, "observedByMonth");
 
                 // obs period per person
                 var personPeriodData = common.normalizeArray(result.observationPeriodsPerPerson);
@@ -272,6 +279,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         }
                     });
                 }
+                common.generateCSVDownload($("#opperperson"), result.observationPeriodsPerPerson, "observationPeriodsPerPerson");
                 $('#spinner-modal').modal('hide');
             }).error(function (result) {
                 $('#spinner-modal').modal('hide');

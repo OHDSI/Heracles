@@ -88,6 +88,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             .range(["#1F78B4", "#FB9A99", "#33A02C"])
                     });
                 }
+                common.generateCSVDownload($("#trellisLinePlot"), result.prevalenceByGenderAgeYear, "prevalenceByGenderAgeYear");
 
                 // prevalence by month
                 var byMonthData = common.normalizeArray(result.prevalenceByMonth, true);
@@ -109,6 +110,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         yLabel: "Prevalence per 1000 People"
                     });
                 }
+                common.generateCSVDownload($("#deathPrevalenceByMonth"), result.prevalenceByMonth, "prevalenceByMonth");
 
                 // death type
                 if (result.deathByType && result.deathByType.length > 0) {
@@ -122,6 +124,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         }
                     });
                 }
+                common.generateCSVDownload($("#deathByType"), result.deathByType, "deathByType");
 
                 // Age At Death
                 var bpdata = common.normalizeArray(result.agetAtDeath);
@@ -146,6 +149,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         yLabel: 'Age at Death'
                     });
                 }
+                common.generateCSVDownload($("#ageAtDeath"), result.agetAtDeath, "ageAtDeath");
 
                 $('#spinner-modal').modal('hide');
             }).error(function (result) {

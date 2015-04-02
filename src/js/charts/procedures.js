@@ -1,5 +1,5 @@
-define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "datatables-colvis", "colorbrewer"],
-    function ($, bootstrap, d3, jnj_chart, common, DataTables, DataTablesColvis, colorbrewer) {
+define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "datatables-colvis", "colorbrewer", "tabletools"],
+    function ($, bootstrap, d3, jnj_chart, common, DataTables, DataTablesColvis, colorbrewer, TableTools) {
 
         function ProceduresRenderer() {}
         ProceduresRenderer.prototype = {};
@@ -28,6 +28,17 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
 
             $(document).on( 'shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
                 $(window).trigger("resize");
+
+                // Version 1.
+                $('table:visible').each(function()
+                {
+                    var oTableTools = TableTools.fnGetInstance(this);
+
+                    if (oTableTools && oTableTools.fnResizeRequired())
+                    {
+                        oTableTools.fnResizeButtons();
+                    }
+                });
             });
 
             ProceduresRenderer.drilldown = function (concept_id, concept_name) {
@@ -66,6 +77,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 yLabel: 'Age at First Occurrence'
                             });
                         }
+                        common.generateCSVDownload($("#ageAtFirstOccurrence"), data.ageAtFirstOccurrence, "ageAtFirstOccurrence");
 
                         // prevalence by month
                         var prevData = common.normalizeArray(data.prevalenceByMonth);
@@ -87,8 +99,9 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 yLabel: "Prevalence per 1000 People"
                             });
                         }
+                        common.generateCSVDownload($("#procedurePrevalenceByMonth"), data.prevalenceByMonth, "procedurePrevalenceByMonth");
 
-                        // condition type visualization
+                        // procedure type visualization
                         if (data.proceduresByType && data.proceduresByType.length > 0) {
                             var donut = new jnj_chart.donut();
                             donut.render(common.mapConceptData(data.proceduresByType), "#proceduresByType", 500, 300, {
@@ -100,6 +113,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 }
                             });
                         }
+                        common.generateCSVDownload($("#proceduresByType"), data.proceduresByType, "proceduresByType");
 
                         // render trellis
                         var trellisData = common.normalizeArray(data.prevalenceByGenderAgeYear);
@@ -171,6 +185,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
 
                             });
                         }
+                        common.generateCSVDownload($("#trellisLinePlot"), data.prevalenceByGenderAgeYear, "prevalenceByGenderAgeYear");
 
                         $('#spinner-modal').modal('hide');
                     }, error : function(data) {
@@ -277,7 +292,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
 
                         datatable = $('#procedure_table').DataTable({
                             order: [5, 'desc'],
-                            dom: 'Clfrtip',
+                            dom: 'T<"clear">lfrtip',
                             data: table_data,
                             columns: [
                                 {
