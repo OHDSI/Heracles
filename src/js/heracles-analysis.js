@@ -240,6 +240,8 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                 };
 
                 $scope.selectVizPack = function($event, vizType) {
+                    var checked = $(".viz-pack-checkbox[viz-type='" + vizType + "'").is(":checked");
+
                     var vals = $scope.visualizationPacks[vizType];
                     if (vals) {
                         var first;
@@ -247,12 +249,10 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                             if (!first) {
                                 first = $(".toggle-checkbox-item[analysis-id=" + this + "]");
                             }
-                            if (!$(".toggle-checkbox-item[analysis-id=" + this + "]").prop("checked")) {
-                                $(".toggle-checkbox-item[analysis-id=" + this + "]").prop("checked", true);
-                                $scope.analysisClick();
-                            }
+                            $(".toggle-checkbox-item[analysis-id=" + this + "]").prop("checked", checked);
+                            $scope.analysisClick();
                         });
-                        if (first) {
+                        if (checked && first) {
                             $('#auto-filter-div').animate({
                                 scrollTop: ($('#auto-filter-div').scrollTop() + first.position().top - $('#auto-filter-div').height()/2 + first.height()/2)
                             }, 1000);
@@ -287,6 +287,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                         cohortJob.analysisIds.push($(this).attr("analysis-id"));
                     });
                     cohortJob.runHeraclesHeel = $("#heraclesHeel").is(":checked");
+                    cohortJob.cohortPeriodOnly = $("#cohortPeriodOnly").is(":checked");
 
                     // set concepts
                     cohortJob.conditionConceptIds = [];
