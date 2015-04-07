@@ -250,6 +250,9 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                                 first = $(".toggle-checkbox-item[analysis-id=" + this + "]");
                             }
                             $(".toggle-checkbox-item[analysis-id=" + this + "]").prop("checked", checked);
+                            if (vizType === "Heracles Heel") {
+                                $("#heraclesHeel").prop("checked", checked);
+                            }
                             $scope.analysisClick();
                         });
                         if (checked && first) {
