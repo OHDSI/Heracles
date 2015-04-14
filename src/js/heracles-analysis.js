@@ -4,8 +4,11 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
             // setup angular controller on angular ready
             angular.module('HeraclesAnalysis', []).controller('CohortExplorerCtrl', function($scope, $http) {
 
+                $scope.selectedJob = {};
+                $scope.vizPack = {};
                 $scope.job = {};
                 $scope.message = {};
+                $scope.selectJobMessage = "";
                 $scope.visualizationPacks = {
                     "Care Site" : [1200, 1201],
                     "Location" : [1100, 1101],
@@ -251,34 +254,151 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 
                     var vals = $scope.visualizationPacks[vizType];
                     if (vals) {
-                        var first;
-                        $.each(vals, function() {
-                            if (!first) {
-                                first = $(".toggle-checkbox-item[analysis-id=" + this + "]");
+                        checkVizPack(vizType, checked, vals);
+                    }
+                };
+
+                $scope.selectVizPackFancy = function($event, vizType) {
+                    var checked = $(".viz-pack-checkbox[viz-type='" + vizType + "'").is(":checked");
+
+                    var vals = $scope.visualizationPacks[vizType];
+                    if (vals) {
+
+                        var ran = [];
+                        var newJobs = [];
+                        if (checked) {
+
+                            $.each(vals, function() {
+                                var lastRan = $(".toggle-checkbox-item[analysis-id=" + this + "]").attr('ran');
+                                if (lastRan && lastRan !== null && lastRan !== "") {
+                                    ran.push(this);
+                                } else {
+                                    newJobs.push(this);
+                                }
+                            });
+
+                            if (ran.length === 0) {
+                                checkVizPack(vizType, checked, vals);
+                            } else {
+                                $scope.selectJobMessage = (ran.length  + "  of your requested jobs have been previously run. They should be repeated only if you have reason to believe they were run using a custom configuration. Otherwise, we recommend removing these jobs to reduce your analysis' running time.");
+
+                                $scope.vizPack = {};
+                                $scope.vizPack.alreadyRan = ran;
+                                $scope.vizPack.newJobs = newJobs;
+                                $scope.vizPack.vizType = vizType;
+                                $scope.vizPack.checked = checked;
+                                $scope.vizPack.vals = vals;
+                                $("#alreadyRanJobsModal").modal("show");
                             }
-                            $(".toggle-checkbox-item[analysis-id=" + this + "]").prop("checked", checked);
-                            if (vizType === "Heracles Heel") {
-                                $("#heraclesHeel").prop("checked", checked);
-                            }
-                            $scope.analysisClick();
-                        });
-                        if (checked && first) {
-                            $('#auto-filter-div').animate({
-                                scrollTop: ($('#auto-filter-div').scrollTop() + first.position().top - $('#auto-filter-div').height()/2 + first.height()/2)
-                            }, 1000);
+
+                        } else {
+                            checkVizPack(vizType, checked, vals);
                         }
                     }
                 };
 
+
+
+                function checkVizPack(vizType, checked, vals) {
+                    if (vals.length === 0) {
+                        // uncheck the label on the left, since nothing is being ran
+                        if (checked) {
+                            $(".viz-pack-checkbox[viz-type='" + vizType + "'").prop("checked", false);
+                        }
+                        return;
+                    }
+                    var first;
+                    $.each(vals, function() {
+                        if (!first) {
+                            first = $(".toggle-checkbox-item[analysis-id=" + this + "]");
+                        }
+                        $(".toggle-checkbox-item[analysis-id=" + this + "]").prop("checked", checked);
+                        if (vizType === "Heracles Heel") {
+                            $("#heraclesHeel").prop("checked", checked);
+                        }
+                        $scope.analysisClick();
+                    });
+                    if (checked && first) {
+                        $('#auto-filter-div').animate({
+                            scrollTop: ($('#auto-filter-div').scrollTop() + first.position().top - $('#auto-filter-div').height()/2 + first.height()/2)
+                        }, 1000);
+                    }
+                }
+
+                $scope.runOnlyNewJobs = function() {
+                    if ($scope.selectedJob.newJobs) {
+                        if ($scope.selectedJob.newJobs.length == 0) {
+                            $scope.selectedJob = {};
+                            $("#alreadyRanJobsModal").modal("hide");
+
+                            $scope.message.text = "There are no new jobs to run.";
+                            $scope.message.label = "Problem submitting analyses";
+                            $("#messageModal").modal('show');
+
+                            return;
+                        }
+                        $scope.sendJob($scope.selectedJob.newJobs);
+
+                        $.each($scope.selectedJob.alreadyRan, function() {
+                            $(".toggle-checkbox-item[analysis-id=" + this + "]").prop("checked", false);
+                        });
+
+                        $scope.analysisClick();
+                    }
+                    $scope.selectedJob = {};
+                    $("#alreadyRanJobsModal").modal("hide");
+                };
+
+                $scope.runAllJobs = function() {
+                    if ($scope.selectedJob.jobs) {
+                        $scope.sendJob($scope.selectedJob.jobs);
+                    }
+                    $scope.selectedJob = {};
+                    $("#alreadyRanJobsModal").modal("hide");
+                };
+
                 $scope.submitJob = function($event) {
                     if ($(".toggle-checkbox-item:checked").length === 0) {
-                        $scope.message.text = "Please select at least one Analysis to run.";
-                        $scope.message.label = "Error submitting Analysis";
+                        $scope.message.text = "Please select at least one analyis to run.";
+                        $scope.message.label = "Problem submitting analyses";
                         $("#messageModal").modal('show');
                         return;
                     }
+
+                    var jobs = [];
+                    var ran = [];
+                    var newJobs = [];
+                    $(".toggle-checkbox-item:checked").each(function () {
+                        var analysisId = $(this).attr("analysis-id");
+                        jobs.push(analysisId);
+
+                        var lastRan = $(this).attr('ran');
+                        if (lastRan && lastRan !== null && lastRan !== "") {
+                            ran.push(analysisId);
+                        } else {
+                            newJobs.push(analysisId);
+                        }
+                    });
+                    if (ran.length > 0) {
+                        $scope.selectJobMessage = (ran.length  + "  of your requested jobs have been previously run. They should be repeated only if you have reason to believe they were run using a custom configuration. Otherwise, we recommend removing these jobs to reduce your analysis' running time.");
+
+                        $scope.selectedJob = {};
+                        $scope.selectedJob.alreadyRan = ran;
+                        $scope.selectedJob.newJobs = newJobs;
+                        $scope.selectedJob.jobs = jobs;
+                        $("#alreadyRanJobsModal").modal("show");
+
+                        return;
+                    }
+
+                    // meets all conditions so ok to submit
+                    $scope.sendJob(jobs);
+                };
+
+
+                $scope.sendJob = function(jobs) {
                     // send notice to user
-                    var btn = $(event.currentTarget);
+                    var btn = $("#btnSubmitJob");
                     btn.button('loading');
                     $scope.job.job_link = null;
                     $scope.job.label = "Submitting...";
@@ -292,10 +412,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                     cohortJob.smallCellCount = $("#smallCellCount").val();
                     cohortJob.cohortDefinitionIds = [];
                     cohortJob.cohortDefinitionIds.push($scope.cohort.cohortDefinition.id);
-                    cohortJob.analysisIds = [];
-                    $(".toggle-checkbox-item:checked").each(function () {
-                        cohortJob.analysisIds.push($(this).attr("analysis-id"));
-                    });
+                    cohortJob.analysisIds = jobs;
                     cohortJob.runHeraclesHeel = $("#heraclesHeel").is(":checked");
                     cohortJob.cohortPeriodOnly = $("#cohortPeriodOnly").is(":checked");
 
@@ -316,6 +433,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                         }
                     });
                     console.log("Submitting to cohort analysis service:");
+                    console.log(cohortJob);
 
                     $http.post(getWebApiUrl() + "/cohortanalysis", cohortJob).
                         success(function(data, status, headers, config) {
