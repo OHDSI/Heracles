@@ -400,15 +400,23 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                     // send notice to user
                     var btn = $("#btnSubmitJob");
                     btn.button('loading');
+                    var d = new Date(),
+                        jobName = (d.getMonth() + 1) + '-' + d.getDate() + '-' + d.getFullYear()
+                            + '_' + d.getHours() + d.getMinutes() + '_'
+                            + ($scope.cohort.cohortDefinition.name.split(' ').join('_'));
+                    $scope.jobName = jobName;
                     $scope.job.job_link = null;
                     $scope.job.label = "Submitting...";
-                    $scope.job.message = "Your job is being submitted. Please wait to receive a status update...";
+                    $scope.job.message = "Your job, " + jobName + ", is being submitted. Please wait to receive a status update...";
                     if (!$("#jobStatusModal").is(":visible")) {
                         $("#jobStatusModal").modal("show");
                     }
 
                     // submit job
                     var cohortJob = {};
+
+
+                    cohortJob.jobName = jobName;
                     cohortJob.smallCellCount = $("#smallCellCount").val();
                     cohortJob.cohortDefinitionIds = [];
                     cohortJob.cohortDefinitionIds.push($scope.cohort.cohortDefinition.id);
@@ -451,7 +459,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                     $scope.job.success = success;
                     if (success) {
                        $scope.job.label = "Success";
-                       $scope.job.message = "Your job was submitted successfully!";
+                       $scope.job.message = "Your job, " + $scope.jobName + ", was submitted successfully!";
                         if (data.jobInstance) {
                             $scope.job.job_link = getWebApiUrl() + "/job/" + data.jobInstance.instanceId +
                                 "/execution/" + data.executionId;
