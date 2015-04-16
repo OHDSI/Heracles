@@ -1,5 +1,5 @@
 // configure angular
-require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_common', 'lodash'], function (angular, $, b, HeraclesD3, j, heraclesCommon, _) {
+require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_common', 'lodash', 'monster'], function (angular, $, b, HeraclesD3, j, heraclesCommon, _, monster) {
         angular.element().ready(function() {
             // setup angular controller on angular ready
             angular.module('HeraclesAnalysis', []).controller('CohortExplorerCtrl', function($scope, $http) {
@@ -177,6 +177,10 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                     $scope.analysisCount = 0;
                     $scope.selected = datum;
                     //$http.get('src/data/sample-cohort-explorer.json')
+                    var lastWebApi = monster.get('last-webapi');
+                    if (lastWebApi) {
+                        setSelectedWebApiUrl(+lastWebApi);
+                    }
                     $http.get(getWebApiUrl() + "/cohortanalysis/" + datum.id + "/summary")
                         .success(function(data, status, headers, config) {
                             $scope.cohort = data;
@@ -473,6 +477,16 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                     }
 
                 }
+
+                $scope.goBack = function (evt) {
+                    $("#cohort-explorer-main").slideUp("fast", function () {
+                        $("#header").slideDown('fast', function () {
+                            $("#cohorts")
+                                .val("")
+                                .focus();
+                        });
+                    });
+                };
 
                 $scope.analysisClick = function() {
                     $scope.analysisCount = $(".toggle-checkbox-item:checked").length;
