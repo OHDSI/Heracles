@@ -240,11 +240,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                     if ($scope.selected) {
                         link.text("Refreshing...");
                         link.prop('disabled', true);
-                        $("input:checkbox").prop("checked", false);
-                        $(".toggle-filter-input").val("");
-                        $("#auto-filter-input").val("");
-                        $("#auto-filter-div").find("label").show();
-                        $scope.analysisCount = 0;
+                        $scope.refreshUI();
                         $scope.showCohort($scope.selected);
                         setTimeout(function() {
                             link.text("Refresh");
@@ -252,6 +248,14 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                         }, 1500);
                     }
                 };
+
+                $scope.refreshUI = function() {
+                    $("input:checkbox").prop("checked", false);
+                    $(".toggle-filter-input").val("");
+                    $("#auto-filter-input").val("");
+                    $("#auto-filter-div").find("label").show();
+                    $scope.analysisCount = 0;
+                }
 
                 $scope.selectVizPack = function($event, vizType) {
                     var checked = $(".viz-pack-checkbox[viz-type='" + vizType + "'").is(":checked");
@@ -479,6 +483,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                 $scope.goBack = function (evt) {
                     $("#cohort-explorer-main").slideUp("fast", function () {
                         $("#header").slideDown('fast', function () {
+                            $scope.refreshUI();
                             $("#cohorts")
                                 .val("")
                                 .focus();
