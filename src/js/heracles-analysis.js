@@ -331,7 +331,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 
                 $scope.runOnlyNewJobs = function() {
                     if ($scope.selectedJob.newJobs) {
-                        if ($scope.selectedJob.newJobs.length == 0) {
+                        if ($scope.selectedJob.newJobs.length === 0) {
                             $scope.selectedJob = {};
                             $("#alreadyRanJobsModal").modal("hide");
 
@@ -405,9 +405,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                     var btn = $("#btnSubmitJob");
                     btn.button('loading');
                     var d = new Date(),
-                        jobName = (d.getMonth() + 1) + '-' + d.getDate() + '-' + d.getFullYear()
-                            + '_' + d.getHours() + d.getMinutes() + '_'
-                            + ($scope.cohort.cohortDefinition.name.split(' ').join('_'));
+                        jobName = (d.getMonth() + 1) + '-' + d.getDate() + '-' + d.getFullYear() + '_' + d.getHours() + d.getMinutes() + '_' + ($scope.cohort.cohortDefinition.name.split(' ').join('_'));
                     $scope.jobName = jobName;
                     $scope.job.job_link = null;
                     $scope.job.label = "Submitting...";

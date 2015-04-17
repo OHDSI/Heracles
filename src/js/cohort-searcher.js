@@ -108,11 +108,11 @@ require(['domReady!', 'jquery', 'typeahead', 'handlebars', 'angular', 'monster',
         setTimeout(function() {
             $(".webpai-dropdown").empty();
             var currentWebApi = getWebApiUrl();
-            $.each(ohdsi_services, function(i) {
+            $.each(getAllOhdsiServices(), function(i) {
                 var li = $('<li/>');
-                var a = $('<a href="#" />');
+                var a = $('<label style="cursor: pointer" />');
 
-                a.html(this.name + ' - <small>' + this.url + '</small>')
+                a.html(this.name + '<br/> <small>' + this.url + '</small>')
                     .addClass('webApiLinks')
                     .css('font-weight', this.url === currentWebApi ? 'bold' : 'normal')
                     .attr('webApiIdx', i)
