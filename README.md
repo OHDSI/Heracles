@@ -10,7 +10,7 @@ HERACLES is a project as part of the Observational Health Data Sciences and Info
 ##### Features
 * Select from existing COHORTs in CDM and choose a set of analyses to run
 * Focus on a particular concept group such as medications, conditions, or procedures
-* Visualize results through a series of reports similar to [ACHILLES](http://www.ohdsi.org/web/achilles/index.html#/SAMPLE/dashboard)
+* Visualize results through a series of reports
 
 
 ##### Technology
@@ -21,15 +21,30 @@ HERACLES is a project as part of the Observational Health Data Sciences and Info
 * AngularJS
 
 ##### System Requirements
-* 
+* Java 1.7 or higher
 
 ##### Dependencies
-* Have a version of the [OHDSI WebAPI](https://github.com/OHDSI/WebAPI) running.
+* None, if using the [OLYMPUS platform](https://github.com/OHDSI/OLYMPUS)
+* Otherwise (for custom implementations), the latest version of the [OHDSI WebAPI](https://github.com/OHDSI/WebAPI)
 
-##### Running Heracles
-*  Will be updated when released
+##### Installation
+*  The preferred method of Heracles installation is via the [OLYMPUS platform](https://github.com/OHDSI/OLYMPUS) 
+*  For advanced users
+	*  Configure and build the OHDSI WebAPI for your enviroment
+	*  Place the Heracles files on a web server (such as Apache)
+	*  Edit the config.js file 
 
-###### For Developers
+##### License
+Apache 2.0
+
+
+
+##### Getting involved
+*  Join the Heracles WG calls.  Find more info on the [OHDSI Forums](http://forums.ohdsi.org/t/heracles-cohort-summarization-wg/307).
+
+
+
+###### For Developers Only
 
 If you wish to add/modify configuration using Grunt, you can install the following.
 * Install [Node.js](http://nodejs.org/) if not yet installed
@@ -42,11 +57,4 @@ If you wish to add/modify configuration using Grunt, you can install the followi
 * (optional) Run watch to keep minified files up to date
 <br/>`grunt watch`
 
-##### Other Notes
-*
 
-##### Getting involved
-* 
-	
-##### License
-Apache
