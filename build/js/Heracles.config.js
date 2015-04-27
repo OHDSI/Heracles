@@ -2,7 +2,7 @@ var current_ohdsi_service;
 var ohdsi_services = [
     {
         name: 'Local',    
-        url: 'http://localhost:8080/WebAPI'
+        url: 'http://localhost:8080/WebAPI/'
     },
     //{
     //    name: 'Public',
@@ -10,7 +10,7 @@ var ohdsi_services = [
     //},
     {
         name: 'Public',
-        url: 'http://api.ohdsi.org:80/WebAPI'
+        url: 'http://api.ohdsi.org:80/WebAPI/'
     }
     //{
     //    name: 'NLP01',

@@ -19,7 +19,7 @@ require(['domReady!', 'jquery', 'typeahead', 'handlebars', 'angular', 'monster',
 
         function getBloodhound() {
 
-            var cohortDefUrl = getWebApiUrl() + '/cohortdefinition';
+            var cohortDefUrl = getWebApiUrl() + 'cohortdefinition';
             //var cohortDefUrl = 'src/data/sample-cohorts.json';
 
             // initialize the cohort type ahead, constructs the suggestion engine

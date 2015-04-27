@@ -181,7 +181,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                     if (lastWebApi) {
                         setSelectedWebApiUrl(+lastWebApi);
                     }
-                    $http.get(getWebApiUrl() + "/cohortanalysis/" + datum.id + "/summary")
+                    $http.get(getWebApiUrl() + "cohortanalysis/" + datum.id + "/summary")
                         .success(function(data, status, headers, config) {
                             $scope.cohort = data;
 
@@ -451,7 +451,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                     console.log("Submitting to cohort analysis service:");
                     console.log(cohortJob);
 
-                    $http.post(getWebApiUrl() + "/cohortanalysis", cohortJob).
+                    $http.post(getWebApiUrl() + "cohortanalysis", cohortJob).
                         success(function(data, status, headers, config) {
                             btn.button('reset');
                             showJobResultModal(true, data, status, headers, config);
@@ -469,7 +469,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                        $scope.job.label = "Success";
                        $scope.job.message = "Your job, " + $scope.jobName + ", was submitted successfully!";
                         if (data.jobInstance) {
-                            $scope.job.job_link = getWebApiUrl() + "/job/" + data.jobInstance.instanceId +
+                            $scope.job.job_link = getWebApiUrl() + "job/" + data.jobInstance.instanceId +
                                 "/execution/" + data.executionId;
                         }
                     } else {
