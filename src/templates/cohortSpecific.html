@@ -48,8 +48,8 @@
     </div>
 
 
-    <div class="row">
-        <div class="col-sm-6">
+    <div class="row equal">
+        <div class="col-sm-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Number of persons by duration from cohort start to cohort end
@@ -57,24 +57,6 @@
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                     <div id="personsByDurationFromStartToEnd" class="chartcontainer"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row equal">
-        <div class="col-sm-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Age at Index
-                </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div id="ageAtIndex" class="chartcontainer"></div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -93,7 +75,26 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
+    </div>
+
+    <div class="row equal">
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Age at Index
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div id="ageAtIndex" class="chartcontainer"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Distribution of age at cohort start by gender
@@ -113,6 +114,136 @@
 
     </div>
 
+    <div class="row equal">
+        <div class="panel panel-default panel-table">
+            <div class="panel-heading">
+                Condition Prevalence
+            </div>
+            <div class="panel-body">
+                <div class="col-sm-12">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="active" id="treemap-tab"><a href="#condition-treemap-panel" role="tab" data-toggle="tab">Treemap</a>
+                        </li>
+                        <li><a href="#condition-table-panel" role="tab" data-toggle="tab">Table</a>
+                        </li>
+                    </ul>
+                    <div id='content' class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="condition-treemap-panel">
+                            <div id="treemap_container">
+                                <div class="treemap_zoomtarget"></div>
+                            </div>
+                            <div class="treemap_legend">Box Size: Prevalence, Color: Records per Person (Blue to Green = Low to High), Use Ctrl-Click to Zoom, Alt-Click to Reset Zoom</div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="condition-table-panel">
+                            <table id="condition_table" class="display">
+                                <thead>
+                                <tr>
+                                    <th>Concept Id</th>
+                                    <th>SOC</th>
+                                    <th>HLGT</th>
+                                    <th>HLT</th>
+                                    <th>PT</th>
+                                    <th>SNOMED</th>
+                                    <th>Person Count</th>
+                                    <th>Prevalence</th>
+                                    <th>Records per Person</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Procedure Prevalence
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-12">
+                        <ul class="nav nav-tabs"role="tablist">
+                            <li class="active"><a href="#procedure-treemap-panel" role="tab" data-toggle="tab">Treemap</a>
+                            </li>
+                            <li><a href="#procedure-table-panel" role="tab" data-toggle="tab">Table</a>
+                            </li>
+                        </ul>
+                        <div id='proc_content' class="tab-content">
+                            <div class="tab-pane active" role="tabpanel" id="procedure-treemap-panel">
+                                <div id="proc_treemap_container">
+                                    <div class="treemap_zoomtarget"></div>
+                                </div>
+                                <div class="treemap_legend">Box Size: Prevalence, Color: Records per Person (Blue to Green = Low to High), Use Ctrl-Click to Zoom, Alt-Click to Reset Zoom</div>
+                            </div>
+                            <div class="tab-pane" role="tabpanel"  id="procedure-table-panel">
+                                <table id="procedure_table" class="display">
+                                    <thead>
+                                    <tr>
+                                        <th>Concept Id</th>
+                                        <th>Level 4</th>
+                                        <th>Level 3</th>
+                                        <th>Level 2</th>
+                                        <th>Procedure</th>
+                                        <th>Person Count</th>
+                                        <th>Prevalence</th>
+                                        <th>Records per Person</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default panel-table">
+                <div class="panel-heading">
+                    Drug Prevalence
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-12">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="active"><a href="#drugera-treemap-panel" role="tab" data-toggle="tab">Treemap</a>
+                            </li>
+                            <li><a href="#drugera-table-panel" role="tab" data-toggle="tab">Table</a>
+                            </li>
+                        </ul>
+                        <div id='drug_content' class="tab-content">
+                            <div role="tabpanel"  class="tab-pane active" id="drugera-treemap-panel">
+                                <div id="drug_treemap_container">
+                                    <div class="treemap_zoomtarget"></div>
+                                </div>
+                                <div class="treemap_legend">Box Size: Prevalence, Color: Length of Era (Blue to Green = Low to High), Use Ctrl-Click to Zoom, Alt-Click to Reset Zoom</div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="drugera-table-panel">
+                                <table id="drugera_table" class="display">
+                                    <thead>
+                                    <tr>
+                                        <th>Concept Id</th>
+                                        <th>ATC 1</th>
+                                        <th>ATC 3</th>
+                                        <th>ATC 5</th>
+                                        <th>Ingredient</th>
+                                        <th>Person Count</th>
+                                        <th>Prevalence</th>
+                                        <th>Length of Era</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 </div>
