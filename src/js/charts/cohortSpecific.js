@@ -305,7 +305,11 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             "id": data.conceptId[i],
                             "path": data.conceptPath[i],
                             "pct_persons": data.percentPersons[i],
-                            "records_per_person": data.recordsPerPerson[i]
+                            "records_per_person": data.recordsPerPerson[i],
+                            "relative_risk" : data.logRRAfterBefore[i],
+                            "pct_persons_after": data.percentPersonsAfter[i],
+                            "pct_persons_before": data.percentPersonsBefore[i],
+                            "risk_difference": data.riskDiffAfterBefore[i]
                         };
 
                         // we only include nodes with sufficient size in the treemap display
@@ -366,7 +370,11 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             "id": data.conceptId[i],
                             "path": data.conceptPath[i],
                             "pct_persons": data.percentPersons[i],
-                            "length_of_era" : data.lengthOfEra[i]
+                            "length_of_era" : data.lengthOfEra[i],
+                            "relative_risk" : data.logRRAfterBefore[i],
+                            "pct_persons_after": data.percentPersonsAfter[i],
+                            "pct_persons_before": data.percentPersonsBefore[i],
+                            "risk_difference": data.riskDiffAfterBefore[i]
                         };
 
                         // we only include nodes with sufficient size in the treemap display
@@ -413,7 +421,10 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             snomed: conceptDetails[4],
                             num_persons: format_comma(this.numPersons[i]),
                             percent_persons: format_pct(this.percentPersons[i]),
-                            records_per_person: format_fixed(this.recordsPerPerson[i])
+                            relative_risk: format_fixed(this.logRRAfterBefore[i]),
+                            percent_persons_before: format_pct(this.percentPersons[i]),
+                            percent_persons_after: format_pct(this.percentPersons[i]),
+                            risk_difference: format_fixed(this.riskDiffAfterBefore[i])
                         };
                     }, conditionOccurrencePrevalence);
 
@@ -452,7 +463,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 className: 'numeric'
                             },
                             {
-                                data: 'records_per_person',
+                                data: 'relative_risk',
                                 className: 'numeric'
                             }
                         ],
@@ -475,10 +486,13 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             return node.num_persons;
                         },
                         getcolorvalue: function (node) {
-                            return node.records_per_person;
+                            return node.relative_risk;
                         },
                         getcolorrange: function () {
-                            return colorbrewer.Paired[3];
+                            return colorbrewer.RR[3];
+                        },
+                        getcolorscale : function() {
+                            return [-6, 0, 5];
                         },
                         getcontent: function (node) {
                             var result = '',
@@ -486,8 +500,11 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 i = steps.length - 1;
                             result += '<div class="pathleaf">' + steps[i] + '</div>';
                             result += '<div class="pathleafstat">Prevalence: ' + format_pct(node.pct_persons) + '</div>';
+                            result += '<div class="pathleafstat">% Persons Before: ' + format_pct(node.pct_persons_before) + '</div>';
+                            result += '<div class="pathleafstat">% Persons After: ' + format_pct(node.pct_persons_after) + '</div>';
                             result += '<div class="pathleafstat">Number of People: ' + format_comma(node.num_persons) + '</div>';
-                            result += '<div class="pathleafstat">Records per Person: ' + format_fixed(node.records_per_person) + '</div>';
+                            result += '<div class="pathleafstat">Log of Relative Risk per Person: ' + format_fixed(node.relative_risk) + '</div>';
+                            result += '<div class="pathleafstat">Difference in Risk: ' + format_fixed(node.risk_difference) + '</div>';
                             return result;
                         },
                         gettitle: function (node) {
@@ -517,7 +534,10 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             procedure_name: conceptDetails[3],
                             num_persons: format_comma(this.numPersons[i]),
                             percent_persons: format_pct(this.percentPersons[i]),
-                            records_per_person: format_fixed(this.recordsPerPerson[i])
+                            relative_risk: format_fixed(this.logRRAfterBefore[i]),
+                            percent_persons_before: format_pct(this.percentPersons[i]),
+                            percent_persons_after: format_pct(this.percentPersons[i]),
+                            risk_difference: format_fixed(this.riskDiffAfterBefore[i])
                         };
                     }, procedureOccurrencePrevalence);
 
@@ -552,7 +572,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 className: 'numeric'
                             },
                             {
-                                data: 'records_per_person',
+                                data: 'relative_risk',
                                 className: 'numeric'
                             }
                         ],
@@ -575,10 +595,13 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             return node.num_persons;
                         },
                         getcolorvalue: function (node) {
-                            return node.records_per_person;
+                            return node.relative_risk;
                         },
                         getcolorrange: function() {
-                            return colorbrewer.Paired[3];
+                            return colorbrewer.RR[3];
+                        },
+                        getcolorscale : function() {
+                            return [-6, 0, 5];
                         },
                         getcontent: function (node) {
                             var result = '',
@@ -586,8 +609,11 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 i = steps.length - 1;
                             result += '<div class="pathleaf">' + steps[i] + '</div>';
                             result += '<div class="pathleafstat">Prevalence: ' + format_pct(node.pct_persons) + '</div>';
+                            result += '<div class="pathleafstat">% Persons Before: ' + format_pct(node.pct_persons_before) + '</div>';
+                            result += '<div class="pathleafstat">% Persons After: ' + format_pct(node.pct_persons_after) + '</div>';
                             result += '<div class="pathleafstat">Number of People: ' + format_comma(node.num_persons) + '</div>';
-                            result += '<div class="pathleafstat">Records per Person: ' + format_fixed(node.records_per_person) + '</div>';
+                            result += '<div class="pathleafstat">Log of Relative Risk per Person: ' + format_fixed(node.relative_risk) + '</div>';
+                            result += '<div class="pathleafstat">Difference in Risk: ' + format_fixed(node.risk_difference) + '</div>';
                             return result;
                         },
                         gettitle: function (node) {
@@ -617,7 +643,10 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             ingredient: conceptDetails[3],
                             num_persons: format_comma(this.numPersons[i]),
                             percent_persons: format_pct(this.percentPersons[i]),
-                            length_of_era: format_fixed(this.lengthOfEra[i])
+                            relative_risk: format_fixed(this.logRRAfterBefore[i]),
+                            percent_persons_before: format_pct(this.percentPersons[i]),
+                            percent_persons_after: format_pct(this.percentPersons[i]),
+                            risk_difference: format_fixed(this.riskDiffAfterBefore[i])
                         };
                     }, drugEraPrevalenceData);
 
@@ -652,7 +681,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 className: 'numeric'
                             },
                             {
-                                data: 'length_of_era',
+                                data: 'relative_risk',
                                 className: 'numeric'
                             }
                         ],
@@ -675,10 +704,13 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                             return node.num_persons;
                         },
                         getcolorvalue: function (node) {
-                            return node.length_of_era;
+                            return node.relative_risk;
                         },
                         getcolorrange: function() {
-                            return colorbrewer.Paired[3];
+                            return colorbrewer.RR[3];
+                        },
+                        getcolorscale : function() {
+                            return [-6, 0, 5];
                         },
                         getcontent: function (node) {
                             var result = '',
@@ -686,8 +718,11 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 i = steps.length - 1;
                             result += '<div class="pathleaf">' + steps[i] + '</div>';
                             result += '<div class="pathleafstat">Prevalence: ' + format_pct(node.pct_persons) + '</div>';
+                            result += '<div class="pathleafstat">% Persons Before: ' + format_pct(node.pct_persons_before) + '</div>';
+                            result += '<div class="pathleafstat">% Persons After: ' + format_pct(node.pct_persons_after) + '</div>';
                             result += '<div class="pathleafstat">Number of People: ' + format_comma(node.num_persons) + '</div>';
-                            result += '<div class="pathleafstat">Length of Era: ' + format_fixed(node.length_of_era) + '</div>';
+                            result += '<div class="pathleafstat">Log of Relative Risk per Person: ' + format_fixed(node.relative_risk) + '</div>';
+                            result += '<div class="pathleafstat">Difference in Risk: ' + format_fixed(node.risk_difference) + '</div>';
                             return result;
                         },
                         gettitle: function (node) {
