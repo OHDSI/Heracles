@@ -324,69 +324,54 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
             return root;
         }
 
-        function buildEraHierarchyFromJSON(data, threshold) {
-            var total = 0;
 
-            var root = {
-                "name": "root",
-                "children": []
-            };
 
-            for (i = 0; i < data.percentPersons.length; i++) {
-                total += data.percentPersons[i];
-            }
+        function drilldown(id, name, type) {
+            $('#loading-text').text("Querying Database...");
+            $('#spinner-modal').modal('show');
+            $("#" + type + "DrilldownScatterplot").empty();
+            $.ajax({
+                type: "GET",
+                url: CohortSpecificRenderer.baseUrl + "/cohortspecific" + type + "/" + id,
+                contentType: "application/json; charset=utf-8"
+            }).done(function (result) {
+                $('#loading-text').text("Rendering Visualizations...");
 
-            for (var i = 0; i < data.conceptPath.length; i++) {
-                var parts = data.conceptPath[i].split("||");
-                var currentNode = root;
-                for (var j = 0; j < parts.length; j++) {
-                    var children = currentNode.children;
-                    var nodeName = parts[j];
-                    var childNode;
-                    if (j + 1 < parts.length) {
-                        // Not yet at the end of the path; move down the tree.
-                        var foundChild = false;
-                        for (var k = 0; k < children.length; k++) {
-                            if (children[k].name === nodeName) {
-                                childNode = children[k];
-                                foundChild = true;
-                                break;
-                            }
-                        }
-                        // If we don't already have a child node for this branch, create it.
-                        if (!foundChild) {
-                            childNode = {
-                                "name": nodeName,
-                                "children": []
-                            };
-                            children.push(childNode);
-                        }
-                        currentNode = childNode;
-                    } else {
-                        // Reached the end of the path; create a leaf node.
-                        childNode = {
-                            "name": nodeName,
-                            "num_persons": data.numPersons[i],
-                            "id": data.conceptId[i],
-                            "path": data.conceptPath[i],
-                            "pct_persons": data.percentPersons[i],
-                            "length_of_era" : data.lengthOfEra[i],
-                            "relative_risk" : data.logRRAfterBefore[i],
-                            "pct_persons_after": data.percentPersonsAfter[i],
-                            "pct_persons_before": data.percentPersonsBefore[i],
-                            "risk_difference": data.riskDiffAfterBefore[i]
-                        };
+                if (result && result.length > 0) {
 
-                        // we only include nodes with sufficient size in the treemap display
-                        // sufficient size is configurable in the calculation of threshold
-                        // which is a function of the number of pixels in the treemap display
-                        if ((data.percentPersons[i] / total) > threshold) {
-                            children.push(childNode);
-                        }
-                    }
+                    var normalized = common.dataframeToArray(common.normalizeArray(result));
+
+                    // nest dataframe data into key->values pair
+                    var totalRecordsData = d3.nest()
+                        .key(function (d) {
+                            return d.recordType;
+                        })
+                        .entries(normalized)
+                        .map(function (d) {
+                            return {name: d.key, values: d.values};
+                        });
+
+
+                    var scatter = new jnj_chart.scatterplot();
+                    scatter.render(totalRecordsData, "#" + type + "DrilldownScatterplot", 900, 250, {
+                        yFormat: d3.format('0%'),
+                        xValue: "duration",
+                        yValue: "pctPersons",
+                        xLabel: "Duration Relative to Index",
+                        yLabel: "% Persons",
+                        showLegend: true,
+                        colors: d3.scale.category10()
+                    });
+
+                    common.generateCSVDownload($("#" + type + "DrilldownScatterplot"), result, type + "Drilldown");
+                    $('#' + type + 'OccurrencesDrilldown').removeClass('hidden');
+
                 }
-            }
-            return root;
+
+                $('#spinner-modal').modal('hide');
+            }).error(function (result) {
+                $('#spinner-modal').modal('hide');
+            });
         }
 
         // show the treemap
@@ -434,8 +419,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         data: table_data,
                         columns: [
                             {
-                                data: 'concept_id',
-                                visible: false
+                                data: 'concept_id'
                             },
                             {
                                 data: 'soc'
@@ -479,8 +463,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                     var treemap = new jnj_chart.treemap();
                     treemap.render(tree, '#treemap_container', width, height, {
                         onclick: function (node) {
-                            console.log('no drilldown for ');
-                            console.log(node);
+                            drilldown(node.id, node.name, 'condition');
                         },
                         getsizevalue: function (node) {
                             return node.num_persons;
@@ -541,14 +524,13 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         };
                     }, procedureOccurrencePrevalence);
 
-                    datatable = $('#procedure_table').DataTable({
+                    var datatable = $('#procedure_table').DataTable({
                         order: [5, 'desc'],
                         dom: 'T<"clear">lfrtip',
                         data: table_data,
                         columns: [
                             {
-                                data: 'concept_id',
-                                visible: false
+                                data: 'concept_id'
                             },
                             {
                                 data: 'level_4'
@@ -588,8 +570,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                     var treemap = new jnj_chart.treemap();
                     treemap.render(tree, '#proc_treemap_container', width, height, {
                         onclick: function (node) {
-                            console.log('no drilldown for ');
-                            console.log(node);
+                            drilldown(node.id, node.name, 'procedure');
                         },
                         getsizevalue: function (node) {
                             return node.num_persons;
@@ -656,8 +637,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         data: table_data,
                         columns: [
                             {
-                                data: 'concept_id',
-                                visible: false
+                                data: 'concept_id'
                             },
                             {
                                 data: 'atc1'
@@ -693,12 +673,11 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
 
                     $('#reportDrugEras').show();
 
-                    var tree = buildEraHierarchyFromJSON(drugEraPrevalenceData, threshold);
+                    var tree = buildHierarchyFromJSON(drugEraPrevalenceData, threshold);
                     var treemap = new jnj_chart.treemap();
                     treemap.render(tree, '#drug_treemap_container', width, height, {
                         onclick: function (node) {
-                            console.log('no drilldown for ');
-                            console.log(node);
+                            drilldown(node.id, node.name, 'drug');
                         },
                         getsizevalue: function (node) {
                             return node.num_persons;

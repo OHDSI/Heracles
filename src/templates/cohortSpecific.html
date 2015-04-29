@@ -114,7 +114,7 @@
 
     </div>
 
-    <div class="row equal">
+    <div class="row">
         <div class="panel panel-default panel-table">
             <div class="panel-heading">
                 Condition Prevalence
@@ -157,6 +157,20 @@
         </div>
     </div>
 
+    <div id="conditionOccurrencesDrilldown" class="hidden reportDrilldown row">
+        <div id="conditionDrilldownTitle" class="reportTitle"></div>
+            <div class="col-sm-12">
+                <div id="conditionDrilldownPrevalencePanel" class="panel panel-default">
+                    <div class="panel-heading">
+                        First Condition Occurrence Relative to Index
+                    </div>
+                    <div class="panel-body">
+                        <div class="drilldown" id="conditionDrilldownScatterplot"></div>
+                    </div>
+                </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-sm-12">
             <div class="panel panel-default">
@@ -196,6 +210,21 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="procedureOccurrencesDrilldown" class="hidden reportDrilldown row">
+        <div id="procedureDrilldownTitle" class="reportTitle"></div>
+        <div class="col-sm-12">
+            <div id="procedureDrilldownPrevalencePanel" class="panel panel-default">
+                <div class="panel-heading">
+                    First Procedure Occurrence Relative to Index
+                </div>
+                <div class="panel-body">
+                    <div class="drilldown" id="procedureDrilldownScatterplot"></div>
                 </div>
             </div>
         </div>
@@ -245,5 +274,19 @@
         </div>
     </div>
 
+
+    <div id="drugOccurrencesDrilldown" class="hidden reportDrilldown row">
+        <div id="drugDrilldownTitle" class="reportTitle"></div>
+        <div class="col-sm-12">
+            <div id="drugDrilldownPrevalencePanel" class="panel panel-default">
+                <div class="panel-heading">
+                    First Drug Occurrence Relative to Index
+                </div>
+                <div class="panel-body">
+                    <div class="drilldown" id="drugDrilldownScatterplot"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
