@@ -54,6 +54,14 @@ function getWebApiName() {
     return current_ohdsi_service.name;
 }
 
+function getSourceKey() {
+	return $('#selectSourceKey').find(":selected").val();
+}
+
+function getSourceSpecificWebApiUrl() {
+	return getWebApiUrl() + getSourceKey() + "/";
+}
+
 /**
  * Sets the selected web api
  * 

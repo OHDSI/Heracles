@@ -60,12 +60,13 @@
         </div>
     </div>
 </div>
-<div  id="viewer-container" style="display: none" ng-controller="CohortViewerCtrl">
+<div id="viewer-container" style="display: none" ng-controller="CohortViewerCtrl">
     <div class="navmenu navmenu-default navmenu-fixed-left offcanvas-sm" style="width:200px">
         <a class="navmenu-brand visible-md visible-lg" ng-click="goBack($event)" style="font-weight: bold">OHDSI Heracles</a>
         <ul class="nav navmenu-nav" style="border-bottom:1px solid #898989;">
             <li><a ng-click="goBack($event)" style="font-size:16px">&laquo;Back</a></li>
             <li><a ng-click="refreshCohortVisualization($event)" style="font-size:16px">Refresh</a></li>
+						<li><select id="selectSourceKey"><option ng-repeat="source in sources" value="{{source.sourceKey}}">{{source.sourceName}}</option></select></li>
             <li><a ng-href="index.html?cohortId={{cohort.id}}">Heracles Runner</a></li>
         </ul>
         <ul class="nav navmenu-nav">
