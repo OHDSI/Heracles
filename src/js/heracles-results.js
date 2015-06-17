@@ -63,6 +63,8 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 				$scope.refreshCommonData = function () {
 					if ($scope.active === "dashboard" || $scope.active === "person") {
 						$.getJSON(getSourceSpecificWebApiUrl() + "cohortresults/" + $scope.cohort.id + "/raw/person/population", function (data) {
+							if (data == undefined)
+								return;
 							var summary = {};
 							$.each(data, function () {
 								if (this.ATTRIBUTE_NAME.toLowerCase() === "source name") {
@@ -98,7 +100,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 					function doIt() {
 						// show default div
 
-						$("#dashboard").trigger("click");
+						//$("#dashboard").trigger("click");
 					}
 
 					$("#cohorts").val(datum.name);
