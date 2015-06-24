@@ -43,11 +43,11 @@ require(['domReady!', 'jquery', 'typeahead', 'handlebars', 'angular', 'monster',
                 source: bloodhoundCohorts.ttAdapter(),
                 pending: "Loading results from " + getWebApiName(),
                 templates: {
-                    empty: [
-                        '<div class="empty-message">',
-                        'Unable to find any cohorts that match the current query',
-                        '</div>'
-                    ].join('\n'),
+                    //empty: [
+                    //    '<div class="empty-message">',
+                    //    'Unable to find any cohorts that match the current query',
+                    //    '</div>'
+                    //].join('\n'),
                     suggestion: Handlebars.compile('<p><span style="font-weight: bold">{{name}}</span> – {{description}}</p>')
                 }
             });
