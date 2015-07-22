@@ -2,10 +2,10 @@
 // set this to true if you're running Olympus; otherwise set the default services you wish to use
 var olympus_enabled = false;
 var default_services = [
-    {
-        name: 'Local',
-        url: 'http://localhost:8080/WebAPI/'
-    },
+   // {
+     //   name: 'Local',
+       // url: 'http://localhost:8080/WebAPI/'
+    //},
     {
         name: 'Public',
         url: 'http://api.ohdsi.org:80/WebAPI/'
