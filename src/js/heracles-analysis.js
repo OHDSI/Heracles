@@ -234,13 +234,13 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 				}
 			};
 
-			$scope.refreshUI = function () {
-				$("input:checkbox").prop("checked", false);
-				$(".toggle-filter-input").val("");
-				$("#auto-filter-input").val("");
-				$("#auto-filter-div").find("label").show();
-				$scope.analysisCount = 0;
-			}
+                $scope.refreshUI = function() {
+                    $("input:checkbox").prop("checked", false);
+                    $(".toggle-filter-input").val("");
+                    $("#auto-filter-input").val("");
+                    $("#auto-filter-div").find("label").show();
+                    $scope.analysisCount = 0;
+                };
 
 			$scope.selectVizPack = function ($event, vizType) {
 				var checked = $(".viz-pack-checkbox[viz-type='" + vizType + "'").is(":checked");
