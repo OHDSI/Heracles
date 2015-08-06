@@ -18,7 +18,7 @@ var default_services = [
 // shouldn't need to modify below here
 var current_ohdsi_service;
 var ohdsi_services = [];
-var sources = [];
+var current_sources = [];
 
 if (olympus_enabled) {
     (function($) {
@@ -60,24 +60,24 @@ function getWebApiUrl(source) {
 }
 
 function getSources(refresh, callback) {
-    if (refresh || !sources || sources.length === 0) {
+    if (refresh || !current_sources || current_sources.length === 0) {
         $.ajax({
             type: "GET",
             url: getWebApiUrl() + 'source/sources',
             success: function (data) {
                 console.log('successfully reloaded sources');
-                sources = data;
+                current_sources = data;
                 if (callback) {
-                    callback(sources);
+                    callback(current_sources);
                 }
             },
             error: function () {
                 console.log('unable to load sources');
-                sources = [];
+                current_sources = [];
             }
         });
     }
-    return sources;
+    return current_sources;
 }
 
 function getWebApiName() {

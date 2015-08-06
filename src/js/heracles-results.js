@@ -48,12 +48,10 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 
 			app.controller('CohortViewerCtrl', function ($scope, $http, CohortService) {
 
-                $scope.sources = sources;
-                setTimeout(function() {
-                    $('.selectpicker').selectpicker('refresh');
-                }, 750);
+                $scope.sources = [];
                 $scope.selectedSource = {};
                 $scope.selectedSourceString = "";
+                $scope.template = 'src/templates/empty.html';
 
 				$scope.summary = undefined;
 
@@ -95,20 +93,11 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 				};
 
 				$scope.setupAndDisplayCohort = function (datum, animate, sources) {
-					function doIt() {
-						// show default div
-
-						//$("#dashboard").trigger("click");
-					}
 
                     $scope.sources = sources;
                     $scope.selectedSource = sources[0];
                     $scope.selectedSourceString = OHDSICommon.generateSourceString($scope.selectedSource);
-
-                    setTimeout(function() {
-                        $('.selectpicker').selectpicker('refresh');
-                        $('.selectpicker').selectpicker('render');
-                    }, 750);
+                    $scope.$apply();
 
 					$("#cohorts").val(datum.name);
 					$scope.cohort = datum;
@@ -117,13 +106,21 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 
 					if (animate) {
 						$("#searcher-container").slideUp("fast", function () {
-							doIt();
-							$("#viewer-container").slideDown("slow");
+							$("#viewer-container").slideDown("slow", function() {
+                                setTimeout(function() {
+                                    $('.selectpicker').selectpicker('refresh');
+                                    $('.selectpicker').selectpicker('render');
+                                }, 500);
+                            });
 						});
 					} else {
 						$("#searcher-container").hide();
-						doIt();
-						$("#viewer-container").show();
+						$("#viewer-container").show('fast', function() {
+                            setTimeout(function() {
+                                $('.selectpicker').selectpicker('refresh');
+                                $('.selectpicker').selectpicker('render');
+                            }, 500);
+                        });
 
 					}
 
@@ -163,7 +160,9 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 				});
 
 				$(document).ready(function () {
-                    $('.selectpicker').selectpicker();
+                    $('.selectpicker').selectpicker({
+                        width: '170px'
+                    });
 
 					function doDefault() {
 						setTimeout(function () {

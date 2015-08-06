@@ -653,6 +653,7 @@ table.data td {
 
 .bootstrap-select.btn-group .dropdown-menu li {
     padding: 0;
+    padding-left: 3px;
 }
 
 .dropdown-menu>li>a {

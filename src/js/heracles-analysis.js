@@ -32,10 +32,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
             };
             $scope.analysisCount = 0;
 
-            $scope.sources = sources;
-            setTimeout(function() {
-                $('.selectpicker').selectpicker('refresh');
-            }, 750);
+            $scope.sources = [];
             $scope.selectedSource = {};
             $scope.selectedSouresForAnalysis  = [];
             $scope.selectedSourceString = "";
@@ -54,7 +51,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                 setTimeout(function() {
                     $('.selectpicker').selectpicker('refresh');
                     $('.selectpicker').selectpicker('render');
-                }, 750);
+                }, 500);
 
                 //$http.get('src/data/sample-cohort-explorer.json')
                 var lastWebApi = monster.get('last-webapi');
@@ -411,13 +408,17 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
             $(document).ready(function () {
                 $('.selectpicker')
                     .selectpicker({
-                        width: '175px'
+                        width: '170px'
                     });
                 var param = urlParam('cohortId');
                 if (param && param !== '') {
                     var datum = {
                         id: param
                     };
+                    var lastWebApi = monster.get('last-webapi');
+                    if (lastWebApi) {
+                        setSelectedWebApiUrl(+lastWebApi);
+                    }
                     $(".page-one").hide();
 
                     getSources(true, function(sources) {

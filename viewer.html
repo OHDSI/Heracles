@@ -75,7 +75,7 @@
                 <li style="margin-left:10px">
                     <select id="sourcepicker" class="selectpicker" >
                         <option ng-repeat="s in sources" key="{{s.sourceKey}}" ng-selected="selectedSource == s">
-                            <span style="font-size:10px">{{s.sourceName}}</span>
+                            {{s.sourceName}}
                         </option>
                     </select>
                 </li>
@@ -91,7 +91,7 @@
 				</li>
 				<li><a id="conditionByIndex" class="chartTypes">Conditions by Index</a>
 				</li>
-				<li class="active"><a id="dashboard" class="chartTypes">Dashboard</a>
+				<li><a id="dashboard" class="chartTypes">Dashboard</a>
 				</li>
 				<li><a id="dataDensity" class="chartTypes">Data Density</a>
 				</li>
