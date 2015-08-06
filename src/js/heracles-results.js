@@ -1,11 +1,11 @@
 // configure angular
-require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_common', 'monster',
+require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_common', 'monster', 'bootstrap-select', 'ohdsi_common',
         '../js/charts/dashboard', '../js/charts/person', '../js/charts/conditions', '../js/charts/drugExposures',
         '../js/charts/conditionEras', '../js/charts/drugEras', '../js/charts/cohortSpecific',
         '../js/charts/observations', '../js/charts/observationPeriod', '../js/charts/dataDensity',
         '../js/charts/death', '../js/charts/procedures', '../js/charts/visits', '../js/charts/measurements',
         '../js/charts/heraclesHeel', '../js/charts/conditionByIndex', '../js/charts/drugByIndex', '../js/charts/procedureByIndex'],
-	function (angular, $, b, HeraclesD3, j, heraclesCommon, monster,
+	function (angular, $, b, HeraclesD3, j, heraclesCommon, monster, SelectPicker, OHDSICommon,
 		DashboardRenderer, PersonRenderer, ConditionRenderer, DrugExposureRenderer,
 		ConditionErasRenderer, DrugErasRenderer, CohortSpecificRenderer,
 		ObservationsRenderer, ObservationPeriodRenderer, DataDensityRenderer,
@@ -48,23 +48,21 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 
 			app.controller('CohortViewerCtrl', function ($scope, $http, CohortService) {
 
-				$http.get(getWebApiUrl() + "source/sources")
-					.success(function (data) {
-						$scope.sources = data;
-					});
+                $scope.sources = sources;
+                setTimeout(function() {
+                    $('.selectpicker').selectpicker('refresh');
+                }, 750);
+                $scope.selectedSource = {};
+                $scope.selectedSourceString = "";
 
-				$scope.defaultSummary = {
-					sourceName: "",
-					numPersons: 0
-				};
-
-				$scope.summary = $scope.defaultSummary;
+				$scope.summary = undefined;
 
 				$scope.refreshCommonData = function () {
 					if ($scope.active === "dashboard" || $scope.active === "person") {
-						$.getJSON(getSourceSpecificWebApiUrl() + "cohortresults/" + $scope.cohort.id + "/raw/person/population", function (data) {
-							if (data == undefined)
-								return;
+						$.getJSON(getWebApiUrl($scope.selectedSource) + "cohortresults/" + $scope.cohort.id + "/raw/person/population", function (data) {
+							if (data === undefined) {
+                                return;
+                            }
 							var summary = {};
 							$.each(data, function () {
 								if (this.ATTRIBUTE_NAME.toLowerCase() === "source name") {
@@ -96,12 +94,21 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 					});
 				};
 
-				$scope.setupAndDisplayCohort = function (datum, animate) {
+				$scope.setupAndDisplayCohort = function (datum, animate, sources) {
 					function doIt() {
 						// show default div
 
 						//$("#dashboard").trigger("click");
 					}
+
+                    $scope.sources = sources;
+                    $scope.selectedSource = sources[0];
+                    $scope.selectedSourceString = OHDSICommon.generateSourceString($scope.selectedSource);
+
+                    setTimeout(function() {
+                        $('.selectpicker').selectpicker('refresh');
+                        $('.selectpicker').selectpicker('render');
+                    }, 750);
 
 					$("#cohorts").val(datum.name);
 					$scope.cohort = datum;
@@ -149,10 +156,14 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 				});
 
 				$("#cohorts-viewer-typeahead").bind('typeahead:selected', function (obj, datum, name) {
-					$scope.setupAndDisplayCohort(datum, true);
+                    getSources(true, function(sources) {
+                        $scope.setupAndDisplayCohort(datum, true, sources);
+                    });
+
 				});
 
 				$(document).ready(function () {
+                    $('.selectpicker').selectpicker();
 
 					function doDefault() {
 						setTimeout(function () {
@@ -169,7 +180,10 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 						$http.get(getWebApiUrl() + 'cohortdefinition/' + param).
 						success(function (data, status, headers, config) {
 							if (data) {
-								$scope.setupAndDisplayCohort(data, false);
+                                getSources(true, function(sources) {
+                                    $scope.setupAndDisplayCohort(data, true, sources);
+
+                                });
 							}
 						}).
 						error(function (data, status, headers, config) {

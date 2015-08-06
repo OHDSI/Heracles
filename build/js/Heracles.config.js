@@ -17,7 +17,8 @@ var default_services = [
 
 // shouldn't need to modify below here
 var current_ohdsi_service;
-var ohdsi_services;
+var ohdsi_services = [];
+var sources = [];
 
 if (olympus_enabled) {
     (function($) {
@@ -28,24 +29,55 @@ if (olympus_enabled) {
             success: function (data) {
                 console.log(data);
                 ohdsi_services = data;
+                getSources();
             },
             error: function () {
                 console.log('unable to load services from Olympus; using defaults');
                 ohdsi_services = default_services;
+                getSources();
             }
         });
     })(jQuery);
 } else {
     ohdsi_services = default_services;
+    getSources();
 }
+
+
 
 // functions to get common parameters
 
-function getWebApiUrl() {
+function getWebApiUrl(source) {
     if (!current_ohdsi_service) {
         current_ohdsi_service = ohdsi_services[0];
     }
-    return current_ohdsi_service.url;
+    if (source && source) {
+        return current_ohdsi_service.url + source.sourceKey + "/";
+    } else {
+        return current_ohdsi_service.url;
+    }
+
+}
+
+function getSources(refresh, callback) {
+    if (refresh || !sources || sources.length === 0) {
+        $.ajax({
+            type: "GET",
+            url: getWebApiUrl() + 'source/sources',
+            success: function (data) {
+                console.log('successfully reloaded sources');
+                sources = data;
+                if (callback) {
+                    callback(sources);
+                }
+            },
+            error: function () {
+                console.log('unable to load sources');
+                sources = [];
+            }
+        });
+    }
+    return sources;
 }
 
 function getWebApiName() {
@@ -55,8 +87,13 @@ function getWebApiName() {
     return current_ohdsi_service.name;
 }
 
+/**
+ * This is from the DOM, if you have access to Angular scope,
+ * you may prefer to get it from there as it may have not yet been written to the DOM
+ * @returns {*|jQuery}
+ */
 function getSourceKey() {
-	return $('#selectSourceKey').find(":selected").val();
+	return $('#selectedSourceKey').val();
 }
 
 function getSourceSpecificWebApiUrl() {
@@ -75,6 +112,7 @@ function setSelectedWebApiUrl(idx) {
         current_ohdsi_service = ohdsi_services[idx];
     }
     console.log('webapi reset to ' + current_ohdsi_service.name);
+    getSources(true);
 }
 
 function getAllOhdsiServices() {

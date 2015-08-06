@@ -66,16 +66,19 @@
 		</div>
 	</div>
 	<div id="viewer-container" style="display: none" ng-controller="CohortViewerCtrl">
+        <input type="hidden" id="selectedSourceKey" value="{{selectedSource.sourceKey}}" />
 		<div class="navmenu navmenu-default navmenu-fixed-left offcanvas-sm" style="width:200px">
 			<a class="navmenu-brand visible-md visible-lg" ng-click="goBack($event)" style="font-weight: bold">OHDSI Heracles</a>
 			<ul class="nav navmenu-nav" style="border-bottom:1px solid #898989;">
 				<li><a ng-click="goBack($event)" style="font-size:16px">&laquo;Back</a>
 				</li>
-				<li>
-					<select class="form-control" id="selectSourceKey">
-						<option ng-repeat="source in sources" value="{{source.sourceKey}}">{{source.sourceName}}</option>
-					</select>
-				</li>
+                <li style="margin-left:10px">
+                    <select id="sourcepicker" class="selectpicker" >
+                        <option ng-repeat="s in sources" key="{{s.sourceKey}}" ng-selected="selectedSource == s">
+                            <span style="font-size:10px">{{s.sourceName}}</span>
+                        </option>
+                    </select>
+                </li>
 				<li><a ng-href="index.html?cohortId={{cohort.id}}">Heracles Runner</a>
 				</li>
 			</ul>

@@ -2,6 +2,7 @@
 @import url("../../lib/bootstrap/bootstrap.css");
 @import url("../../lib/jasny-bootstrap/css/jasny-bootstrap.min.css");
 @import url("../../lib/colorbrewer/colorbrewer.css");
+@import url("../../lib/bootstrap-select/css/bootstrap-select.min.css");
 
 .sub-text {
 	color: #BEEDF6;
@@ -648,4 +649,12 @@ table.data td {
     .container {
         width: 1970px;
     }
+}
+
+.bootstrap-select.btn-group .dropdown-menu li {
+    padding: 0;
+}
+
+.dropdown-menu>li>a {
+    padding: 5px 4px;
 }

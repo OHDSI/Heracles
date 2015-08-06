@@ -62,6 +62,7 @@
 		</div>
 	</div>
 	<div id="cohort-explorer-main" class="row" style="display:none" ng-controller="CohortExplorerCtrl">
+        <input type="hidden" id="selectedSourceKey" value="{{selectedSource.sourceKey}}" />
 		<!-- Cohort Explorer -->
 		<div>
 			<div class="navmenu navmenu-default navmenu-fixed-left offcanvas-sm" style="width:200px">
@@ -71,6 +72,13 @@
 					</li>
 					<li><a ng-click="refreshCohort($event)" style="font-size:16px">Refresh</a>
 					</li>
+                    <li style="margin-left:10px">
+                        <select id="sourcepicker" class="selectpicker" multiple data-selected-text-format="count">
+                            <option ng-repeat="s in sources" key="{{s.sourceKey}}" ng-selected="selectedSouresForAnalysis.indexOf(s) >= 0">
+                                <span style="font-size:10px">{{s.sourceName}}</span>
+                            </option>
+                        </select>
+                    </li>
 					<li><a ng-href="viewer.html?cohortId={{cohort.cohortDefinition.id}}">Heracles Viewer</a>
 					</li>
 				</ul>
@@ -105,14 +113,16 @@
 				<div id="cohort-explorer-summary" class="row">
 					<div class="col-sm-4">
 						<div>
-							<h3 id="cohort-name">{{cohort.cohortDefinition.name}}
+							<span id="cohort-name" class="h4">{{cohort.cohortDefinition.name}}
+
                             <!--
                             <small ng-show="cohort.cohortDefinition.description != null"
                                    data-toggle="tooltip" data-placement="bottom" title="{{cohort.cohortDefinition.description}}">
                                 <a class="definition">definition</a>
                             </small>
                             -->
-                        </h3>
+                        </span>
+
 							<div>
 								<p class="cohort-description">
 									{{cohort.cohortDefinition.description}}
@@ -239,15 +249,9 @@
 			<input type="checkbox" id="cohortPeriodOnly" /> Cohort Period Only <span style="color:#aaa">(Limit to inside the cohort period)</span>
 		</label>
 	</div>
-	<div class="col-md-12" style="margin-top:10px">
-		<h4>Choose Data Sources for Analysis</h4>
-		<div ng-repeat="source in sources">
-			<input type="checkbox" class="checkSource" value="{{source.sourceKey}}" />
-			{{source.sourceName}}
-		</div>
-	</div>
+
 	<div class="col-sm-12">
-		<button id="btnSubmitJob" class="btn btn-lg btn-heracles analyses-button pull-right" filter-key="cohort-analyses" ng-click="submitJob($event)" data-loading-text="...">Begin Analysis</button>
+		<button id="btnSubmitJob" class="btn btn-lg btn-heracles analyses-button pull-right" filter-key="cohort-analyses" ng-click="submitJob($event)" data-loading-text="...">Begin Analysis {{selectedSourceString}}</button>
 	</div>
 	<div class="col-sm-12" style="padding:10px">&nbsp;</div>
 	</div>
