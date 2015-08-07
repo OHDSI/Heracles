@@ -63,11 +63,13 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                             }
 							var summary = {};
 							$.each(data, function () {
-								if (this.ATTRIBUTE_NAME.toLowerCase() === "source name") {
-									summary.sourceName = this.ATTRIBUTE_VALUE;
-								} else if (this.ATTRIBUTE_NAME.toLowerCase() === "number of persons") {
-									summary.numPersons = (this.ATTRIBUTE_VALUE).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-								}
+                                if (this.ATTRIBUTE_NAME) {
+                                    if (this.ATTRIBUTE_NAME.toLowerCase() === "source name") {
+                                        summary.sourceName = this.ATTRIBUTE_VALUE;
+                                    } else if (this.ATTRIBUTE_NAME.toLowerCase() === "number of persons") {
+                                        summary.numPersons = (this.ATTRIBUTE_VALUE).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                    }
+                                }
 							});
 							$scope.summary = summary;
 							$scope.$apply();
