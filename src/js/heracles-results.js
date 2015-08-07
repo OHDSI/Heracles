@@ -174,6 +174,17 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                         width: '170px'
                     });
 
+                    $('#sourcepicker').on('change', function(){
+                        var sel = $(this).find("option:selected");
+                        $scope.selectedSource = ($scope.sources[$(sel).val()]);
+
+                        $scope.selectedSourceString = OHDSICommon.generateSourceString($scope.selectedSource);
+                        $scope.$apply();
+
+                        $('#sourcepicker').selectpicker('refresh');
+                        $('#' + $scope.active).trigger('click');
+                    });
+
 					function doDefault() {
 						setTimeout(function () {
 							$("#cohorts").focus();

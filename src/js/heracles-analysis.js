@@ -36,32 +36,38 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
             $scope.selectedSource = {};
             $scope.selectedSouresForAnalysis  = [];
             $scope.selectedSourceString = "";
+            $scope.clickedSourceName = "";
 
             $scope.hasOneSource = function () {
                 var keys = _.keys($scope.sources);
                 return keys.length <= 1;
             };
 
-            $scope.refreshSource = function(sources, selectedSource) {
+            $scope.refreshSource = function(sources, selectedSource, keepSelectedSources) {
                 $scope.sources = {};
                 $.each(sources, function() {
                     $scope.sources[this.sourceKey] = this;
                 });
                 $scope.selectedSource = selectedSource;
-                $scope.selectedSouresForAnalysis = []; // reset to empty
-                $scope.selectedSouresForAnalysis.push($scope.selectedSource);
+                $scope.clickedSourceName = $scope.selectedSource.sourceName;
+                if (!keepSelectedSources) {
+                    $scope.selectedSouresForAnalysis = []; // reset to empty
+                }
+                if ($scope.selectedSouresForAnalysis.indexOf(selectedSource) < 0) {
+                    $scope.selectedSouresForAnalysis.push($scope.selectedSource);
+                }
                 $scope.selectedSourceString = OHDSICommon.generateSourceString($scope.selectedSouresForAnalysis);
             };
 
-            $scope.showCohort = function (datum, sources, selectedSource) {
+            $scope.showCohort = function (datum, sources, selectedSource, keepSelectedSources) {
                 $('#spinner-modal').modal('show');
                 $("#run-analysis-container").hide();
                 $scope.analysisCount = 0;
                 $scope.selected = datum;
 
                 // refresh sources
-                if (sources && sources.length > 0) {
-                    $scope.refreshSource(sources, selectedSource ? selectedSource : sources[0]);
+                if (sources) {
+                    $scope.refreshSource(sources, selectedSource ? selectedSource : sources[0], keepSelectedSources);
                 }
 
                 setTimeout(function() {
@@ -460,15 +466,29 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                     });
                     $scope.selectedSourceString = OHDSICommon.generateSourceString($scope.selectedSouresForAnalysis);
                     $scope.$apply();
+
+                    $('#sourcepicker').selectpicker('refresh');
                 });
 
-                $(".dropdown-menu").on('click', 'li a', function(){
-                    var vals = ($('#sourcepicker').selectpicker('val'));
-                    if (vals) {
-                        var sel = $scope.sources[vals[vals.length - 1]];
-                        console.log(sel);
+                $(".dropdown-menu").on('click', 'li a', function(e){
+                    //var selText = $(this).text().trim();
+                    //
+                    //var sel;
+                    //$.each($scope.sources, function(k, v) {
+                    //    if (v.sourceName === selText) {
+                    //        sel = v;
+                    //    }
+                    //});
+                    //if (sel) {
+                    //    try {
+                    //        $scope.clickedSourceName = selText;
+                    //        $scope.$apply();
+                    //        $scope.showCohort($scope.selected, $scope.sources, sel, true);
+                    //    } catch (e) {console.log(e)}
+                    //
+                    //}
+                    //return false;
 
-                }
                 })
 
             });
