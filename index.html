@@ -72,7 +72,7 @@
 					</li>
 					<li><a ng-click="refreshCohort($event)" style="font-size:16px">Refresh</a>
 					</li>
-                    <li style="margin-left:10px">
+                    <li style="margin-left:10px" ng-hide="sources.length <= 1">
                         <select id="sourcepicker" class="selectpicker" multiple data-selected-text-format="count">
                             <option ng-repeat="s in sources" key="{{s.sourceKey}}" ng-selected="selectedSouresForAnalysis.indexOf(s) >= 0">
                                 <span style="font-size:10px">{{s.sourceName}}</span>
