@@ -48,7 +48,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 
 			app.controller('CohortViewerCtrl', function ($scope, $http, CohortService) {
 
-                $scope.sources = [];
+                $scope.sources = {};
                 $scope.selectedSource = {};
                 $scope.selectedSourceString = "";
                 $scope.template = 'src/templates/empty.html';
@@ -94,9 +94,17 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 					});
 				};
 
+                $scope.hasOneSource = function () {
+                    var keys = _.keys($scope.sources);
+                    return keys.length <= 1;
+                };
+
 				$scope.setupAndDisplayCohort = function (datum, animate, sources) {
 
-                    $scope.sources = sources;
+                    $scope.sources = {};
+                    $.each(sources, function() {
+                        $scope.sources[this.sourceKey] = this;
+                    });
                     $scope.selectedSource = sources[0];
                     $scope.selectedSourceString = OHDSICommon.generateSourceString($scope.selectedSource);
                     $scope.$apply();

@@ -72,9 +72,9 @@
 			<ul class="nav navmenu-nav" style="border-bottom:1px solid #898989;">
 				<li><a ng-click="goBack($event)" style="font-size:16px">&laquo;Back</a>
 				</li>
-                <li style="margin-left:10px" ng-hide="sources.length <= 1">
+                <li style="margin-left:10px" ng-hide="hasOneSource()">
                     <select id="sourcepicker" class="selectpicker" >
-                        <option ng-repeat="s in sources" key="{{s.sourceKey}}" ng-selected="selectedSource == s">
+                        <option ng-repeat="(k,s) in sources" value="{{k}}" ng-selected="selectedSource == s">
                             {{s.sourceName}}
                         </option>
                     </select>

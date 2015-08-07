@@ -72,10 +72,10 @@
 					</li>
 					<li><a ng-click="refreshCohort($event)" style="font-size:16px">Refresh</a>
 					</li>
-                    <li style="margin-left:10px" ng-hide="sources.length <= 1">
+                    <li style="margin-left:10px" ng-hide="hasOneSource()">
                         <select id="sourcepicker" class="selectpicker" multiple data-selected-text-format="count">
-                            <option ng-repeat="s in sources" key="{{s.sourceKey}}" ng-selected="selectedSouresForAnalysis.indexOf(s) >= 0">
-                                <span style="font-size:10px">{{s.sourceName}}</span>
+                            <option ng-repeat="(k, s) in sources" value="{{k}}" ng-selected="selectedSouresForAnalysis.indexOf(s) >= 0">
+                                {{s.sourceName}}
                             </option>
                         </select>
                     </li>
@@ -251,7 +251,9 @@
 	</div>
 
 	<div class="col-sm-12">
-		<button id="btnSubmitJob" class="btn btn-lg btn-heracles analyses-button pull-right" filter-key="cohort-analyses" ng-click="submitJob($event)" data-loading-text="...">Begin Analysis {{selectedSourceString}}</button>
+		<button id="btnSubmitJob" class="btn btn-lg btn-heracles analyses-button pull-right" filter-key="cohort-analyses"
+                ng-disabled="selectedSouresForAnalysis.length == 0"
+                ng-click="submitJob($event)" data-loading-text="...">Begin Analysis {{selectedSourceString}}</button>
 	</div>
 	<div class="col-sm-12" style="padding:10px">&nbsp;</div>
 	</div>

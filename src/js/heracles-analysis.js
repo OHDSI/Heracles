@@ -32,21 +32,37 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
             };
             $scope.analysisCount = 0;
 
-            $scope.sources = [];
+            $scope.sources = {};
             $scope.selectedSource = {};
             $scope.selectedSouresForAnalysis  = [];
             $scope.selectedSourceString = "";
 
-            $scope.showCohort = function (datum, sources) {
+            $scope.hasOneSource = function () {
+                var keys = _.keys($scope.sources);
+                return keys.length <= 1;
+            };
+
+            $scope.refreshSource = function(sources, selectedSource) {
+                $scope.sources = {};
+                $.each(sources, function() {
+                    $scope.sources[this.sourceKey] = this;
+                });
+                $scope.selectedSource = selectedSource;
+                $scope.selectedSouresForAnalysis = []; // reset to empty
+                $scope.selectedSouresForAnalysis.push($scope.selectedSource);
+                $scope.selectedSourceString = OHDSICommon.generateSourceString($scope.selectedSouresForAnalysis);
+            };
+
+            $scope.showCohort = function (datum, sources, selectedSource) {
                 $('#spinner-modal').modal('show');
                 $("#run-analysis-container").hide();
                 $scope.analysisCount = 0;
                 $scope.selected = datum;
 
-                $scope.sources = sources;
-                $scope.selectedSource = sources[0];
-                $scope.selectedSouresForAnalysis.push($scope.selectedSource);
-                $scope.selectedSourceString = OHDSICommon.generateSourceString($scope.selectedSouresForAnalysis);
+                // refresh sources
+                if (sources && sources.length > 0) {
+                    $scope.refreshSource(sources, selectedSource ? selectedSource : sources[0]);
+                }
 
                 setTimeout(function() {
                     $('.selectpicker').selectpicker('refresh');
@@ -246,15 +262,14 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                 window.scrollTo(0, 0);
 
                 if ($(".toggle-checkbox-item:checked").length === 0) {
-                    $scope.message.text = "Please select at least one analyis to run.";
+                    $scope.message.text = "Please select at least one analysis to run.";
                     $scope.message.label = "Problem submitting analyses";
                     $("#messageModal").modal('show');
                     return;
                 }
 
                 // ensure at least one data source is selected
-                var checkedSources = $('input.checkSource:checked');
-                if (checkedSources.length === 0) {
+                if ($scope.selectedSouresForAnalysis.length === 0) {
                     $scope.message.text = "Please select at least one data source for the analysis.";
                     $scope.message.label = "Problem submitting analyses";
                     $("#messageModal").modal('show');
@@ -262,8 +277,8 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                 }
 
                 $scope.selectedSourceKeys = [];
-                for (var s = 0; s < checkedSources.length; s++) {
-                    $scope.selectedSourceKeys.push($(checkedSources[s]).val());
+                for (var s = 0; s < $scope.selectedSouresForAnalysis.length; s++) {
+                    $scope.selectedSourceKeys.push($scope.selectedSouresForAnalysis[s].sourceKey);
                 }
 
                 var jobs = [];
@@ -349,7 +364,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                     console.log("Submitting to cohort analysis service:");
                     console.log(cohortJob);
 
-                    $http.post(getWebApiUrl() + "cohortanalysis", cohortJob).
+                    $http.post(getWebApiUrl($scope.selectedSource.sourceKey) + "cohortanalysis", cohortJob).
                         success(function (data, status, headers, config) {
                             btn.button('reset');
                             showJobResultModal(true, data, status, headers, config);
@@ -436,6 +451,25 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 
                     }, 300);
                 }
+
+                $('#sourcepicker').on('change', function(){
+                    var sel = $(this).find("option:selected");
+                    $scope.selectedSouresForAnalysis = [];
+                    $.each(sel, function() {
+                        $scope.selectedSouresForAnalysis.push($scope.sources[$(sel).val()]);
+                    });
+                    $scope.selectedSourceString = OHDSICommon.generateSourceString($scope.selectedSouresForAnalysis);
+                    $scope.$apply();
+                });
+
+                $(".dropdown-menu").on('click', 'li a', function(){
+                    var vals = ($('#sourcepicker').selectpicker('val'));
+                    if (vals) {
+                        var sel = $scope.sources[vals[vals.length - 1]];
+                        console.log(sel);
+
+                }
+                })
 
             });
         });
