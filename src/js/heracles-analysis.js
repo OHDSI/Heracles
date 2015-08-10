@@ -349,6 +349,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                     cohortJob.analysisIds = jobs;
                     cohortJob.runHeraclesHeel = $("#heraclesHeel").is(":checked");
                     cohortJob.cohortPeriodOnly = $("#cohortPeriodOnly").is(":checked");
+                    cohortJob.visualizations = [];
 
                     // set concepts
                     cohortJob.conditionConceptIds = [];
@@ -365,6 +366,10 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                                 cohortJob[(key + "ConceptIds")] = ary;
                             }
                         }
+                    });
+
+                    $(".viz-pack-checkbox:checked").each(function() {
+                        cohortJob.visualizations.push($(this).attr('viz-type'));
                     });
 
                     console.log("Submitting to cohort analysis service:");
