@@ -369,7 +369,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                     });
 
                     $(".viz-pack-checkbox:checked").each(function() {
-                        cohortJob.visualizations.push($(this).attr('viz-type'));
+                        cohortJob.visualizations.push(_.snakeCase($(this).attr('viz-type')));
                     });
 
                     console.log("Submitting to cohort analysis service:");
