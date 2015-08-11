@@ -494,7 +494,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                     //}
                     //return false;
 
-                })
+                });
 
             });
         });
