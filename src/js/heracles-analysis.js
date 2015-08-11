@@ -83,6 +83,9 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 
                 $http.get(getWebApiUrl($scope.selectedSource) + "cohortanalysis/" + datum.id + "/summary")
                     .success(function (data, status, headers, config) {
+
+                        HeraclesD3.clearSummaryData();
+
                         $scope.cohort = data;
 
                         if (data.analyses) {
@@ -102,26 +105,40 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                             $scope.cohort.analysesMap = map;
 
                         }
-                        if ($scope.cohort.meanAge !== null) {
-                            $scope.cohort.meanAge = Math.round(+$scope.cohort.meanAge);
-                        }
-                        /*
-                         if ($scope.cohort.ageDistribution !== null && $scope.cohort.ageDistribution.length > 0) {
-                         HeraclesD3.showAgeDistribution($scope.cohort.ageDistribution);
-                         }
-                         if ($scope.cohort.genderDistribution !== null && $scope.cohort.genderDistribution.length > 0) {
-                         HeraclesD3.showGenderDistribution($scope.cohort.genderDistribution);
-                         }
-                         */
-                        $("#run-analysis-container").show();
-                        HeraclesD3.renderOHDSIDefaults($scope.cohort);
 
+                        // now load summary visualizations
+                        $http.get(getWebApiUrl($scope.selectedSource) + "cohortanalysis/" + datum.id + "/summarydata")
+                            .success(function (data, status, headers, config) {
+                                if (!$scope.cohort){
+                                    $scope.cohort = {};
+                                }
+
+                                $scope.cohort.ageDistribution = data.ageDistribution;
+                                $scope.cohort.genderDistribution = data.genderDistribution;
+                                $scope.cohort.meanAge = data.meanAge;
+                                $scope.cohort.meanObsPeriod = data.meanObsPeriod;
+                                $scope.cohort.totalPatients = data.totalPatients;
+
+                                if ($scope.cohort.meanAge !== null) {
+                                    $scope.cohort.meanAge = Math.round(+$scope.cohort.meanAge);
+                                }
+
+                                HeraclesD3.renderOHDSIDefaults($scope.cohort);
+
+                                $('#spinner-modal').modal('hide');
+                            }).error(function (data, status, headers, config) {
+                                console.log("failed to load summary visualizations");
+                            });
+
+                        $("#run-analysis-container").show();
                         $('#spinner-modal').modal('hide');
                     }).error(function (data, status, headers, config) {
                         console.log("failed to load analyses");
                         $("#run-analysis-container").show();
                         $('#spinner-modal').modal('hide');
                     });
+
+
             };
 
             $scope.scrollAnalysesClick = function ($event, k) {
