@@ -157,6 +157,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 					$(".active").removeClass("active");
 					self.parent("li").addClass("active");
 
+                    $('#chart-wrapper').empty();
 					var id = $(this).attr("id");
 					$scope.renderVisualizationSection(id);
 
