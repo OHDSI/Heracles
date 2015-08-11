@@ -99,7 +99,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                                 if (!map[prettifyAnalysisType]) {
                                     map[prettifyAnalysisType] = [];
                                 }
-                                this.class = +this.analysisComplete ? "analysis-complete" : "analysis-open";
+                                this.class = "analysis-open";
                                 map[prettifyAnalysisType].push(this);
                             });
                             $scope.cohort.analysesMap = map;
@@ -125,7 +125,46 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 
                                 HeraclesD3.renderOHDSIDefaults($scope.cohort);
 
-                                $('#spinner-modal').modal('hide');
+                            }).error(function (data, status, headers, config) {
+                                console.log("failed to load summary visualizations");
+                            });
+
+                        // now get analysis completed times
+                        $http.get(getWebApiUrl($scope.selectedSource) + "cohortanalysis/" + datum.id + "/summaryanalyses")
+                            .success(function (data, status, headers, config) {
+
+                                if (!$scope.cohort){
+                                    $scope.cohort = {};
+                                }
+                                if (!$scope.cohort.analysesMap){
+                                    $scope.cohort.analysesMap = {};
+                                }
+
+                                if (data.analyses) {
+
+                                    $.each(data.analyses, function () {
+                                        // no need to do anything if analysis is complete
+                                        var analysisFull = this;
+                                        if (1 === +analysisFull.analysisComplete) {
+                                            var prettifyAnalysisType = _.startCase(analysisFull.analysisType.toLowerCase());
+
+                                            if (!$scope.cohort.analysesMap[prettifyAnalysisType]) {
+                                                $scope.cohort.analysesMap[prettifyAnalysisType] = [];
+                                            }
+
+                                            $.each($scope.cohort.analysesMap[prettifyAnalysisType], function() {
+                                                if (this.analysisId === analysisFull.analysisId) {
+                                                    this.class = "analysis-complete";
+                                                    this.analysisComplete = analysisFull.analysisComplete;
+                                                    this.lastUpdateTime = analysisFull.lastUpdateTime;
+                                                    this.lastUpdateTimeFormatted = analysisFull.lastUpdateTimeFormatted;
+                                                }
+                                            });
+
+                                        }
+                                    });
+
+                                }
                             }).error(function (data, status, headers, config) {
                                 console.log("failed to load summary visualizations");
                             });
