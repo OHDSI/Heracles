@@ -659,3 +659,12 @@ table.data td {
 .dropdown-menu>li>a {
     padding: 5px 4px;
 }
+
+span.viz-complete {
+    padding: 3px;
+    margin-left: 8px;
+    font-size: 9px;
+    background-color: lightgray;
+
+}
+

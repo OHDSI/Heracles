@@ -104,6 +104,8 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 
 				$scope.setupAndDisplayCohort = function (datum, animate, sources) {
 
+                    $('.viz-complete').detach();
+
                     $scope.sources = {};
                     $.each(sources, function() {
                         $scope.sources[this.sourceKey] = this;
@@ -136,6 +138,24 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                         });
 
 					}
+
+                    $http.get(getWebApiUrl($scope.selectedSource) + 'cohortresults/' + $scope.cohort.id + '/completed').
+                        success(function (data, status, headers, config) {
+                            if (data) {
+                                $('.chartTypes').each(function(){
+                                    var a = $(this);
+                                    var vizType = a.attr('vizkey');
+                                    if (data.indexOf(vizType) >= 0) {
+                                        a.append('<span class="viz-complete badge">' +
+                                        '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>');
+                                    }
+                                });
+                            }
+                        }).
+                        error(function (data, status, headers, config) {
+                            console.log("unable to retrieve completed");
+
+                        });
 
 				};
 
