@@ -140,27 +140,47 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 				};
 
 				$scope.renderVisualizationSection = function (id) {
-					$("#chart-container").hide();
+					//$("#chart-container").hide();
+                    //$("#chart-wrapper").empty();
 					$scope.active = id;
-					$scope.template = 'src/templates/' + id + '.html';
-					$scope.refreshCommonData();
 
-					var renderer = renderers[id];
-					if (renderer) {
-						renderer.render(CohortService.getCohort());
-					}
-					$("#chart-container").show();
+                    $('#loading-text').text("Loading Files...");
+                    $('#spinner-modal').modal('show');
+
+                    setTimeout(function() {
+
+                        var newTemplate = 'src/templates/' + id + '.html';
+                        if (newTemplate !== $scope.template) {
+                            $scope.template = newTemplate;
+                            $scope.$apply();
+                        }
+
+                        setTimeout(function() {
+                            $scope.refreshCommonData();
+
+                            var renderer = renderers[id];
+                            if (renderer) {
+                                renderer.render(CohortService.getCohort());
+                            }
+                        }, 25);
+
+                    }, 200);
+
+					//$("#chart-container").show();
 				};
 
 				// include other scripts
 				require(['cohort-searcher']);
 
 				$(".chartTypes").click(function () {
+
+                    $scope.template = 'src/templates/loading.html';
+                    $scope.$apply();
+
 					var self = $(this);
 					$(".active").removeClass("active");
 					self.parent("li").addClass("active");
 
-                    $('#chart-wrapper').empty();
 					var id = $(this).attr("id");
 					$scope.renderVisualizationSection(id);
 
