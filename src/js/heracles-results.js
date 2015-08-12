@@ -86,6 +86,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 
 				$scope.goBack = function (evt) {
                     $("#chart-wrapper").empty();
+                    $('li.active').removeClass('active');
                     $scope.template = 'src/templates/empty.html';
 					$("#viewer-container").slideUp("fast", function () {
 						$("#searcher-container").slideDown('fast', function () {
