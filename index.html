@@ -343,9 +343,15 @@
 
 	<script src="lib/jquery/jquery.js" type="text/javascript"></script>
 	<script src="build/js/Heracles.config.js" type="text/javascript"></script>
-	<script src="lib/requirejs/require.js" data-main="src/js/require.main"></script>
-	<script type="application/javascript">
-		require(['heracles-analysis']);
+	<script src="lib/requirejs/require.js" type="text/javascript"></script>
+    <script>
+        require(['src/js/require.main'], function(){
+            require([]);
+            require(['heracles-analysis']);
+        });
+    </script>
+    <script type="application/javascript">
+
 	</script>
 
 </body>
