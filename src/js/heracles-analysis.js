@@ -81,7 +81,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                     setSelectedWebApiUrl(+lastWebApi);
                 }
 
-                $http.get(getWebApiUrl($scope.selectedSource) + "cohortanalysis/" + datum.id + "/summary")
+                $http.get(getWebApiUrl() + "cohortanalysis/" + datum.id + "/summary")
                     .success(function (data, status, headers, config) {
 
                         HeraclesD3.clearSummaryData();
@@ -107,7 +107,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                         }
 
                         // now load summary visualizations
-                        $http.get(getWebApiUrl($scope.selectedSource) + "cohortanalysis/" + datum.id + "/summarydata")
+                        $http.get(getWebApiUrl($scope.selectedSource) + "cohortresults/" + datum.id + "/summarydata")
                             .success(function (data, status, headers, config) {
                                 if (!$scope.cohort){
                                     $scope.cohort = {};
@@ -130,7 +130,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                             });
 
                         // now get analysis completed times
-                        $http.get(getWebApiUrl($scope.selectedSource) + "cohortanalysis/" + datum.id + "/summaryanalyses")
+                        $http.get(getWebApiUrl($scope.selectedSource) + "cohortresults/" + datum.id + "/summaryanalyses")
                             .success(function (data, status, headers, config) {
 
                                 if (!$scope.cohort){
@@ -431,7 +431,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
                     console.log("Submitting to cohort analysis service:");
                     console.log(cohortJob);
 
-                    $http.post(getWebApiUrl($scope.selectedSource.sourceKey) + "cohortanalysis", cohortJob).
+                    $http.post(getWebApiUrl() + "cohortanalysis", cohortJob).
                         success(function (data, status, headers, config) {
                             btn.button('reset');
                             showJobResultModal(true, data, status, headers, config);
