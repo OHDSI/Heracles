@@ -4,14 +4,14 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
         '../js/charts/conditionEras', '../js/charts/drugEras', '../js/charts/cohortSpecific',
         '../js/charts/observations', '../js/charts/observationPeriod', '../js/charts/dataDensity',
         '../js/charts/death', '../js/charts/procedures', '../js/charts/visits', '../js/charts/measurements',
-        '../js/charts/heraclesHeel', '../js/charts/conditionByIndex', '../js/charts/drugByIndex', '../js/charts/procedureByIndex'],
+        '../js/charts/heraclesHeel', '../js/charts/conditionByIndex', '../js/charts/drugByIndex', '../js/charts/procedureByIndex', '../js/charts/simpleGraph'],
 	function (angular, $, b, HeraclesD3, j, heraclesCommon, monster, SelectPicker, OHDSICommon,
 		DashboardRenderer, PersonRenderer, ConditionRenderer, DrugExposureRenderer,
 		ConditionErasRenderer, DrugErasRenderer, CohortSpecificRenderer,
 		ObservationsRenderer, ObservationPeriodRenderer, DataDensityRenderer,
 		DeathDataRenderer, ProceduresRenderer, VisitsRenderer, MeasurementsRenderer,
 		HeraclesHeelRenderer, ConditionsByIndexRenderer, DrugsByIndexRenderer,
-		ProceduresByIndexRenderer) {
+		ProceduresByIndexRenderer, SimpleGraph) {
 		var renderers = {
 			'dashboard': DashboardRenderer,
 			'person': PersonRenderer,
