@@ -122,7 +122,7 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                                 return {name: d.key, values: d.values};
                             });
 
-
+//OHDSI-55
 //                        var scatter = new jnj_chart.scatterplot();
 //                        scatter.render(totalRecordsData, "#" + type + "DrilldownScatterplot", 900, 250, {
 //                            yFormat: d3.format('0%'),
@@ -136,21 +136,21 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
 //                        });
 
                         
-var allInd = totalRecordsData.inArrayIndex("all", "name");
-var firstInd = totalRecordsData.inArrayIndex("first", "name");
-var allDataArray = $.merge( $.merge( [], totalRecordsData[allInd].values), totalRecordsData[firstInd].values);
-//var allDataArray = $.merge([], totalRecordsData[allInd].values);
-//$.merge(allDataArray, totalRecordsData[firstInd].values);
-      graph = new SimpleGraph("chart1", {
-          "xmax": d3.max(allDataArray, function(d){return d.duration}), "xmin": d3.min(allDataArray, function(d){return d.duration}),
-          "ymax": d3.max(allDataArray, function(d){return d.pctPersons}), "ymin": 0, 
-          "title": "Simple Graph1",
-          "xlabel": "X Axis",
-          "ylabel": "Y Axis",
-          "height": 250,
-          "width": 900,
-          "dataArray": allDataArray
-        });
+                        var allInd = totalRecordsData.inArrayIndex("all", "name");
+                        var firstInd = totalRecordsData.inArrayIndex("first", "name");
+                        var allDataArray = $.merge( $.merge( [], totalRecordsData[allInd].values), totalRecordsData[firstInd].values);
+                        graph = new SimpleGraph("chart1", {
+                            "xmax": d3.max(allDataArray, function(d){return d.duration}), "xmin": d3.min(allDataArray, function(d){return d.duration}),
+                            "ymax": d3.max(allDataArray, function(d){return d3.round(d.pctPersons * 100, 0)}), "ymin": 0, 
+//                        "title": "Simple Graph1",
+                            "xlabel": "Duration Relative To Index",
+                            "ylabel": "% Persons",
+                            "height": 250,
+                            "width": 1300,
+                            "dataArray": allDataArray,
+                            "colors": d3.scale.category10()
+                        });
+                        
                         common.generateCSVDownload($("#" + type + "DrilldownScatterplot"), result, type + "Drilldown");
                         $('#' + type + 'OccurrencesDrilldown').removeClass('hidden');
 

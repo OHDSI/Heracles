@@ -19,6 +19,7 @@ SimpleGraph = function(elemid, options) {
   this.cx = this.options.width;
   this.cy = this.options.height;
   this.dataArray = this.options.dataArray;
+  this.dataCircleColor = this.options.colors;
 
   this.padding = {
      "top":    this.options.title  ? 40 : 20,
@@ -49,7 +50,7 @@ SimpleGraph = function(elemid, options) {
 
   // drag y-axis logic
   this.downy = Math.NaN;
-
+    
   this.dragged = this.selected = null;
 
   this.line = d3.svg.line()
@@ -68,7 +69,8 @@ SimpleGraph = function(elemid, options) {
   this.dataArray.forEach(function(value) {
         var newpoint = {};
         newpoint.x = value.duration;
-        newpoint.y = value.pctPersons;
+        newpoint.y = d3.round(value.pctPersons * 100, 0);
+        newpoint.recordType = value.recordType;
         self.points.push(newpoint);
   });
 
@@ -81,7 +83,7 @@ SimpleGraph = function(elemid, options) {
   this.plot = this.vis.append("rect")
       .attr("width", this.size.width)
       .attr("height", this.size.height)
-      .style("fill", "#EEEEEE")
+      .style("fill", "#FFFFFF")
       .attr("pointer-events", "all")
       .on("mousedown.drag", self.plot_drag())
       .on("touchstart.drag", self.plot_drag())
@@ -118,6 +120,15 @@ SimpleGraph = function(elemid, options) {
         .attr("dy","2.4em")
         .style("text-anchor","middle");
   }
+
+//this adds xAxis with static ticks (we dont want this now. chart moves when it's dragged)
+//    var xAxis = d3.svg.axis()
+//        .scale(self.x)
+//        .orient("bottom");
+//    this.vis.append("g")
+//      .attr("style", "{fill: none;  stroke: #000;  shape-rendering: crispEdges;}")
+//      .attr("transform", "translate(0," + this.size.height + ")")
+//      .call(xAxis);
 
   // add y-axis label
   if (this.options.ylabel) {
@@ -173,6 +184,18 @@ SimpleGraph.prototype.update = function() {
       .data(this.points);
 //      .data(this.points, function(d) { return d; });
 
+    
+  var tooltip = d3.select("body").append("div")
+    .style("position", "absolute")
+    .style("width", "250px")
+    .style("height", "80px")
+    .style("pointer-events", "none")
+    .style("background", "#1C1C1C")
+    .style("color", "#FFFFFF")
+    .style("padding", "3px")
+//    .attr("class", "simple_chart_tooltip")
+    .style("opacity", 0);
+    
   circle.enter().append("circle")
       .attr("class", function(d) { 
         return d === self.selected ? "selected" : null; 
@@ -184,8 +207,27 @@ SimpleGraph.prototype.update = function() {
 //      .attr("r", 10.0)
       .attr("r", 5.0)
       .style("cursor", "ns-resize")
-      .on("mousedown.drag",  self.datapoint_drag())
-      .on("touchstart.drag", self.datapoint_drag());
+      .attr("fill", function(d) { return self.dataCircleColor(d.recordType); })
+      .on("mouseover", function(d) {
+        tooltip.transition()
+          .duration(200)
+          .style("opacity", 0.9);
+        tooltip.html("Series: " + d.recordType + "<br/> " 
+          + "Duration Relative to Index: " + d.x + "<br/> "
+	      + "% Persons: " + d.y)
+//        .style("left", "500px")
+//        .style("top", "30x0px");
+        .style("left", (d3.event.pageX + 5) + "px")
+        .style("top", (d3.event.pageY - 25) + "px");
+      })
+      .on("mouseout", function(d) {
+          tooltip.transition()
+               .duration(500)
+               .style("opacity", 0);
+      });
+
+//      .on("mousedown.drag",  self.datapoint_drag())
+//      .on("touchstart.drag", self.datapoint_drag());
 
   circle
       .attr("class", function(d) { return d === self.selected ? "selected" : null; })
@@ -325,10 +367,10 @@ SimpleGraph.prototype.redraw = function() {
         .attr("class", "x")
         .attr("transform", tx);
 
-    gxe.append("line")
-        .attr("stroke", stroke)
-        .attr("y1", 0)
-        .attr("y2", self.size.height);
+//    gxe.append("line")
+//        .attr("stroke", stroke)
+//        .attr("y1", 0)
+//        .attr("y2", self.size.height);
 
     gxe.append("text")
         .attr("class", "axis")
@@ -357,10 +399,10 @@ SimpleGraph.prototype.redraw = function() {
         .attr("transform", ty)
         .attr("background-fill", "#FFEEB6");
 
-    gye.append("line")
-        .attr("stroke", stroke)
-        .attr("x1", 0)
-        .attr("x2", self.size.width);
+//    gye.append("line")
+//        .attr("stroke", stroke)
+//        .attr("x1", 0)
+//        .attr("x2", self.size.width);
 
     gye.append("text")
         .attr("class", "axis")
