@@ -69,7 +69,7 @@ SimpleGraph = function(elemid, options) {
   this.dataArray.forEach(function(value) {
         var newpoint = {};
         newpoint.x = value.duration;
-        newpoint.y = d3.round(value.pctPersons * 100, 0);
+        newpoint.y = d3.round(value.pctPersons * 100, 2);
         newpoint.recordType = value.recordType;
         self.points.push(newpoint);
   });

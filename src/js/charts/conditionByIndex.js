@@ -141,15 +141,29 @@ define(["jquery", "bootstrap", "d3","jnj_chart", "ohdsi_common", "datatables", "
                         var allDataArray = $.merge( $.merge( [], totalRecordsData[allInd].values), totalRecordsData[firstInd].values);
                         graph = new SimpleGraph("chart1", {
                             "xmax": d3.max(allDataArray, function(d){return d.duration}), "xmin": d3.min(allDataArray, function(d){return d.duration}),
-                            "ymax": d3.max(allDataArray, function(d){return d3.round(d.pctPersons * 100, 0)}), "ymin": 0, 
+                            "ymax": d3.max(allDataArray, function(d){return d3.round(d.pctPersons * 100, 2)}), "ymin": 0, 
 //                        "title": "Simple Graph1",
                             "xlabel": "Duration Relative To Index",
                             "ylabel": "% Persons",
-                            "height": 250,
+                            "height": 300,
                             "width": 1300,
                             "dataArray": allDataArray,
                             "colors": d3.scale.category10()
                         });
+                        d3.select("#resetBtnCondByIdx").on({
+                            "click":  function() {
+                                graph = new SimpleGraph("chart1", {
+                                    "xmax": d3.max(allDataArray, function(d){return d.duration}), "xmin": d3.min(allDataArray, function(d){return d.duration}),
+                                    "ymax": d3.max(allDataArray, function(d){return d3.round(d.pctPersons * 100, 2)}), "ymin": 0, 
+                                    "xlabel": "Duration Relative To Index",
+                                    "ylabel": "% Persons",
+                                    "height": 300,
+                                    "width": 1300,
+                                    "dataArray": allDataArray,
+                                    "colors": d3.scale.category10()
+                                });
+                            }, 
+                        });;
                         
                         common.generateCSVDownload($("#" + type + "DrilldownScatterplot"), result, type + "Drilldown");
                         $('#' + type + 'OccurrencesDrilldown').removeClass('hidden');
