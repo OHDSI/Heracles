@@ -214,7 +214,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
             };
 
             $scope.selectVizPack = function ($event, vizType) {
-                var checked = $(".viz-pack-checkbox[viz-type='" + vizType + "'").is(":checked");
+                var checked = $(".viz-pack-checkbox[viz-type='" + vizType + "']").is(":checked");
 
                 var vals = $scope.visualizationPacks[vizType];
                 if (vals) {
