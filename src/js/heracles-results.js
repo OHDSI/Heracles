@@ -46,7 +46,7 @@ require(['angular', 'jquery', 'bootstrap', 'heracles-d3', 'jasny', 'heracles_com
 				};
 			});
 
-			app.controller('CohortViewerCtrl', function ($scope, $http, CohortService) {
+			app.controller('ACohortViewerCtrl', function ($scope, $http, CohortService) {
 
                 $scope.sources = {};
                 $scope.selectedSource = {};

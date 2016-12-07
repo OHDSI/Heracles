@@ -145,13 +145,14 @@ a {
 
 .navbar-offcanvas, .navmenu {
     width: 200px;
+    display: none;
 }
 
 html, body {
     height: 100%;
 }
 body {
-    padding: 50px 0 0 0;
+    padding: 0px;
     overflow-x: hidden;
 
 }
@@ -184,6 +185,11 @@ body {
 
 .chart-well > svg {
     padding: 3px;
+}
+
+svg {
+    min-height: 300px;
+    min-width: 150px;
 }
 
 .rotate {
@@ -258,7 +264,7 @@ body {
     color: #fff;
     border-radius: 2px;
     pointer-events: none;
-    max-width: 400px;
+    /*max-width: 400px;*/
 }
 /* Creates a small triangle extender for the tooltip */
 
@@ -433,7 +439,7 @@ div.chartcontainer {
     fill: rgb(68, 68, 136);
 }
 .bar {
-    fill: #1f77b4;
+    fill: #34774D;
 }
 /* Barchart styles */
 
@@ -447,25 +453,25 @@ div.chartcontainer {
     font: 10px arial;
 }
 .boxplot .median {
-    stroke: #1f77b4;
+    stroke: #132A13;
 }
 .boxplot line {
-    stroke: #1f77b4;
+    stroke: #132A13;
     stroke-width: 1px;
 }
 .boxplot rect,
 .boxplot circle {
     fill: rgba(31, 119, 180, 0.2);
-    stroke: #1f77b4;
+    stroke: #132A13;
     stroke-width: 1px;
 }
 .boxplot .whisker {
     stroke-dasharray: 3, 3;
-    stroke: #1f77b4;
+    stroke: #132A13;
 }
 .boxplot .outlier {
     fill: none;
-    stroke: #1f77b4;
+    stroke: #132A13;
 }
 
 table.boxplotValues tr td
@@ -476,7 +482,7 @@ table.boxplotValues tr td
 
 .lineplot .line {
     fill: none;
-    stroke: #1f77b4;
+    stroke: #132A13;
     stroke-width: 1px;
 }
 .g-trellis .x-guide path.domain,
@@ -494,7 +500,7 @@ table.boxplotValues tr td
 .axis path,
 .axis line {
     fill: none;
-    stroke: black;
+    stroke: #AAAAAA;
 }
 .axis text {
     font-family: arial;
@@ -554,7 +560,7 @@ table.data td {
 
 @media (min-width: 992px) {
     #viewer-container, #cohort-explorer-main {
-        padding: 0 0 0 200px;
+        /*padding: 0 0 0 200px;*/
     }
     .navmenu {
         padding-top: 0;
@@ -668,3 +674,115 @@ span.viz-complete {
 
 }
 
+.pieChart {
+    float: left;
+}
+
+circle{
+    fill: white;
+    stroke: #34774D;
+    opacity: .75;
+}
+
+circle:hover, circle.outlier:hover {
+  opacity: 1;
+}
+
+circle.outlier {
+  fill: white;
+  stroke: #47A369;
+  opacity: .5;
+}
+
+body {
+    background-color: #efefef;
+}
+
+#artemisHeader{
+    background-color: #47A369; 
+    color: #ffffff;
+    padding: 15px 45px;
+    height: 60px;
+    margin-bottom: 5px;    
+    box-shadow: 1px 1px 1px #aaa;
+}
+
+h1{
+    margin: 0px;
+    font-weight: normal;
+    font-size: 24px;
+}
+
+#artemisDash{
+    padding: 0px 25px;
+}
+
+.tile {
+    padding: 5px;
+    /*background-color: #ffffff;*/
+}
+
+.innerTile {
+    padding: 15px;
+    background-color: #F9F5F4;
+    border-radius: 3px;
+    box-shadow: 1px 1px 1px #aaaaaa;
+}
+
+#hist1 svg{
+    min-width: 200px;
+    min-height: 405px;
+}
+
+#hist2 svg{
+    min-width: 600px;
+    min-height: 405px;
+}
+
+#hist3 svg{
+    min-width: 700px;
+    min-height: 400px;
+}
+
+.hist rect {
+  stroke: white;
+  fill: #34774D;
+}
+
+.axis text, svg text {
+    font-family: sans-serif;
+    font-size: 11px;
+    fill: #AAAAAA;
+}
+
+h3 {
+  color: #1F665D;
+  margin-top: 0px;
+  font-size: 18px;
+}
+
+#tooltip {
+        position: absolute;
+        width: 50px;
+        height: auto;
+        padding: 5px;
+        background-color: white;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+        -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+        -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+        pointer-events: none;
+}
+
+#tooltip.hidden {
+        display: none;
+}
+
+#tooltip p {
+        margin: 0;
+        font-family: sans-serif;
+        font-size: 14px;
+        line-height: 16px;
+}
