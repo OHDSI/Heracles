@@ -758,22 +758,29 @@ h1{
 h3 {
   color: #1F665D;
   margin-top: 0px;
-  font-size: 18px;
+  font-size: 17px;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #eaeaea;
 }
 
 #tooltip {
         position: absolute;
-        width: 50px;
+        width: auto;
         height: auto;
         padding: 5px;
         background-color: white;
-        -webkit-border-radius: 10px;
-        -moz-border-radius: 10px;
-        border-radius: 10px;
-        -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-        -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        -webkit-box-shadow: 1px 1px 1px #AAAAAA;
+        -moz-box-shadow: 1px 1px 1px #AAAAAA;
+        box-shadow: 1px 1px 1px #AAAAAA;
         pointer-events: none;
+}
+
+h4 {
+    margin-top: 0px;
+    font-size: 16px;
 }
 
 #tooltip.hidden {

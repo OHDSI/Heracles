@@ -113,6 +113,15 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
                           .attr("width", width)
                           .attr("height", height);
 
+              var tip = d3.tip()
+              .attr('class', 'd3-tip')
+              .offset([-10, 0])
+              .html(function(d, i) {
+                return "<strong>Count:</strong> <span style='color:#aaaaaa'>" + data[i].averageCost + "</span>";
+              })
+
+              svg.call(tip);
+
               //append the axis
               svg.append("g")
                  .attr("class", "axis")
@@ -192,11 +201,27 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
                  .attr("cy", function(d) {
                   return yScale(d);   
                  })
-                  .on("mouseover", function(d) {
+                 .on("mousemove", function(d, i) {
                     d3.select(this).attr("r", 7).style("fill", "#47A369");
-                  })                  
-                  .on("mouseout", function(d) {
+                        //Get this bar's x/y values, then augment for the tooltip
+                        var xPosition = parseFloat(d3.select(this).attr("x"));
+                        var yPosition = parseFloat(d3.select(this).attr("y")) + height / 2 -150;
+
+                        //Update the tooltip position and value
+                        d3.select("#tooltip")
+                            .style("z-index", 1000)
+                            .style("left", (d3.event.pageX - 250) + "px")
+                            .style("top", (d3.event.pageY - 50) + "px")
+                            .select("#value")
+                            .text("$" + d);
+
+                        //Show the tooltip
+                        d3.select("#tooltip").classed("hidden", false);
+                    })                  
+                    .on("mouseout", function() {
+                    //Hide the tooltip
                     d3.select(this).attr("r", 4).style("fill", "#ffffff");
+                    d3.select("#tooltip").classed("hidden", true);
                   });
 
             // function random_jitter() {
@@ -340,21 +365,22 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
                     .attr("y", function(d) { return y(d.count); })
                     .attr("width", x.rangeBand())
                     .attr("height", function(d) { return height - y(d.count); })
-                    .on("mouseover", function(d) {
+                    .on("mousemove", function(d) {
                     d3.select(this).style("fill", "#47A369");
-                    //Get this bar's x/y values, then augment for the tooltip
-                    var xPosition = parseFloat(d3.select(this).attr("x")) + x.rangeBand() / 2;
-                    var yPosition = parseFloat(d3.select(this).attr("y")) / 2 + height / 2;
+                        //Get this bar's x/y values, then augment for the tooltip
+                        var xPosition = parseFloat(d3.select(this).attr("x"));
+                        var yPosition = parseFloat(d3.select(this).attr("y")) + height / 2 -150;
 
-                    //Update the tooltip position and value
-                    d3.select("#tooltip")
-                        .style("left", xPosition + "px")
-                        .style("top", yPosition + "px")
-                        .select("#value")
-                        .text(d.count);
+                        //Update the tooltip position and value
+                        d3.select("#tooltip")
+                            .style("z-index", 1000)
+                            .style("left", (d3.event.pageX - 275) + "px")
+                            .style("top", (d3.event.pageY - 50) + "px")
+                            .select("#value")
+                            .text(d.count);
 
-                    //Show the tooltip
-                    d3.select("#tooltip").classed("hidden", false);
+                        //Show the tooltip
+                        d3.select("#tooltip").classed("hidden", false);
                     })                  
                     .on("mouseout", function() {
                     //Hide the tooltip
@@ -380,6 +406,15 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
 
             var y = d3.scale.ordinal().rangeRoundBands([0, height], .05);
                 x = d3.scale.linear().range([0, width]);
+
+            var tip = d3.tip()
+              .attr('class', 'd3-tip')
+              .offset([-10, 0])
+              .html(function(d) {
+                return "<strong>Count:</strong> <span style='color:#aaaaaa'>" + d.count + "</span>";
+              })
+
+            svg.call(tip);
             
             var g = svg.append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -437,12 +472,28 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
                   .attr("y", function(d) { return y(d.conceptName); })
                   .attr("width", function(d) { return x(d.count); })
                   .attr("height", y.rangeBand())
-                  .on("mouseover", function(d) {
+                  .on("mousemove", function(d) {
                     d3.select(this).style("fill", "#47A369");
-                  })                  
-                  .on("mouseout", function(d) {
-                    d3.select(this).style("fill", "#34774D");
-                  });
+                        //Get this bar's x/y values, then augment for the tooltip
+                        var xPosition = parseFloat(d3.select(this).attr("x"));
+                        var yPosition = parseFloat(d3.select(this).attr("y")) + height / 2 -150;
+
+                        //Update the tooltip position and value
+                        d3.select("#tooltip")
+                            .style("z-index", 1000)
+                            .style("left", (d3.event.pageX - 275) + "px")
+                            .style("top", (d3.event.pageY - 50) + "px")
+                            .select("#value")
+                            .text(d.count);
+
+                        //Show the tooltip
+                        d3.select("#tooltip").classed("hidden", false);
+                    })                  
+                    .on("mouseout", function() {
+                        //Hide the tooltip
+                        d3.select(this).style("fill", "#34774D");
+                        d3.select("#tooltip").classed("hidden", true);
+                    });
           }
 
             BarChart(data2);
@@ -461,6 +512,8 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
 
             var y = d3.scale.ordinal().rangeRoundBands([0, height], .05);
                 x = d3.scale.linear().range([0, width]);
+
+
             
             var g = svg.append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -476,6 +529,16 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
               var yAxis = d3.svg.axis()
                 .scale(y)
                 .orient("left");
+
+              var tip = d3.tip()
+              .attr('class', 'd3-tip')
+              .offset([-10, 0])
+              .html(function(d) {
+                //console.log(d.totalCost);
+                return "<strong>Count:</strong> <span style='color:#aaaaaa'>" + d.totalCost + "</span>";
+              })
+
+            svg.call(tip);
 
               g.append("g")
                   .attr("class", "axis axis--x")
@@ -513,17 +576,33 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
               g.selectAll(".bar")
                 .data(data)
                 .enter().append("rect")
-                  .attr("class", "bar")
-                  .attr("x", function(d) { return 0; })
-                  .attr("y", function(d) { return y(d.personId); })
-                  .attr("width", function(d) { return x(d.totalCost); })
-                  .attr("height", y.rangeBand())
-                  .on("mouseover", function(d) {
-                    d3.select(this).style("fill", "#47A369");
-                  })                  
-                  .on("mouseout", function(d) {
-                    d3.select(this).style("fill", "#34774D");
-                  });
+                    .attr("class", "bar")
+                    .attr("x", function(d) { return 0; })
+                    .attr("y", function(d) { return y(d.personId); })
+                    .attr("width", function(d) { return x(d.totalCost); })
+                    .attr("height", y.rangeBand())
+                    .on("mousemove", function(d) {
+                        d3.select(this).style("fill", "#47A369");
+                        //Get this bar's x/y values, then augment for the tooltip
+                        var xPosition = parseFloat(d3.select(this).attr("x")) + x.width / 2;
+                        var yPosition = parseFloat(d3.select(this).attr("y")) / 2 + height / 2;
+
+                        //Update the tooltip position and value
+                        d3.select("#tooltip")
+                            .style("z-index", 1000)
+                            .style("left", (d3.event.pageX - 275) + "px")
+                            .style("top", (d3.event.pageY - 50) + "px")
+                            .select("#value")
+                            .text("$" + d.totalCost);
+
+                        //Show the tooltip
+                        d3.select("#tooltip").classed("hidden", false);
+                    })                  
+                    .on("mouseout", function() {
+                        //Hide the tooltip
+                        d3.select(this).style("fill", "#34774D");
+                        d3.select("#tooltip").classed("hidden", true);
+                    });
 
               svg.append("text")
                 .attr("transform", "rotate(-90)")
