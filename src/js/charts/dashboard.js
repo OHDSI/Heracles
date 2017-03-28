@@ -37,12 +37,8 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
             //initialize boxplot statistics
             var costData = [];
             for (var i = 0, len = data.length; i < len; i++) {
-              //console.log(data[i]);
               costData[len - 1 - i] = data[i].averageCost;
-              //console.log(i);
             }
-
-            //console.log(costData);
 
             var data = [],
                 outliers = [],
@@ -54,12 +50,6 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
                 iqr = 0,
                 upperWhisker = -Infinity,
                 maxVal = -Infinity;
-
-
-
-            // y.domain(data.map(function(d) { 
-            //     console.log(d.averageCost);
-            //     return d.averageCost; }));
 
             //calculate the boxplot statistics
               minVal = costData[0],
@@ -76,11 +66,7 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
               console.log("medianVal=" + medianVal);
               console.log("iqr=" + iqr);
 
-              // lowerWhisker = d3.max([minVal, q1Val - iqr])
-              // upperWhisker = d3.min([maxVal, q3Val + iqr]);
-
               var index = 0;
-              //console.log(costData.length);
               //search for the lower whisker, the mininmum value within q1Val - 1.5*iqr
               while (index < costData.length && lowerWhisker == Infinity) {
                 //console.log(costData.length);
@@ -223,15 +209,6 @@ define(["d3","jnj_chart", "ohdsi_common"], function (d3, jnj_chart, common) {
                     d3.select(this).attr("r", 4).style("fill", "#ffffff");
                     d3.select("#tooltip").classed("hidden", true);
                   });
-
-            // function random_jitter() {
-            //   // if (Math.round(Math.random() * 1) == 0)
-            //   //   var seed = -5;
-            //   // else
-            //   //   var seed = 5; 
-            //   // return midline + Math.floor((Math.random() * seed) + 1);
-            //   return midline;
-            // }
 
             function type(d) {
               d.value = +d.value; // coerce to number
